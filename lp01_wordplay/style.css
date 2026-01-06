@@ -211,10 +211,10 @@ footer > * {
 .hero-title {
     position: fixed; /* ビューポートに固定 */
     top: 50%;
-    left: -5%;
+    left: -2%;
     transform: translate(0%, -50%); /* 中央に配置 */
-    font-size: 23vw; /* ビューポート幅に応じた大きな文字サイズ */
-    font-family: "Bauhaus 93", sans-serif;
+    font-size: 26vw; /* ビューポート幅に応じた大きな文字サイズ */
+    font-family: 'Space Mono', monospace, sans-serif;
     color: #000; /* 薄い色で背景らしく */
     z-index: -1; /* 他のコンテンツの下に配置 */
     pointer-events: none; /* テキスト上のクリックイベントを無効化し、下のコンテンツを操作可能にする */
@@ -340,4 +340,5 @@ footer {
 
 footer a {
   color: inherit;        /* 親要素の色を引き継ぐ（青文字を避ける） */
+
 }
