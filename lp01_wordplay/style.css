@@ -22,7 +22,7 @@ footer > * {
   margin: 0 auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   header,
   section{
     padding: 60px 0;
@@ -149,7 +149,7 @@ footer > * {
 
 /* ---レスポンシブデザイン----- */
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   /* ステップ */
   .section-step-left {
     top: 0;          /* 上下中央を解除 */
@@ -214,7 +214,7 @@ footer > * {
     left: -2%;
     transform: translate(0%, -50%); /* 中央に配置 */
     font-size: 26vw; /* ビューポート幅に応じた大きな文字サイズ */
-    font-family: 'Space Mono', monospace, sans-serif;
+    font-family: 'Space Mono', monospace;
     color: #000; /* 薄い色で背景らしく */
     z-index: -1; /* 他のコンテンツの下に配置 */
     pointer-events: none; /* テキスト上のクリックイベントを無効化し、下のコンテンツを操作可能にする */
@@ -269,7 +269,7 @@ footer > * {
 }
 
 /* スマホ幅 */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .store-buttons {
     flex-direction: column;
     align-items: center;
@@ -308,7 +308,7 @@ footer > * {
   font-style: italic;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .also h2{
     font-size: 6vh;
   }
@@ -340,5 +340,4 @@ footer {
 
 footer a {
   color: inherit;        /* 親要素の色を引き継ぐ（青文字を避ける） */
-
 }
