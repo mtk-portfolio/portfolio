@@ -1,0 +1,343 @@
+/* --- 全体 --------------------------------------------------------------------------------------------------------- */
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  color: #222;
+  background-color: #ffff33;
+}
+
+/* セクション共通 */
+header,
+section{
+  padding: 60px 20px;
+}
+
+/* 幅制限 */
+header > *,
+section > *,
+footer > * {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  header,
+  section{
+    padding: 60px 0;
+  }
+}
+
+/* --- section共通 --------------------------------------------------------------------------------------------------- */
+
+/* セクションの範囲 */
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 20px;
+}
+
+.section-inner h2{
+  font-size: 20px;
+}
+
+/* --- セクションの進捗 ------------------------------ */
+
+/* 左寄せ */
+.section-step-left {
+  position: absolute; /* 【重要】これでレイアウトから浮かせる（縦伸びが消える） */
+  left: 0;            /* 左端に固定 */
+  top: 50%;           /* 上下中央へ */
+  transform: translateY(-50%); /* 正確な中央寄せ */
+  z-index: -1;         /* 重なりの順序（必要に応じて調整） */
+}
+
+.section-step-left p {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 900;
+  font-size: 20vw; /* 適宜調整 */
+
+  /* 文字をくり抜く */
+  color: transparent;                 /* 中の色を透明にする */
+  -webkit-text-stroke: 2px #ffffff;   /* フチの色と太さを指定（白の場合） */
+  
+  /* 馴染ませるなら少し透明度を上げる */
+  opacity: 0.8;
+}
+
+/* 右寄せ */
+.section-step-right {
+  position: absolute; /* レイアウトから浮かせる */
+  right: 0;            /* 左端に固定 */
+  top: 50%;           /* 上下中央へ */
+  transform: translateY(-50%); /* 正確な中央寄せ */
+  z-index: -1;         /* 重なりの順序（必要に応じて調整） */
+}
+
+.section-step-right p {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 900;
+  font-size: 20rem; /* 適宜調整 */
+
+  /* 文字をくり抜く */
+  color: transparent;                 /* 中の色を透明にする */
+  -webkit-text-stroke: 2px #ffffff;   /* フチの色と太さを指定（白の場合） */
+  
+  /* 馴染ませるなら少し透明度を上げる */
+  opacity: 0.8;
+}
+
+/* --- セクションの説明文 ------------------------------ */
+
+/* 説明欄の網掛け */
+.section-desc-wrap {
+  padding: 20px;
+  max-width: 60%;
+  width: 60%;
+  border-radius: 36px;
+  /* ドット網掛け */
+  background-image: radial-gradient(
+  circle,
+  #ffff33 1px, /* ドットの大きさ */
+  transparent 1px
+  );
+  background-size: 5px 5px; /* ドットの間隔 */
+}
+
+/* 黒背景 */
+.section-desc-black {
+  display: flex;
+  border-radius: 36px;
+  background: #000;
+  gap: 20px;
+  padding: 20px;
+}
+
+.section-desc-black img {
+  max-width: 209px;
+  max-height: 350px;
+}
+
+/* セクションのテキストエリア */
+.text-area-black {
+  color: #ffff33;
+  padding: 0 20px;
+  font-family: "Meiryo", "メイリオ", "MS PGothic", sans-serif;
+}
+
+/* 白背景 */
+.section-desc-white {
+  display: flex;
+  border-radius: 36px;
+  background: #fff;
+  gap: 20px;
+  padding: 20px;
+}
+
+.section-desc-white img {
+  max-width: 209px;
+  max-height: 350px;
+}
+
+/* セクションのテキストエリア */
+.text-area-white {
+  color: #000;
+  padding: 0 20px;
+  font-family: "Meiryo", "メイリオ", "MS PGothic", sans-serif;
+}
+
+/* ---レスポンシブデザイン----- */
+
+@media (max-width: 768px) {
+  /* ステップ */
+  .section-step-left {
+    top: 0;          /* 上下中央を解除 */
+    text-align: center; /* 中の数字を中央揃えに */
+    width: 100%;        /* 横幅いっぱい */
+  }
+  .section-step-left p {
+    font-size: 30vh;
+  }
+  .section-step-right {
+    top: 0;          /* 上下中央を解除 */
+    text-align: center; /* 中の数字を中央揃えに */
+    width: 100%;        /* 横幅いっぱい */
+  }
+  .section-step-right p {
+    font-size: 30vh;
+  }
+  /* セクション内を縦並びに */
+  .section-inner {
+    flex-direction: column;
+    padding: 20px 0;
+  }
+  /* 説明欄の幅調整 */
+  .section-desc-wrap {
+    padding: 20px;
+    max-width: 90%;
+    width: 90%;
+  }
+  /* 説明文と画像サイズ */
+  .section-desc-black {
+    flex-direction: column; /* 縦並び */
+    align-items: center; /* 中央寄せ */
+  }
+  .section-desc-black img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%
+  }
+  .section-desc-white {
+    flex-direction: column; /* 縦並び */
+    align-items: center; /* 中央寄せ */
+  }
+  .section-desc-white img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%
+  }
+}
+
+/* --- hero --------------------------------------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+}
+
+/* 背景文字h1 */
+.hero-title {
+    position: fixed; /* ビューポートに固定 */
+    top: 50%;
+    left: -5%;
+    transform: translate(0%, -50%); /* 中央に配置 */
+    font-size: 23vw; /* ビューポート幅に応じた大きな文字サイズ */
+    font-family: "Bauhaus 93", sans-serif;
+    color: #000; /* 薄い色で背景らしく */
+    z-index: -1; /* 他のコンテンツの下に配置 */
+    pointer-events: none; /* テキスト上のクリックイベントを無効化し、下のコンテンツを操作可能にする */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+}
+
+/* スマホの周辺 */
+.phone-bg {
+  width: 250px;
+  border-radius: 36px;
+  padding: 20px; /* スマホの縁 */
+  /* ドット網掛け */
+  background-image: radial-gradient(
+  circle,
+  #ffff33 1px, /* ドットの大きさ */
+  transparent 1px
+  );
+  background-size: 5px 5px; /* ドットの間隔 */
+}
+
+/* スマホの枠 */
+.phone-mock {
+  width: 230px;
+  height: 410px;
+  border-radius: 29px;
+  background: #111;
+  padding: 5px; /* スマホの縁 */
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.25),
+    inset 0 0 0 2px #333;
+}
+
+/* スマホの中身 */
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 25px; /* スマホの丸み */
+  background: #ffff33;
+  overflow: hidden;
+}
+
+/* ダウンロードボタン */
+.store-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.store-buttons img{
+  max-width: 150px
+}
+
+/* スマホ幅 */
+@media (max-width: 768px) {
+  .store-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* --- summary ------------------------------------------------------------------------------------------------------ */
+
+/* summary内部を横並びにして右寄せ */
+.summary-row {
+  display: flex;
+  justify-content: flex-end; /* 右寄せ */
+  position: relative;
+  z-index: 0
+}
+
+/* --- how-to-play -------------------------------------------------------------------------------------------------- */
+
+
+/* summary内部を横並びにして右寄せ */
+.how-to-play-row {
+  display: flex;
+  position: relative;
+  z-index: 0
+}
+
+/* --- also --------------------------------------------------------------------------------------------------------- */
+
+.also {
+  text-align: center;
+}
+
+.also h2{
+  font-size: 6vw;
+  color: #fff;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .also h2{
+    font-size: 6vh;
+  }
+}
+
+/* --- cta ---------------------------------------------------------------------------------------------------------- */
+
+/* ボタン */
+.cta {
+  text-align: center;
+}
+
+.cta a {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #222;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+/* --- footer ------------------------------------------------------------------------------------------------------- */
+
+/* フッター */
+footer {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+footer a {
+  color: inherit;        /* 親要素の色を引き継ぐ（青文字を避ける） */
+}
