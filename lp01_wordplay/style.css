@@ -5,7 +5,8 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
   color: #222;
-  background-color: #ffff33;
+  background-color: #ffd445;
+  font-family: "Meiryo", "メイリオ", "MS PGothic", sans-serif;
 }
 
 /* セクション共通 */
@@ -99,36 +100,62 @@ footer > * {
   /* ドット網掛け */
   background-image: radial-gradient(
   circle,
-  #ffff33 1px, /* ドットの大きさ */
+  #ffd445 1px, /* ドットの大きさ */
   transparent 1px
   );
   background-size: 5px 5px; /* ドットの間隔 */
 }
 
-/* 黒背景 */
+/* --- 黒背景 -------------------------------------- */
 .section-desc-black {
   display: flex;
+  align-items: center;     /* 上下中央 */
   border-radius: 36px;
   background: #000;
   gap: 20px;
-  padding: 20px;
+  padding: 40px;
 }
 
 .section-desc-black img {
+  border-radius: 24px;
   max-width: 209px;
   max-height: 350px;
 }
 
 /* セクションのテキストエリア */
 .text-area-black {
-  color: #ffff33;
   padding: 0 20px;
-  font-family: "Meiryo", "メイリオ", "MS PGothic", sans-serif;
+  
 }
 
-/* 白背景 */
+/* 見出し */
+.text-area-black h2 {
+  color: #ffd445;
+  font-size: 13px;
+  margin-top: 0px;
+  margin-bottom: 2em;
+}
+
+/* メイン説明 */
+.text-main-black {
+  color: #ffd445;
+  font-size: calc(14px + 1vw);
+  margin-top: 0px;
+  margin-bottom: 2em;
+}
+
+/* サブ説明 */
+.text-sub-black {
+  color: #fff;
+  font-size: calc(10px + .3vw);
+  font-family: "Hiragino Maru Gothic ProN", "Kosugi Maru", sans-serif;
+  font-style: italic;
+}
+
+/* --- 白背景 -------------------------------------- */
 .section-desc-white {
   display: flex;
+  align-items: center;     /* 上下中央 */
   border-radius: 36px;
   background: #fff;
   gap: 20px;
@@ -136,6 +163,7 @@ footer > * {
 }
 
 .section-desc-white img {
+  border-radius: 24px;
   max-width: 209px;
   max-height: 350px;
 }
@@ -144,9 +172,28 @@ footer > * {
 .text-area-white {
   color: #000;
   padding: 0 20px;
-  font-family: "Meiryo", "メイリオ", "MS PGothic", sans-serif;
 }
 
+/* 見出し */
+.text-area-white h2 {
+  font-size: 13px;
+  margin-top: 0px;
+  margin-bottom: 2em;
+}
+
+/* メイン説明 */
+.text-main-white {
+  font-size: calc(13px + .5vw);
+  margin-top: 0px;
+  margin-bottom: 2em;
+}
+
+/* サブ説明 */
+.text-sub-white {
+  font-size: calc(10px + .3vw);
+  font-family: "Hiragino Maru Gothic ProN", "Kosugi Maru", sans-serif;
+  font-style: italic;
+}
 /* ---レスポンシブデザイン----- */
 
 @media (max-width: 640px) {
@@ -229,7 +276,7 @@ footer > * {
   /* ドット網掛け */
   background-image: radial-gradient(
   circle,
-  #ffff33 1px, /* ドットの大きさ */
+  #ffd445 1px, /* ドットの大きさ */
   transparent 1px
   );
   background-size: 5px 5px; /* ドットの間隔 */
@@ -252,7 +299,7 @@ footer > * {
   width: 100%;
   height: 100%;
   border-radius: 25px; /* スマホの丸み */
-  background: #ffff33;
+  background: #ffd445;
   overflow: hidden;
 }
 
@@ -273,6 +320,35 @@ footer > * {
   .store-buttons {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+/* PCは無視して、タブレット以下の幅で、かつ横向き（またはタブレット縦）の時 */
+@media screen and (max-width: 1024px) {
+  /* ダウンロードボタンを横並びにする設定 */
+  .store-buttons {
+    display: flex !important;      /* 縦並びを解除してFlexboxにする */
+    flex-direction: row !important; /* 横方向に並べる */
+    justify-content: center !important; /* 中央に寄せる */
+    gap: 15px !important;           /* ボタン同士の間隔 */
+    width: 100% !important;         /* 親要素の幅いっぱいに広げる */
+  }
+  /* ボタン自体の大きさを調整（横並びで収まりやすくする） */
+  .store-buttons a {
+    width: 140px !important; 
+  }
+  /* --- スマホ横向き(高さが低い)時だけの追加調整 --- */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .hero {
+      height: auto !important;      /* 画面下部が消えないよう高さを自動に */
+      min-height: 100vh;           /* 最低でも画面1枚分は確保 */
+      padding: 60px 20px !important; /* 上下の余白を調整 */
+    }
+    /* 背景のスマホ画像を少し小さくして収まりを良くする */
+    .phone-bg {
+      transform: scale(0.7) !important;
+      margin: 20px auto !important;
+    }
   }
 }
 
@@ -311,6 +387,12 @@ footer > * {
 @media (max-width: 640px) {
   .also h2{
     font-size: 6vh;
+  }
+}
+
+@media (max-width: 1024px) {
+  .also h2{
+    font-size: 12vw;
   }
 }
 
