@@ -23,7 +23,7 @@ footer > * {
   margin: 0 auto;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
   header,
   section{
     padding: 60px 0;
@@ -159,7 +159,7 @@ footer > * {
   border-radius: 36px;
   background: #fff;
   gap: 20px;
-  padding: 20px;
+  padding: 40px;
 }
 
 .section-desc-white img {
@@ -196,7 +196,7 @@ footer > * {
 }
 /* ---レスポンシブデザイン----- */
 
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
   /* ステップ */
   .section-step-left {
     top: 0;          /* 上下中央を解除 */
@@ -229,6 +229,7 @@ footer > * {
   .section-desc-black {
     flex-direction: column; /* 縦並び */
     align-items: center; /* 中央寄せ */
+    padding: 20px;
   }
   .section-desc-black img {
     max-width: 100%;
@@ -238,6 +239,7 @@ footer > * {
   .section-desc-white {
     flex-direction: column; /* 縦並び */
     align-items: center; /* 中央寄せ */
+    padding: 20px;
   }
   .section-desc-white img {
     max-width: 100%;
@@ -315,40 +317,46 @@ footer > * {
   max-width: 150px
 }
 
-/* スマホ幅 */
-@media (max-width: 640px) {
+/* --- タブレット・スマホ全般 (1024px以下) --- */
+@media screen and (max-width: 1024px) {
+  /* 基本を「縦並び」に変更（スマホ・タブレット共通） */
   .store-buttons {
+    display: flex !important;
+    flex-direction: column !important; /* ここを column に変更 */
+    align-items: center;               /* 縦並びなので中央寄せ */
+    gap: 15px;
+    width: 100%;
+  }
+
+  .store-buttons img {
+    width: 140px;
+  }
+
+  /* セクション内の調整 */
+  .section-inner {
     flex-direction: column;
-    align-items: center;
+    padding: 20px 0;
   }
 }
 
-/* PCは無視して、タブレット以下の幅で、かつ横向き（またはタブレット縦）の時 */
-@media screen and (max-width: 1024px) {
-  /* ダウンロードボタンを横並びにする設定 */
+/* --- スマホ横向き等の「高さが低い」時だけの特別ルール --- */
+@media screen and (max-width: 1024px) and (max-height: 640px) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  /* 高さがない時は、画面を広く使うために「横並び」に上書き */
   .store-buttons {
-    display: flex !important;      /* 縦並びを解除してFlexboxにする */
-    flex-direction: row !important; /* 横方向に並べる */
-    justify-content: center !important; /* 中央に寄せる */
-    gap: 15px !important;           /* ボタン同士の間隔 */
-    width: 100% !important;         /* 親要素の幅いっぱいに広げる */
+    flex-direction: row !important; /* ここを row に変更 */
+    justify-content: center;
+    gap: 10px;
   }
-  /* ボタン自体の大きさを調整（横並びで収まりやすくする） */
-  .store-buttons a {
-    width: 140px !important; 
-  }
-  /* --- スマホ横向き(高さが低い)時だけの追加調整 --- */
-  @media (orientation: landscape) and (max-height: 500px) {
-    .hero {
-      height: auto !important;      /* 画面下部が消えないよう高さを自動に */
-      min-height: 100vh;           /* 最低でも画面1枚分は確保 */
-      padding: 60px 20px !important; /* 上下の余白を調整 */
-    }
-    /* 背景のスマホ画像を少し小さくして収まりを良くする */
-    .phone-bg {
-      transform: scale(0.7) !important;
-      margin: 20px auto !important;
-    }
+
+  .phone-bg {
+    transform: scale(0.7);
+    margin: 10px auto;
   }
 }
 
@@ -384,17 +392,12 @@ footer > * {
   font-style: italic;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
   .also h2{
     font-size: 6vh;
   }
 }
 
-@media (max-width: 1024px) {
-  .also h2{
-    font-size: 12vw;
-  }
-}
 
 /* --- cta ---------------------------------------------------------------------------------------------------------- */
 
