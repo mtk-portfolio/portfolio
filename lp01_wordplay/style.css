@@ -55,14 +55,12 @@ footer > * {
 }
 
 .section-step-left p {
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 900;
   font-size: 20vw; /* 適宜調整 */
-  opacity: 0.8;
   /* 文字をくり抜く */
   color: transparent;                 /* 中の色を透明にする */
-  -webkit-text-stroke: clamp(1px, 0.15vw, 2px) #fff;   /* フチの色と太さを指定（白の場合） */
-  paint-order: stroke fill;
+  -webkit-text-stroke: 2px #ffffff;   /* フチの色と太さを指定（白の場合） */
 }
 
 /* 右寄せ */
@@ -75,14 +73,12 @@ footer > * {
 }
 
 .section-step-right p {
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 900;
   font-size: 20rem; /* 適宜調整 */
-  opacity: 0.8;
   /* 文字をくり抜く */
   color: transparent;                 /* 中の色を透明にする */
-  -webkit-text-stroke: clamp(1px, 0.15vw, 2px) #fff;   /* フチの色と太さを指定（白の場合） */
-  paint-order: stroke fill;
+  -webkit-text-stroke: 2px #ffffff;   /* フチの色と太さを指定（白の場合） */
 }
 
 /* --- セクションの説明文 ------------------------------ */
@@ -201,7 +197,6 @@ footer > * {
   }
   .section-step-left p {
     font-size: 30vh;
-  -webkit-text-stroke: clamp(2px, 0.15vw, 3px) #fff;
   }
   .section-step-right {
     top: 0;          /* 上下中央を解除 */
@@ -210,7 +205,6 @@ footer > * {
   }
   .section-step-right p {
     font-size: 30vh;
-  -webkit-text-stroke: clamp(2px, 0.15vw, 3px) #fff;
   }
   /* セクション内を縦並びに */
   .section-inner {
