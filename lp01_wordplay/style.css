@@ -19,7 +19,7 @@ section{
 header > *,
 section > *,
 footer > * {
-  max-width: 960px;
+  max-width: 90vw;
   margin: 0 auto;
 }
 
@@ -374,7 +374,6 @@ footer > * {
 
 /* --- how-to-play -------------------------------------------------------------------------------------------------- */
 
-
 /* summary内部を横並びにして右寄せ */
 .how-to-play-row {
   display: flex;
@@ -391,7 +390,22 @@ footer > * {
 .also h2{
   font-size: 6vw;
   color: #fff;
+  font-family: "Hiragino Maru Gothic ProN", "Kosugi Maru", sans-serif;
   font-style: italic;
+  margin-bottom: 3vw;
+}
+
+.also ul{
+  position: relative;
+}
+
+.also li{
+  list-style: none;
+  margin: 0 0 4vw 0;
+}
+
+.also img{
+  border-radius: 999px;
 }
 
 @media (max-width: 1024px) {
@@ -400,6 +414,45 @@ footer > * {
   }
 }
 
+
+/* --- flyer ---------------------------------------------------------------------------------------------------------- */
+
+.flyer-section {
+  position: relative;
+  height: 50vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* フライヤーの写真 */
+.flyer-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/GameSample.png'); /* 写真を指定 */
+  background-size: cover;
+  background-position: center;
+  border-radius: 60px;
+  transition: filter 0.5s ease, transform 0.5s ease;/* 変化を滑らかにする設定 */
+  z-index: 0;
+}
+
+/* 前面コンテンツ：z-indexを背景より高くする */
+.flyer-overlay {
+  position: relative; /* 重ねる */
+  z-index: 1;/* 背景の 0 より大きくする */
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .flyer-section {
+    height: 150vw;
+    margin: 0 20px;
+  }
+}
 
 /* --- cta ---------------------------------------------------------------------------------------------------------- */
 
