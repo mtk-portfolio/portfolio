@@ -55,7 +55,7 @@ footer > * {
 }
 
 .section-step-left p {
-  font-family: system-ui, sans-serif;
+  font-family: "Roboto", system-ui, Arial, sans-serif;
   font-weight: 900;
   font-size: 20vw; /* 適宜調整 */
   /* 文字をくり抜く */
@@ -73,7 +73,7 @@ footer > * {
 }
 
 .section-step-right p {
-  font-family: system-ui, sans-serif;
+  font-family: "Roboto", system-ui, Arial, sans-serif;
   font-weight: 900;
   font-size: 20rem; /* 適宜調整 */
   /* 文字をくり抜く */
