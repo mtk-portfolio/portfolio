@@ -62,6 +62,7 @@ footer > * {
   /* 文字をくり抜く */
   color: transparent;                 /* 中の色を透明にする */
   -webkit-text-stroke: clamp(1px, 0.15vw, 2px) #fff;   /* フチの色と太さを指定（白の場合） */
+  paint-order: stroke fill;
 }
 
 /* 右寄せ */
@@ -81,6 +82,7 @@ footer > * {
   /* 文字をくり抜く */
   color: transparent;                 /* 中の色を透明にする */
   -webkit-text-stroke: clamp(1px, 0.15vw, 2px) #fff;   /* フチの色と太さを指定（白の場合） */
+  paint-order: stroke fill;
 }
 
 /* --- セクションの説明文 ------------------------------ */
