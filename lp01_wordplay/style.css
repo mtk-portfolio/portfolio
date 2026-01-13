@@ -55,7 +55,7 @@ footer > * {
 }
 
 .section-step-left p {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   font-weight: 900;
   font-size: 20vw; /* 適宜調整 */
   opacity: 0.8;
@@ -74,7 +74,7 @@ footer > * {
 }
 
 .section-step-right p {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   font-weight: 900;
   font-size: 20rem; /* 適宜調整 */
   opacity: 0.8;
