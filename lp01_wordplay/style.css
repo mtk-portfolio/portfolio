@@ -395,13 +395,12 @@ footer > * {
   margin-bottom: 3vw;
 }
 
-.also ul{
-  position: relative;
-}
-
-.also li{
-  list-style: none;
-  margin: 0 0 4vw 0;
+/* 画像を束ねるコンテナ */
+.also-container {
+  display: flex;
+  flex-direction: column; /* 縦に並べる */
+  align-items: center;    /* 左右中央に揃える */
+  gap: 4vw;               /* 画像同士の間隔 */
 }
 
 .also img{
