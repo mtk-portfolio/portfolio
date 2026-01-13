@@ -197,6 +197,7 @@ footer > * {
   }
   .section-step-left p {
     font-size: 30vh;
+    font-weight: 700;
   }
   .section-step-right {
     top: 0;          /* 上下中央を解除 */
@@ -205,6 +206,7 @@ footer > * {
   }
   .section-step-right p {
     font-size: 30vh;
+    font-weight: 700;
   }
   /* セクション内を縦並びに */
   .section-inner {
