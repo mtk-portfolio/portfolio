@@ -19,7 +19,7 @@ section{
 header > *,
 section > *,
 footer > * {
-  max-width: 90vw;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -424,6 +424,11 @@ footer > * {
   align-items: center;
   justify-content: center;
   padding: 0;
+}
+
+.flyer-section > .flyer-background {
+  max-width: none; /* 親の 90vw や 960px を無視する */
+  width: 90vw;
 }
 
 /* フライヤーの写真 */
