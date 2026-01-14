@@ -292,11 +292,44 @@ footer > * {
 
 /* スマホの中身 */
 .phone-screen {
+  position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 25px; /* スマホの丸み */
-  background: #ffd445;
+  background-color: #ffd445; /* 統一した背景色 */
+  border-radius: 25px;
   overflow: hidden;
+}
+
+.slider img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  /* 8枚 × 5秒 = 40秒サイクル */
+  animation: wordplayLoop 25s infinite;
+}
+
+/* 5秒ずつ開始時間をずらして順番を作る */
+.slider img:nth-child(1) { animation-delay: 0s; }
+.slider img:nth-child(2) { animation-delay: 5s; }
+.slider img:nth-child(3) { animation-delay: 7s; }
+.slider img:nth-child(4) { animation-delay: 9s; }
+.slider img:nth-child(5) { animation-delay: 11s; }
+.slider img:nth-child(6) { animation-delay: 13s; }
+.slider img:nth-child(7) { animation-delay: 15s; }
+.slider img:nth-child(8) { animation-delay: 17s; }
+.slider img:nth-child(9) { animation-delay: 19s; }
+
+/* 40秒を100%とした時のキーフレーム計算 */
+@keyframes wordplayLoop {
+  0% { opacity: 0; }
+  2% { opacity: 1; }    /* 約0.8秒でフェードイン */
+  12.5% { opacity: 1; } /* 5秒間（全体の1/8）維持 */
+  15% { opacity: 0; }   /* 約1秒でフェードアウト */
+  100% { opacity: 0; }
 }
 
 /* ダウンロードボタン */
@@ -418,8 +451,9 @@ footer > * {
   padding: 0;
 }
 
+/* 親の 960px を無視する */
 .flyer-section > .flyer-background {
-  max-width: none; /* 親の 90vw や 960px を無視する */
+  max-width: none;
   width: 90vw;
 }
 
@@ -428,7 +462,7 @@ footer > * {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('img/GameSample.png'); /* 写真を指定 */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/GameSample.png'); /* 写真を指定 */
   background-size: cover;
   background-position: center;
   border-radius: 60px;
@@ -438,15 +472,61 @@ footer > * {
 
 /* 前面コンテンツ：z-indexを背景より高くする */
 .flyer-overlay {
+  display: flex;
+  justify-content: center; /* 中央に寄せる */
+  align-items: flex-start; /* 上揃え */
+  gap: 40px;               /* 左右の間隔 */
+  width: 100%;
+  max-width: 1000px;       /* 広がりすぎないように制限 */
+  margin: 0 auto;          /* 画面中央に配置 */
+  padding: 40px 20px;
   position: relative; /* 重ねる */
   z-index: 1;/* 背景の 0 より大きくする */
-  text-align: center;
+}
+
+.flyer-overlay h2 {
+  font-size: calc(15px + 2vw);
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.flyer-overlay p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffd445;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+.flyer-text-free{
+  flex: 1;                 /* 同じ幅で広がるようにする */
+  text-align: left;      /* 中身を左揃え */
+}
+
+.flyer-text-pro {
+  flex: 1;                 /* 同じ幅で広がるようにする */
+  text-align: right;      /* 中身を右揃え */
 }
 
 @media (max-width: 1024px) {
   .flyer-section {
     height: 150vw;
     margin: 0 20px;
+  }
+  .flyer-overlay {
+    min-height: 500px;
+    flex-direction: column; /* 縦に並べる */
+    justify-content: space-between; /* 中身を「上」と「下」の端に振り分ける */
+    align-items: center;    /* 中央揃え */
+    gap: 60px;              /* 縦の間隔を広めにとる */
+  }
+  .flyer-text-free,
+  .flyer-text-pro {
+    flex: none; /* 横並び用の flex: 1 を解除 */
+    text-align: left;
+    width: 100%;
   }
 }
 
@@ -455,15 +535,21 @@ footer > * {
 /* ボタン */
 .cta {
   text-align: center;
+  padding: 0;
+  margin-top: 24px;
+  margin-bottom: 60px;
 }
 
 .cta a {
+  font-size: calc(14px + 0.5vw);
+  font-weight: 600;
   display: inline-block;
-  padding: 12px 24px;
-  background: #222;
-  color: #fff;
   text-decoration: none;
-  border-radius: 4px;
+  background: #ffd445;
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 40px;
+  padding: 14px 24px;
 }
 
 /* --- footer ------------------------------------------------------------------------------------------------------- */
