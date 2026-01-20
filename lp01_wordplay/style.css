@@ -43,42 +43,66 @@ footer > * {
   font-size: 20px;
 }
 
-/* --- セクションの進捗 ------------------------------ */
+/* --- セクションの進捗文字（３／３） ------------------------------ */
 
-/* 左寄せ */
+/* ３／３左寄せ */
 .section-step-left {
-  position: absolute; /* 【重要】これでレイアウトから浮かせる（縦伸びが消える） */
+  position: absolute; /* レイアウトから浮かせる（縦伸びが消える） */
   left: 0;            /* 左端に固定 */
   top: 50%;           /* 上下中央へ */
   transform: translateY(-50%); /* 正確な中央寄せ */
-  z-index: -1;         /* 重なりの順序（必要に応じて調整） */
+  z-index: -1;         /* 重なりの順序 */
 }
 
-.section-step-left p {
-  font-family: "Roboto", system-ui, Arial, sans-serif;
-  font-weight: 900;
-  font-size: 20vw; /* 適宜調整 */
-  /* 文字をくり抜く */
-  color: transparent;                 /* 中の色を透明にする */
-  -webkit-text-stroke: 2px #ffffff;   /* フチの色と太さを指定（白の場合） */
-}
-
-/* 右寄せ */
+/* ３／３右寄せ */
 .section-step-right {
   position: absolute; /* レイアウトから浮かせる */
   right: 0;            /* 左端に固定 */
   top: 50%;           /* 上下中央へ */
   transform: translateY(-50%); /* 正確な中央寄せ */
-  z-index: -1;         /* 重なりの順序（必要に応じて調整） */
+  z-index: -1;         /* 重なりの順序 */
 }
 
+/* --- 文字くり抜き -------------------------------------- */
+
+.section-step-left p,
 .section-step-right p {
-  font-family: "Roboto", system-ui, Arial, sans-serif;
+  font-family: "Wintyr VF";
   font-weight: 900;
-  font-size: 20rem; /* 適宜調整 */
+  font-size: 18rem; /* 適宜調整 */
+  letter-spacing: -0.05em;
   /* 文字をくり抜く */
   color: transparent;                 /* 中の色を透明にする */
   -webkit-text-stroke: 2px #ffffff;   /* フチの色と太さを指定（白の場合） */
+}
+
+/* --- 文字アニメ -------------------------------------- */
+
+/* 親要素：文字を横に並べるが、幅の変化を無視させる */
+.section-step-left p,
+.section-step-right p {
+  display: inline-grid;
+  /* 「1文字分の固定幅」と「残りの幅」に分割する */
+  grid-template-columns: 0.8ch auto; 
+  align-items: center;
+}
+
+.pulse-number {
+  font-family: "Wintyr VF"; 
+  justify-self: center; /* 1.2chの幅の「真ん中」に居座る */
+  animation: weightPulseStrict 2s ease-in-out infinite;
+}
+
+@keyframes weightPulseStrict {
+  0%, 100% {
+    font-weight: 900;
+    /* バリアブルフォントならこちらが確実 */
+    font-variation-settings: "wght" 900;
+  }
+  50% {
+    font-weight: 100;
+    font-variation-settings: "wght" 100;
+  }
 }
 
 /* --- セクションの説明文 ------------------------------ */
@@ -98,37 +122,61 @@ footer > * {
   background-size: 5px 5px; /* ドットの間隔 */
 }
 
-/* --- 黒背景 -------------------------------------- */
-.section-desc-black {
-  display: flex;
-  align-items: center;     /* 上下中央 */
-  border-radius: 36px;
-  background: #000;
-  gap: 20px;
-  padding: 40px;
-}
+/* --- 説明共通設定 -------------------------------------- */
 
-.section-desc-black img {
+/* 画像共通 */
+.section-desc-black img,
+.section-desc-white img {
   border-radius: 24px;
   max-width: 209px;
   max-height: 350px;
 }
 
-/* セクションのテキストエリア */
-.text-area-black {
-  padding: 0 20px;
-  
+/* 説明の枠共通（背景色以外） */
+.section-desc-black,
+.section-desc-white {
+  display: flex;
+  align-items: center;     /* 上下中央 */
+  border-radius: 36px;
+  gap: 20px;
+  padding: 40px;
 }
 
-/* 見出し */
-.text-area-black h2 {
-  color: #ffd445;
+/* 見出し共通 */
+.text-area-black h2,
+.text-area-white h2 {
   font-size: 13px;
   margin-top: 0px;
   margin-bottom: 2em;
 }
 
-/* メイン説明 */
+/* サブ説明共通 */
+.text-sub-black,
+.text-sub-white {
+  font-size: calc(10px + .3vw);
+  font-family: "Hiragino Maru Gothic ProN", "Kosugi Maru", sans-serif;
+  font-style: italic;
+}
+
+/* --- 黒背景 -------------------------------------- */
+
+/* 背景色（黒地） */
+.section-desc-black {
+  background: #000;
+}
+
+/* セクションのテキストエリア（黒地） */
+.text-area-black {
+  padding: 0 20px;
+  
+}
+
+/* 見出し（黒地） */
+.text-area-black h2 {
+  color: #ffd445;
+}
+
+/* メイン説明（黒地） */
 .text-main-black {
   color: #ffd445;
   font-size: calc(14px + 1vw);
@@ -136,76 +184,54 @@ footer > * {
   margin-bottom: 2em;
 }
 
-/* サブ説明 */
+/* サブ説明（黒地） */
 .text-sub-black {
   color: #fff;
-  font-size: calc(10px + .3vw);
-  font-family: "Hiragino Maru Gothic ProN", "Kosugi Maru", sans-serif;
-  font-style: italic;
 }
 
 /* --- 白背景 -------------------------------------- */
+
+/* 背景色（白地） */
 .section-desc-white {
-  display: flex;
-  align-items: center;     /* 上下中央 */
-  border-radius: 36px;
   background: #fff;
-  gap: 20px;
-  padding: 40px;
 }
 
-.section-desc-white img {
-  border-radius: 24px;
-  max-width: 209px;
-  max-height: 350px;
-}
-
-/* セクションのテキストエリア */
+/* セクションのテキストエリア（白地） */
 .text-area-white {
   color: #000;
   padding: 0 20px;
 }
 
-/* 見出し */
+/* 見出し（白地） */
 .text-area-white h2 {
-  font-size: 13px;
-  margin-top: 0px;
-  margin-bottom: 2em;
+  color: #000;
 }
 
-/* メイン説明 */
+/* メイン説明（白地） */
 .text-main-white {
   font-size: calc(13px + .5vw);
   margin-top: 0px;
   margin-bottom: 2em;
 }
 
-/* サブ説明 */
+/* サブ説明（白地） */
 .text-sub-white {
-  font-size: calc(10px + .3vw);
-  font-family: "Hiragino Maru Gothic ProN", "Kosugi Maru", sans-serif;
-  font-style: italic;
+  color: #000;
 }
+
 /* ---レスポンシブデザイン----- */
 
 @media (max-width: 1024px) {
   /* ステップ */
-  .section-step-left {
-    top: 0;          /* 上下中央を解除 */
-    text-align: center; /* 中の数字を中央揃えに */
-    width: 100%;        /* 横幅いっぱい */
-  }
-  .section-step-left p {
-    font-size: 30vh;
-    font-weight: 700;
-  }
+  .section-step-left,
   .section-step-right {
     top: 0;          /* 上下中央を解除 */
     text-align: center; /* 中の数字を中央揃えに */
     width: 100%;        /* 横幅いっぱい */
   }
+  .section-step-left p,
   .section-step-right p {
-    font-size: 30vh;
+    font-size: 30vw;
     font-weight: 700;
   }
   /* セクション内を縦並びに */
@@ -219,26 +245,28 @@ footer > * {
     max-width: 90%;
     width: 90%;
   }
-  /* 説明文と画像サイズ */
-  .section-desc-black {
-    flex-direction: column; /* 縦並び */
-    align-items: center; /* 中央寄せ */
-    padding: 20px;
-  }
-  .section-desc-black img {
+  /* 画像 */
+  .section-desc-black img,
+  .section-desc-white img {
     max-width: 100%;
     max-height: 100%;
     width: 100%
   }
+  /* 説明文と画像サイズ */
+  .section-desc-black,
   .section-desc-white {
     flex-direction: column; /* 縦並び */
     align-items: center; /* 中央寄せ */
     padding: 20px;
   }
-  .section-desc-white img {
-    max-width: 100%;
-    max-height: 100%;
-    width: 100%
+}
+
+
+@media (max-width: 640px) {
+  .section-step-left p,
+  .section-step-right p {
+    font-size: 30vh;
+    font-weight: 700;
   }
 }
 
@@ -250,19 +278,22 @@ footer > * {
   overflow: hidden;
 }
 
-/* 背景文字h1 */
+/* --- 背景文字h1(背景のデカ文字) ----------------------------------------- */
+
 .hero-title {
-    position: fixed; /* ビューポートに固定 */
+    position: fixed; /* 背景に固定 */
     top: 50%;
     left: -2%;
     transform: translate(0%, -50%); /* 中央に配置 */
-    font-size: 26vw; /* ビューポート幅に応じた大きな文字サイズ */
+    font-size: 26vw; /* ディスプレイ幅に応じた大きな文字サイズ */
     font-family: 'Space Mono', monospace;
     color: #000; /* 薄い色で背景らしく */
     z-index: -1; /* 他のコンテンツの下に配置 */
     pointer-events: none; /* テキスト上のクリックイベントを無効化し、下のコンテンツを操作可能にする */
     white-space: nowrap; /* テキストの折り返しを防ぐ */
 }
+
+/* --- スマホ画面 ------------------------------------------------------------- */
 
 /* スマホの周辺 */
 .phone-bg {
@@ -299,6 +330,120 @@ footer > * {
   border-radius: 25px;
   overflow: hidden;
 }
+
+/* --- スマホ画面の吹き出し ---------------------------------------- */
+
+/* 吹き出し画像の共通設定 */
+.speech-bubble-top img,
+.speech-bubble-leftup img,
+.speech-bubble-leftdown img,
+.speech-bubble-rightup img,
+.speech-bubble-rightmiddle img,
+.speech-bubble-rightdown img {
+  width: 120px;
+  height: auto;
+  display: block; /* 余計な隙間を消す */
+  margin: 0 auto; /* 念のため中央寄せ */
+  animation: bubblePulse 1s ease-in-out infinite;
+}
+
+/* 吹き出し画像の傾斜 */
+.speech-bubble-leftup img { --r: -10deg;}/* 左に10° */
+.speech-bubble-leftdown img { --r: -10deg;}
+.speech-bubble-rightup img { --r: 10deg;}/* 右に10° */
+.speech-bubble-rightmiddle img { --r: 10deg;}
+.speech-bubble-rightdown img { --r: 10deg;}
+
+/* 各ポジションの共通設定*/
+.speech-bubble-top,
+.speech-bubble-leftup,
+.speech-bubble-rightdown,
+.speech-bubble-leftdown,
+.speech-bubble-rightup,
+.speech-bubble-rightmiddle { 
+  position: absolute;  /* スマホ枠を基準に自由に動かす */
+  transform: translateX(-50%); /* 自身の幅の半分戻して、完全に中央揃え */
+  z-index: 100;        /* スマホ(z-index:1)より大きい数字で手前に出す */
+  pointer-events: none; /* 下にある画面の操作を邪魔しない */
+  
+  /* --- 追加：読み込み時に「無」の状態にする指定 --- */
+  opacity: 0;
+  transform: translateX(-50%) scale(0);
+  
+  /* --- 修正：both を追加して、delay中も 0% の状態を維持させる --- */
+  animation: bubbleDrainCenter 5s ease-in-out infinite both;
+ }
+
+/* 各ポジションの位置 */
+
+.speech-bubble-top {
+  top: 55px;
+  left: 50%;
+ }
+.speech-bubble-leftup {
+  top: 150px;
+  left: 42%;
+ }
+.speech-bubble-leftdown {
+  top: 400px;
+  left: 42%;
+ }
+
+.speech-bubble-rightup {
+  top: 120px;
+  left: 58%;
+ }
+.speech-bubble-rightmiddle {
+  top: 250px;
+  left: 58%;
+ }
+.speech-bubble-rightdown {
+  top: 380px;
+  left: 58%;
+ }
+
+/* 各ポジションの「待ち時間（delay）」をズラす */
+.speech-bubble-top         { animation-delay: 0s; }
+.speech-bubble-leftup      { animation-delay: 0.8s; } /* 少し遅れて出る */
+.speech-bubble-rightdown   { animation-delay: 1.5s; } /* さらに遅れて出る */
+.speech-bubble-leftdown    { animation-delay: 2.3s; }
+.speech-bubble-rightup     { animation-delay: 3.0s; }
+.speech-bubble-rightmiddle { animation-delay: 3.8s; }
+
+/* --- 吹き出しアニメ設定 ------------- */
+
+/* 鼓動 */
+@keyframes bubblePulse {
+  0% { transform: rotate(var(--r, 0deg)) scale(1); }
+  50% { transform: rotate(var(--r, 0deg)) scale(1.05); }
+  100% { transform: rotate(var(--r, 0deg)) scale(1); }
+}
+
+/* 出入り */
+@keyframes bubbleDrainCenter {
+  0% {
+    /* 出る時：中央を維持したまま 0px から */
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+  }
+  10% {
+    /* 出きった：中央を維持したまま 100% のサイズ */
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  85% {
+    /* 滞在終わりまで中央をキープ */
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    /* 消える時：中央を維持したまま中心点（0px）へ凝縮 */
+    opacity: 1; 
+    transform: translateX(-50%) scale(0);
+  }
+}
+
+/* --- スマホ画面のスライダー -------------------------------- */
 
 .slider img {
   position: absolute;
@@ -355,6 +500,33 @@ footer > * {
     width: 100%;
   }
 
+  /* 吹き出し位置調整 */
+  .speech-bubble-top {
+    top: -2%;
+    left: 50%;
+  }
+  .speech-bubble-leftup {
+    top: 90px;
+    left: 8%;
+  }
+  .speech-bubble-leftdown {
+    top: 340px;
+    left: 8%;
+  }
+
+  .speech-bubble-rightup {
+    top: 60px;
+    left: 88%;
+  }
+  .speech-bubble-rightmiddle {
+    top: 190px;
+    left: 88%;
+  }
+  .speech-bubble-rightdown {
+    top: 320px;
+    left: 88%;
+  }
+
   .store-buttons img {
     width: 140px;
   }
@@ -384,6 +556,36 @@ footer > * {
   .phone-bg {
     transform: scale(0.7);
     margin: 10px auto;
+  }
+}
+
+/* --- スマホ全般 (640px以下) --- */
+@media screen and (max-width: 640px) {
+  /* 吹き出し位置調整 */
+  .speech-bubble-top {
+    top: 60px;
+    left: 50%;
+  }
+  .speech-bubble-leftup {
+    top: 150px;
+    left: 18%;
+  }
+  .speech-bubble-leftdown {
+    top: 400px;
+    left: 18%;
+  }
+
+  .speech-bubble-rightup {
+    top: 120px;
+    left: 80%;
+  }
+  .speech-bubble-rightmiddle {
+    top: 250px;
+    left: 80%;
+  }
+  .speech-bubble-rightdown {
+    top: 380px;
+    left: 80%;
   }
 }
 
