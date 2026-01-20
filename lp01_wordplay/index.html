@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wordplay｜6文字の単語を完成させるシンプルなパズルゲーム</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -20,8 +23,8 @@ CTA：今すぐ遊ぶ
   <div class="phone-bg">
     <div class="phone-mock">
       <div class="phone-screen">
-        <!-- ここにスクショ風の画像やダミーUI -->
-         <div class="slider">
+        <!-- スマホ画面のスライダー -->
+        <div class="slider">
           <img src="img/DummyScreen00.png" alt="Demo 1">
           <img src="img/DummyScreen01.png" alt="Demo 2">
           <img src="img/DummyScreen02.png" alt="Demo 3">
@@ -33,6 +36,14 @@ CTA：今すぐ遊ぶ
           <img src="img/DummyScreen08.png" alt="Demo 9">
         </div>
       </div>
+      
+      <!-- スマホ画面の吹き出し -->
+      <div class="speech-bubble-top"><img src="img/DemoBubble.png" alt="DemoBubble 1"></div>
+      <div class="speech-bubble-leftup"><img src="img/DemoBubble.png" alt="DemoBubble 2"></div>
+      <div class="speech-bubble-leftdown"><img src="img/DemoBubble.png" alt="DemoBubble 3"></div>
+      <div class="speech-bubble-rightup"><img src="img/DemoBubble.png" alt="DemoBubble 4"></div>
+      <div class="speech-bubble-rightmiddle"><img src="img/DemoBubble.png" alt="DemoBubble 5"></div>
+      <div class="speech-bubble-rightdown"><img src="img/DemoBubble.png" alt="DemoBubble 6"></div>
     </div>
   </div>
   <!-- ボタンエリア -->
@@ -59,7 +70,7 @@ CTA：今すぐ遊ぶ
       
       <!-- 進捗ステップ -->
       <div class="section-step-left">
-        <p>1/3</p>
+        <p><span class="pulse-number">1</span>/3</p>
       </div>
 
       <!-- テキスト側 -->
@@ -108,7 +119,7 @@ CTA：今すぐ遊ぶ
 
       <!-- 進捗ステップ -->
       <div class="section-step-right">
-        <p>2/3</p>
+        <p><span class="pulse-number">2</span>/3</p>
       </div>
 
     </div>
@@ -128,7 +139,7 @@ CTA：今すぐ遊ぶ
       
       <!-- 進捗ステップ -->
       <div class="section-step-left">
-        <p>3/3</p>
+        <p><span class="pulse-number">3</span>/3</p>
       </div>
 
       <!-- テキスト側 -->
