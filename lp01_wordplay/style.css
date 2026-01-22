@@ -68,7 +68,7 @@ footer > * {
 .section-step-left p,
 .section-step-right p {
   font-family: "Space Grotesk";
-  font-weight: 900;
+  font-weight: 700;
   font-size: 18rem; /* 適宜調整 */
   letter-spacing: -0.05em;
   color: transparent;              /* 中身を透明にする */
@@ -95,7 +95,7 @@ footer > * {
 
 @keyframes weightPulseStrict {
   0%, 100% {
-    font-weight: 900;
+    font-weight: 700;
     /* バリアブルフォントならこちらが確実 */
     font-variation-settings: "wght" 900;
   }
