@@ -70,7 +70,6 @@ footer > * {
   font-family: "Montserrat";
   font-weight: 700;
   font-size: 18rem; /* 適宜調整 */
-  letter-spacing: -0.05em;
   color: transparent;              /* 中身を透明にする */
   -webkit-text-stroke: 1px #ffffff; /* 縁の色と太さ */
   -moz-text-stroke: 1px #ffffff;    /* Firefox用（必要なら） */
@@ -97,7 +96,7 @@ footer > * {
   0%, 100% {
     font-weight: 700;
     /* バリアブルフォントならこちらが確実 */
-    font-variation-settings: "wght" 900;
+    font-variation-settings: "wght" 700;
   }
   50% {
     font-weight: 100;
@@ -281,17 +280,20 @@ footer > * {
 /* --- 背景文字h1(背景のデカ文字) ----------------------------------------- */
 
 .hero-title {
-    position: fixed; /* 背景に固定 */
-    top: 50%;
-    left: -2%;
-    transform: translate(0%, -50%); /* 中央に配置 */
-    font-size: 26vw; /* ディスプレイ幅に応じた大きな文字サイズ */
-    font-family: 'Space Mono', monospace;
-    color: #000; /* 薄い色で背景らしく */
-    z-index: -1; /* 他のコンテンツの下に配置 */
-    pointer-events: none; /* テキスト上のクリックイベントを無効化し、下のコンテンツを操作可能にする */
-    white-space: nowrap; /* テキストの折り返しを防ぐ */
+  position: fixed;
+  top: 50%;
+  left: -2%;
+  transform: translateY(-50%);
+  font-size: 24vw;
+  font-family: "Wintyr VF";
+  letter-spacing: -0.05em;
+  color: #000;
+  z-index: -1;
+  pointer-events: none;
+  white-space: nowrap;
+  will-change: transform;
 }
+
 
 /* --- スマホ画面 ------------------------------------------------------------- */
 
