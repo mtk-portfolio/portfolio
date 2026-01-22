@@ -280,17 +280,29 @@ footer > * {
 /* --- 背景文字h1(背景のデカ文字) ----------------------------------------- */
 
 .hero-title {
-    position: fixed; /* 背景に固定 */
+    position: fixed;
     top: 50%;
-    left: -2%;
-    transform: translate(0%, -50%); /* 中央に配置 */
-    font-size: clamp(80px, 22vw, 1000px); /* ディスプレイ幅に応じた大きな文字サイズ */
-    font-family: "Space Grotesk";
-    color: #000; /* 薄い色で背景らしく */
-    z-index: -1; /* 他のコンテンツの下に配置 */
-    pointer-events: none; /* テキスト上のクリックイベントを無効化し、下のコンテンツを操作可能にする */
-    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    
+    /* 親の 960px の中での 50% ではなく、画面幅の 50% を指定 */
+    left: 50vw; 
+    
+    /* 自分の幅の半分だけ戻す（これで画面の絶対中央） */
+    transform: translate(-50%, -50%); 
+
+    /* 左右にはみ出させるために、画面幅より大きくする */
+    width: 110vw; 
+    text-align: center;
+    
+    font-size: 22vw;
+    font-family: "Space Grotesk", sans-serif;
+    color: #000;
+    white-space: nowrap;
+    
+    /* 親の max-width や margin の影響を物理的に遮断する */
+    margin: 0 !important;
+    max-width: none !important;
 }
+
 
 /* --- スマホ画面 ------------------------------------------------------------- */
 
