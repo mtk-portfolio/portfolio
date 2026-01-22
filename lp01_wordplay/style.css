@@ -675,15 +675,15 @@ footer > * {
 /* 前面コンテンツ：z-indexを背景より高くする */
 .flyer-overlay {
   display: flex;
-  justify-content: center; /* 中央に寄せる */
-  align-items: flex-start; /* 上揃え */
-  gap: 40px;               /* 左右の間隔 */
-  width: 100%;
-  max-width: 1000px;       /* 広がりすぎないように制限 */
-  margin: 0 auto;          /* 画面中央に配置 */
-  padding: 40px 20px;
-  position: relative; /* 重ねる */
-  z-index: 1;/* 背景の 0 より大きくする */
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  width: 90vw; /* 背景と同じ幅にする */
+  max-width: none; 
+  padding: 60px; /* 背景の角丸にぶつからないよう、内側に余白を作る */
+  box-sizing: border-box; 
+  position: relative;
+  z-index: 1;
 }
 
 .flyer-overlay h2 {
