@@ -284,9 +284,8 @@ footer > * {
   top: 50%;
   left: -2%;
   transform: translateY(-50%);
-  font-size: 24vw;
-  font-family: "Wintyr VF";
-  letter-spacing: -0.05em;
+  font-size: 26vw;
+  font-family: 'Space Mono', monospace;
   color: #000;
   z-index: -1;
   pointer-events: none;
