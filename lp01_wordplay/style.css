@@ -1,12 +1,3 @@
-/* --- フォント ----------------------------------------------------------------------------------------------------- */
-
-@font-face {
-  font-family: "Wintyr VF";
-  src: url("https://cdn.jsdelivr.net/gh/your-repo/fonts/WintyrVF.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-}
-
 /* --- 全体 --------------------------------------------------------------------------------------------------------- */
 
 body {
@@ -294,7 +285,7 @@ footer > * {
     left: -2%;
     transform: translate(0%, -50%); /* 中央に配置 */
     font-size: clamp(80px, 22vw, 1000px); /* ディスプレイ幅に応じた大きな文字サイズ */
-    font-family: "Wintyr VF";
+    font-family: "Space Grotesk";
     color: #000; /* 薄い色で背景らしく */
     z-index: -1; /* 他のコンテンツの下に配置 */
     pointer-events: none; /* テキスト上のクリックイベントを無効化し、下のコンテンツを操作可能にする */
