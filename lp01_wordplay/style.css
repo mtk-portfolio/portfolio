@@ -71,9 +71,9 @@ footer > * {
   font-weight: 900;
   font-size: 18rem; /* 適宜調整 */
   letter-spacing: -0.05em;
-  /* 文字をくり抜く */
-  color: transparent;                 /* 中の色を透明にする */
-  -webkit-text-stroke: 2px #ffffff;   /* フチの色と太さを指定（白の場合） */
+  color: transparent;              /* 中身を透明にする */
+  -webkit-text-stroke: 1px #ffffff; /* 縁の色と太さ */
+  -moz-text-stroke: 1px #ffffff;    /* Firefox用（必要なら） */
 }
 
 /* --- 文字アニメ -------------------------------------- */
