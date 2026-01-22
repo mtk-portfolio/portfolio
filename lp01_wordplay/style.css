@@ -695,7 +695,7 @@ footer > * {
 }
 
 .flyer-overlay p {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   color: #ffd445;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
