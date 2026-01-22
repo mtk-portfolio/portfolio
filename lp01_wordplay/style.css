@@ -67,7 +67,7 @@ footer > * {
 
 .section-step-left p,
 .section-step-right p {
-  font-family: "Inter var";
+  font-family: "Montserrat";
   font-weight: 700;
   font-size: 18rem; /* 適宜調整 */
   letter-spacing: -0.05em;
@@ -88,7 +88,7 @@ footer > * {
 }
 
 .pulse-number {
-  font-family: "Inter var"; 
+  font-family: "Montserrat"; 
   justify-self: center; /* 1.2chの幅の「真ん中」に居座る */
   animation: weightPulseStrict 2s ease-in-out infinite;
 }
