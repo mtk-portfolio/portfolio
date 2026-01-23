@@ -281,6 +281,7 @@ footer > * {
 
 .hero-title {
     position: fixed;
+    z-index: -1;/* 最下面へ */
     top: 50%;
     
     /* 親の 960px の中での 50% ではなく、画面幅の 50% を指定 */
@@ -301,6 +302,13 @@ footer > * {
     /* 親の max-width や margin の影響を物理的に遮断する */
     margin: 0 !important;
     max-width: none !important;
+}
+
+/* タブレット・スマホ用（1024px以下） */
+@media screen and (max-width: 1024px) {
+    .hero-title {
+        font-size: 25vw; 
+    }
 }
 
 
