@@ -17,8 +17,8 @@
 説明文
 CTA：今すぐ遊ぶ
   -->
-<header class="hero">
-  <h1 class="hero-title">wordplay</h1> <!-- 背景文字 -->
+<h1 class="hero-title">wordplay</h1> <!-- 背景文字 -->
+<header class="hero fade-in-target">
   <!-- スマホ型エリア -->
   <div class="phone-bg">
     <div class="phone-mock">
@@ -75,7 +75,7 @@ CTA：今すぐ遊ぶ
 
       <!-- テキスト側 -->
       <div class="section-desc-wrap">
-        <div class="section-desc-black">
+        <div class="section-desc-black reveal-swing-left">
           <img src="img/DummyScreen01.png" alt="Download on the App Store">
           <div class="text-area-black">
           <h2>ゲーム概要</h2>
@@ -107,7 +107,7 @@ CTA：今すぐ遊ぶ
       
       <!-- テキスト側 -->
       <div class="section-desc-wrap">
-        <div class="section-desc-white">
+        <div class="section-desc-white reveal-swing-right">
           <img src="img/DummyScreen04.png" alt="Download on the App Store">
           <div class="text-area-white">
             <h2>遊び方</h2>
@@ -144,7 +144,7 @@ CTA：今すぐ遊ぶ
 
       <!-- テキスト側 -->
       <div class="section-desc-wrap">
-        <div class="section-desc-black">
+        <div class="section-desc-black reveal-swing-left">
           <img src="img/DummyScreen08.png" alt="Download on the App Store">
           <div class="text-area-black">
           <h2>Wordplayとは</h2>
@@ -165,20 +165,19 @@ CTA：今すぐ遊ぶ
 
 <!-- 追加情報-->
 <section class="also">
-  <h2>追加情報</h2>
+  <h2 class="reveal">追加情報</h2>
   <div class="also-container">
-    <img src="img/DummyMessageR.png" alt="追加情報1">
-    <img src="img/DummyMessageL.png" alt="追加情報2">
-    <img src="img/DummyMessageR.png" alt="追加情報3">
-    <img src="img/DummyMessageL.png" alt="追加情報4">
-    <img src="img/DummyMessageR.png" alt="追加情報5">
+    <div class="reveal"><img src="img/DummyMessageR.png" alt="追加情報1"></div>
+    <div class="reveal"><img src="img/DummyMessageL.png" alt="追加情報2"></div>
+    <div class="reveal"><img src="img/DummyMessageR.png" alt="追加情報3"></div>
+    <div class="reveal"><img src="img/DummyMessageL.png" alt="追加情報4"></div>
+    <div class="reveal"><img src="img/DummyMessageR.png" alt="追加情報5"></div>
   </div>
 </section>
 
 <!-- フライヤー -->
 <section class="flyer-section">
   <div class="flyer-background"></div>
-  
   <div class="flyer-overlay">
     <div class="flyer-text-free">
       <h2>基本無料</h3>
@@ -217,5 +216,72 @@ Wordplay
   </div>
 </footer>
 
+<script>
+  // --- ホバーアニメ ----------------------------------------------------------------------------------
+  
+  // 全てのターゲット要素を取得
+  const tiltCards = document.querySelectorAll('.section-desc-black, .section-desc-white');
+  
+  tiltCards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const width = rect.width;
+      const height = rect.height;
+      
+      // 手前に吸い付く計算（反転設定）
+      const xRotation = ((y - height / 2) / height) * -20; 
+      const yRotation = ((x - width / 2) / width) * 20;
+      
+      card.style.setProperty('--rx', `${xRotation}deg`);
+      card.style.setProperty('--ry', `${yRotation}deg`);
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      // 離れたらそのカードの角度をリセット
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+
+  // --- 振子表示アニメ ----------------------------------------------------------------------------------
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 画面に入ったら「show」クラスを付ける（これでアニメが発動する）
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 }); // 20%見えたら発動
+
+    // 「reveal」で始まるクラスを全部まとめて監視！
+    document.querySelectorAll('[class*="reveal"]').forEach(el => observer.observe(el));
+  });
+
+  // --- 遅延表示アニメ ----------------------------------------------------------------------------------
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // 要素が画面に入ったら
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show'); // クラスを付与
+          // 一度表示したら監視を止める場合（初見時のみにする）
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1 // 10% くらい見えたら実行
+    });
+
+    // 「reveal」クラスがついた要素をすべて監視対象にする
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>
