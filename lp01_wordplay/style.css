@@ -30,6 +30,110 @@ footer > * {
   }
 }
 
+/* --- アニメ共通 ---------------------------------------------------------------------------------------------------- */
+
+/* --- header用アニメ ------------------------------------------------ */
+
+/* 1. アニメーションの「動き」を定義 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;                  /* 最初は透明 */
+    transform: translateY(30px); /* 30px 下に下げておく */
+  }
+  to {
+    opacity: 1;                  /* 最終的に不透明 */
+    transform: translateY(0);    /* 元の位置に戻る */
+  }
+}
+
+/* 2. アニメーションを適用する設定 */
+.fade-in-target {
+  /* 名前、時間、動き方、最後にその場に留まる設定 */
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* --- 振子表示アニメ ------------------------------------------------ */
+
+/* 左振子 */
+
+/* 1. 振り子の動きを定義 */
+@keyframes swing-in-left {
+  0% {
+    transform: rotate(20deg); /* 真横（右）まで持ち上がった状態 */
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(-10deg); /* 行き過ぎて左まで振れる */
+  }
+  70% {
+    transform: rotate(5deg);  /* 少し右に戻る */
+  }
+  100% {
+    transform: rotate(0deg);   /* 真下で止まる */
+    opacity: 1;
+  }
+}
+
+/* 2. 監視用クラスの設定 */
+.reveal-swing-left {
+  opacity: 0;
+  /* 支点を「上部中央」に設定（ここが吊られている点になる） */
+  transform-origin: center top;
+}
+
+/* 3. JSで.showがついた瞬間に実行 */
+.reveal-swing-left.show {
+  animation: swing-in-left 1.2s ease-out forwards;
+}
+
+
+/* 右振子 */
+
+/* 1. 振り子の動きを定義 */
+@keyframes swing-in-right {
+  0% {
+    transform: rotate(-20deg); /* 真横（左）まで持ち上がった状態 */
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(-10deg); /* 行き過ぎて左まで振れる */
+  }
+  70% {
+    transform: rotate(5deg);  /* 少し右に戻る */
+  }
+  100% {
+    transform: rotate(0deg);   /* 真下で止まる */
+    opacity: 1;
+  }
+}
+
+/* 2. 監視用クラスの設定 */
+.reveal-swing-right {
+  opacity: 0;
+  /* 支点を「上部中央」に設定（ここが吊られている点になる） */
+  transform-origin: center top;
+}
+
+/* 3. JSで.showがついた瞬間に実行 */
+.reveal-swing-right.show {
+  animation: swing-in-right 1.2s ease-out forwards;
+}
+
+/* --- 遅延表示アニメ ------------------------------------------------ */
+
+/* 最初は透明で、少し下に下げておく（待機状態） */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* このクラスがJSで追加された瞬間に、元の位置に戻って表示される */
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* --- section共通 --------------------------------------------------------------------------------------------------- */
 
 /* セクションの範囲 */
@@ -131,6 +235,32 @@ footer > * {
   max-height: 350px;
 }
 
+/* --- ホバーで画像拡大 ------------------------ */
+
+/* 親要素（カード全体）の設定 */
+.section-desc-black,
+.section-desc-white {
+  transform-style: preserve-3d;
+}
+
+/* 画像自体の設定 */
+.section-desc-black img,
+.section-desc-white img {
+  transition: transform 0.3s ease-out;
+  /* Z軸の重なり順で、画像が隠れないように少しだけ浮かせておくと綺麗です */
+  transform: translateZ(1px); 
+  pointer-events: auto; /* 画像へのマウス反応を許可 */
+}
+
+/* 画像に直接マウスが乗った時だけ拡大＋浮上 */
+.section-desc-black img:hover,
+.section-desc-white img:hover {
+  transform: scale(1.10) translateZ(30px);
+  cursor: pointer;
+}
+
+/* --- 枠の共通設定 --------------------------- */
+
 /* 説明の枠共通（背景色以外） */
 .section-desc-black,
 .section-desc-white {
@@ -155,6 +285,16 @@ footer > * {
   font-size: calc(10px + .3vw);
   font-family: "Hiragino Maru Gothic ProN", "Kosugi Maru", sans-serif;
   font-style: italic;
+}
+
+/* ホバーアニメ（JavaScriptで指定） */
+.section-desc-black,
+.section-desc-white {
+  /* --- 3D傾斜のための設定 --- */
+  perspective: 900px; /* 奥行き感（数値が小さいほど激しく傾く） */
+  transition: transform 0.2s ease-out; /* 戻る時の滑らかさ */
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
 }
 
 /* --- 黒背景 -------------------------------------- */
@@ -260,7 +400,6 @@ footer > * {
   }
 }
 
-
 @media (max-width: 640px) {
   .section-step-left p,
   .section-step-right p {
@@ -310,7 +449,6 @@ footer > * {
         font-size: 25vw; 
     }
 }
-
 
 /* --- スマホ画面 ------------------------------------------------------------- */
 
@@ -363,8 +501,20 @@ footer > * {
   height: auto;
   display: block; /* 余計な隙間を消す */
   margin: 0 auto; /* 念のため中央寄せ */
-  animation: bubblePulse 1s ease-in-out infinite;
+  animation: bubblePulse 1s ease-in-out infinite;/* 鼓動アニメ呼び出し */
 }
+
+/* 吹き出し画像ホバー時の共通設定 */
+.speech-bubble-top:hover img,
+.speech-bubble-leftup:hover img,
+.speech-bubble-leftdown:hover img,
+.speech-bubble-rightup:hover img,
+.speech-bubble-rightmiddle:hover img,
+.speech-bubble-rightdown:hover img {
+  width: 140px;
+  animation-play-state: paused !important;/* アニメを一時停止させる */
+}
+
 
 /* 吹き出し画像の傾斜 */
 .speech-bubble-leftup img { --r: -10deg;}/* 左に10° */
@@ -383,7 +533,7 @@ footer > * {
   position: absolute;  /* スマホ枠を基準に自由に動かす */
   transform: translateX(-50%); /* 自身の幅の半分戻して、完全に中央揃え */
   z-index: 100;        /* スマホ(z-index:1)より大きい数字で手前に出す */
-  pointer-events: none; /* 下にある画面の操作を邪魔しない */
+  pointer-events: auto;
   
   /* --- 追加：読み込み時に「無」の状態にする指定 --- */
   opacity: 0;
@@ -396,7 +546,7 @@ footer > * {
 /* 各ポジションの位置 */
 
 .speech-bubble-top {
-  top: 55px;
+  top: 50px;
   left: 50%;
  }
 .speech-bubble-leftup {
@@ -651,6 +801,13 @@ footer > * {
 
 .also img{
   border-radius: 999px;
+  transform: rotate(var(--r, 0deg));/* 傾斜のための基準値 */
+  transition: transform 0.3s ease;/* 動きを滑らかにする */
+}
+
+.also img:hover {
+  --r: -10deg;/* 基準に対しての傾き値 */
+  transform: rotate(var(--r));/* 傾斜アニメの発動命令 */
 }
 
 @media (max-width: 1024px) {
@@ -670,6 +827,7 @@ footer > * {
   align-items: center;
   justify-content: center;
   padding: 0;
+  overflow: visible !important;
 }
 
 /* 親の 960px を無視する */
@@ -687,8 +845,12 @@ footer > * {
   background-size: cover;
   background-position: center;
   border-radius: 60px;
-  transition: filter 0.5s ease, transform 0.5s ease;/* 変化を滑らかにする設定 */
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;/* 変化を滑らかにする設定 */
   z-index: 0;
+}
+
+.flyer-background:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
 }
 
 /* 前面コンテンツ：z-indexを背景より高くする */
@@ -771,6 +933,11 @@ footer > * {
   border: 2px solid #000;
   border-radius: 40px;
   padding: 14px 24px;
+  transition: all 0.3s ease-out;
+}
+
+.cta a:hover {
+  font-size: calc(20px + 0.5vw);
 }
 
 /* --- footer ------------------------------------------------------------------------------------------------------- */
