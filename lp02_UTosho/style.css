@@ -1,0 +1,671 @@
+/* =================================================================================================================================
+   リセットCSS (ブラウザの余計な余白を消す)
+   ================================================================================================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* =================================================================================================================================
+   東照大学のブランドカラー
+   =================================================================================================================================
+   --葵紺・メインカラー：#001f3f
+   --黄金・アクセントカラー：#c9a063
+   --本文・テキストカラー：#333333
+   --薄灰・背景用カラー：#f8f9fa
+
+/* =================================================================================================================================
+   メイン
+   ================================================================================================================================= */
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  color: #333;
+  background-color: #001f3f; /* 東照ブルー背景 */
+  line-height: 1.6;
+}
+
+/* 明朝体（タイトル・キャッチコピー用） */
+.serif {
+  font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "MS PMincho", serif;
+}
+
+/* =================================================================================================================================
+   ヘッダ
+   ================================================================================================================================= */
+
+/* --- ナビゲーションナビ（上部） -------------------------------------------------------------------------------------------------- */
+
+.header-top {
+  background-color: #19448E;
+  padding: 8px 5%;
+  display: flex;
+  justify-content: flex-end; /* 右寄せ */
+}
+
+.header-nav a {
+  color: #fff;
+  font-size: 0.75rem;
+  font-family: "メイリオ", Meiryo, sans-serif;
+}
+
+.header-nav a:hover {
+  text-decoration: underline;
+}
+
+.header-nav ul {
+  display: flex;
+  gap: 20px;
+  font-size: 0.75rem;
+}
+
+/* レスポンシブ */
+@media (max-width: 680px) {
+  .header-top {
+    display: none;
+  }
+}
+
+/* --- メインナビ（中部） ---------------------------------------------------------------------------------------------------------- */
+
+/* 中段：ロゴ & 検索・基金ナビ */
+.header-main {
+  background-color: #001f3f;
+  display: flex;
+  justify-content: space-between; /* ロゴとナビを左右に振る */
+  align-items: center;           /* 上下中央揃え */
+  padding: 20px 5%;
+}
+
+.logo-img {
+  height: 65px; /* ロゴの大きさ調整 */
+  width: auto;
+}
+
+/* 検索・基金ナビ全体の並び */
+.search-nav ul {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* サイト内検索フォーム */
+.search-box form {
+  display: flex;
+  align-items: center; /* 中身を上下中央に */
+  border: 1px solid #001f3f;
+  border-radius: 24px; /* ボタンの角丸と合わせる */
+  background: #f9f9f9;
+  overflow: hidden;    /* ボタンの角丸が枠からはみ出さないように */
+  padding: 0;          /* ★ここを0にするのがポイント！ */
+}
+
+.search-input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 0.9em;
+  width: 150px;
+  padding-left: 15px; /* 枠の左側に余白を作る */
+  flex-grow: 1;       /* 入力欄を可能な限り広げる */
+}
+
+.search-btn {
+  border: none;
+  background: #007bbb;
+  color: #fff;
+  cursor: pointer;
+  padding: 15px; /* ★ここの上下パディングで全体の高さを決める */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+/* 虫眼鏡自体の色を変えたい場合はここ */
+.search-btn i {
+  color: #ffffff; 
+}
+
+/* 教員検索・基金ボタンの装飾 */
+.nav-btn a {
+  display: block;
+  font-size: 0.9em;
+  color: #fff;
+  background-color: #007bbb;
+  border: 1px solid #007bbb;
+  border-radius: 24px;
+  padding: 8px 13px;
+}
+
+.nav-btn a:hover {
+  opacity: 0.5;
+}
+
+.fund-btn a {
+  color: #007bbb;
+  background-color: #001f3f; /* 東照ゴールド */
+}
+
+.translation-btn {
+  display: none;
+}
+
+/* レスポンシブ */
+@media (max-width: 940px) {
+.header-main {
+    flex-direction: column; /* 縦並びにする */
+    align-items: center;    /* 中央に寄せる */
+    gap: 20px;              /* ロゴと検索ナビの間の余白 */
+  }
+
+  /* ロゴの大きさを少し調整（必要であれば） */
+  .logo-img {
+    max-width: 220px;
+    height: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .logo-img {
+    max-width: 140px;
+    height: auto;
+  }
+  .search-nav {
+    display: none;
+  }
+  .translation-btn {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #f7c114;
+    text-align: center;
+  }
+  .translation-btn p {
+    font-size: 1em;
+    line-height:1.1em;
+    margin: 0;
+    padding: 0;
+  }
+  .translation-btn a {
+    font-size: 0.8em;
+  }
+  .translation-btn a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* --- ヘッダーメニュー（下部） ---------------------------------------------------------------------------------------------------- */
+
+/* --- スイッチ制御 --------------------------------------------------- */
+
+/* 最初は両方のナビを隠しておく */
+.nav-home, .nav-focus {
+  display: none;
+}
+
+/* HOMEスイッチがONの時、HOME用ナビを出す */
+#switch-home:checked ~ .nav-home {
+  display: block;
+}
+
+/* FOCUSスイッチがONの時、FOCUS用ナビを出す */
+#switch-focus:checked ~ .nav-focus {
+  display: block;
+}
+
+/* スイッチ自体は邪魔なので隠す */
+input[type="radio"] {
+  display: none;
+}
+
+/* --- スイッチボタン --------------------------------------------------- */
+
+/* 親要素：高さを決めて、はみ出しを隠す */
+.tab-labels {
+  display: flex;
+  width: 100%;
+  height: 45px;      /* タブの高さ */
+  border-bottom: #333 1px solid;
+  position: relative;
+}
+
+/* ラベル共通：重なりを作るために absolute にする */
+.tab-labels label {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9em;
+  box-sizing: border-box; /* 基本はこれ */
+  transition: width 0.4s ease, height 0.2s ease, margin-top 0.2s ease;
+}
+
+/* --- HOMEボタン（左側・青） --- */
+.home-btn {
+  left: 0;
+  background-color: #005bac; /* 本家風の青 */
+  color: #fff;
+  width: 30%;
+  /* 右側を斜めに削る：右上の角を(100% 0)にし、右下の角を(92% 100%)にする */
+  clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+/* --- FOCUSボタン（右側・黄） --- */
+.focus-btn {
+  right: 0;
+  background-color: #fbc02d; /* 本家風の黄色 */
+  color: #333;
+  width: 30%;
+  /* 左側を斜めに削る：左上(0,0)から右下(100,100)へ向かう斜線 */
+  clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 0;
+}
+
+/* --- ★スイッチ制御：チェックされた方を手前に持ってくる --- */
+#switch-home:checked ~ .tab-labels .home-btn {
+  width: 80%;
+  z-index: 2; /* HOMEが上 */
+  height: 50px;           /* 非アクティブ時より5px高く（例） */
+  margin-top: -5px;       /* 高くなった分、上に突き出させる */
+  border-top: 3px solid #005bac; /* 本家風の明るい青のアクセント線 */
+}
+
+#switch-focus:checked ~ .tab-labels .focus-btn {
+  width: 80%;
+  z-index: 2; /* FOCUSが上 */
+  height: 50px;
+  margin-top: -5px;
+  border-top: 3px solid #ffeb3b; /* フォーカス用のアクセント線 */
+}
+
+/* ラジオボタン本体は隠しておく */
+input[name="nav-switch"] {
+  display: none;
+}
+
+/* --- HOMEボタン（左側）：非アクティブ時に「左」を指す --- */
+.home-btn::before {
+  font-family: "Font Awesome 6 Free";
+  content: "\f0d9";
+  font-weight: 900;
+  margin-right: 8px;
+  display: none;
+}
+
+/* FOCUSがアクティブな時、HOME（左）は左を指す◀を出す */
+#switch-focus:checked ~ .tab-labels .home-btn::before {
+  display: inline-block;
+}
+
+/* --- FOCUSボタン（右側）：非アクティブ時に「右」を指す --- */
+.focus-btn::after {
+  font-family: "Font Awesome 6 Free";
+  content: "\f0da";
+  font-weight: 900;
+  margin-left: 8px;
+  display: none;
+}
+
+/* HOMEがアクティブな時、FOCUS（右）は右を指す▶を出す */
+#switch-home:checked ~ .tab-labels .focus-btn::after {
+  display: inline-block;
+}
+
+/* レスポンシブ */
+@media (max-width: 680px) {
+  .menu-switcher {
+    display: none;
+  }
+}
+
+/* --- ラベル --------------------------------------------------- */
+
+/* --- 1. メニュー全体の共通設定 --- */
+.main-nav ul {
+  display: flex;        /* 横並びの要 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.main-nav li {
+  flex: 1;              /* 幅を均等に分ける */
+  text-align: center;
+  background-color: #005bac; /* デフォルトはHOMEの青 */
+  color: #fff;
+  padding: 15px 0;
+  font-size: 0.9em;
+  border-right: 1px solid #164a84;
+  cursor: pointer;
+}
+
+.main-nav li:last-child {
+  border-right: none;   /* 最後の縦線を消す */
+}
+
+/* --- 2. 切り替えの制御（ここが重要！） --- */
+
+/* 初期状態：両方のナビを隠す */
+.nav-home, .nav-focus {
+  display: none;
+}
+
+/* HOMEがチェックされた時：nav-homeを表示 */
+#switch-home:checked ~ .nav-home {
+  display: block;
+}
+
+/* FOCUSがチェックされた時：nav-focusを表示 & 背景を黄色に */
+#switch-focus:checked ~ .nav-focus {
+  display: block;
+}
+
+#switch-focus:checked ~ .nav-focus li {
+  background-color: #fbc02d; /* FOCUS用の色 */
+  color: #333;               /* 文字を読みやすく黒系に */
+  border-right: 1px solid #c89932; /* 線の色も調整 */
+}
+
+/* =================================================================================================================================
+   メインビジュアル (Hero Section)
+   ================================================================================================================================= */
+.hero {
+  width: 100%;
+  height: 60vh; /* 画面の6割程度の高さ */
+  background-color: #ccc; /* 画像がない時のダミー */
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('img/UTosho01.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+  color: #fff;
+}
+
+.catchphrase {
+  font-family: "Yu Mincho", serif;
+  font-size: 3rem;
+  line-height: 1.4;
+  letter-spacing: 0.15em;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+/* レスポンシブ */
+@media (max-width: 680px) {
+  .catchphrase {
+    font-size: 1.6rem;
+  }
+}
+
+/* =================================================================================================================================
+   情報掲載セクション
+   ================================================================================================================================= */
+
+/* --- お知らせ ------------------------------------------------------------------------------------------------------------------- */
+
+.notices {
+  background-color: #ddd; /* 薄灰背景 */
+  padding: 40px 10%;
+}
+
+/* --- フォーカス ------------------------------------------------------------------------------------------------------------------- */
+
+.focus {
+  background-color: #f8f9fa; /* 薄灰背景 */
+  padding: 40px 10%;
+}
+
+/* --- ハイライト ------------------------------------------------------------------------------------------------------------------- */
+
+.highlights {
+  background-color: #ddd; /* 薄灰背景 */
+  padding: 40px 10%;
+}
+
+/* --- メディア --------------------------------------------------------------------------------------------------------------------- */
+
+.media {
+  color: #fff;
+  background-color: #333; /* 薄灰背景 */
+  padding: 40px 10%;
+}
+
+/* --- インタビュー ----------------------------------------------------------------------------------------------------------------- */
+
+.initiatives {
+  background-color: #f8f9fa; /* 薄灰背景 */
+  padding: 40px 10%;
+}
+
+/* --- アップデート ----------------------------------------------------------------------------------------------------------------- */
+
+.updates {
+  background-color: #ddd; /* 薄灰背景 */
+  padding: 40px 10%;
+}
+
+/* --- フッター情報 ------------------------------------------------------------------------------------------------------------------- */
+
+.other {
+  background-color: #f8f9fa; /* 薄灰背景 */
+  padding: 40px 10%;
+}
+
+/* =================================================================================================================================
+   SNSボタン
+   ================================================================================================================================= */
+
+.social-link {
+  margin-bottom: 10px;
+}
+
+.social-link ul {
+  display: flex;
+  align-items: center;
+  background-color: #ccc;
+  gap: 10px;
+  border-bottom: 5px solid #c89932;
+  padding: 8px 5vw;
+}
+
+.social-link a {
+  /* inline-block をやめて flex にする */
+  display: inline-flex;
+  align-items: center;    /* これで縦方向を強制中央 */
+  justify-content: center; /* 横方向も中央 */
+  
+  background-color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0 5px 0 0;
+  
+  /* 高さを明示的に指定するとズレにくくなります */
+  height: 2em;
+  width: 2em;
+  line-height: 1; /* 余計な行間を排除 */
+}
+
+/* SNSアイコン */
+.fb {color: #1877F2;}
+.x {color: #000;}
+.youtube {color: #f00; padding: 2px 8px !important;}
+.linkedin {color: #0A66C2;}
+/* インスタのアイコン側 */
+.instagram i {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285ae3 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  
+  /* inline-block だとズレる原因になるので、flexの子要素として振る舞わせる */
+  display: block; 
+}
+
+.social-media {
+  font-size: 0.9em !important;
+  background-color: transparent !important;
+  width: auto !important;
+}
+
+.social-media:hover span{
+  text-decoration: underline;
+}
+
+.social-media i {
+  color: #c89932 !important;
+  margin-right: 3px;
+}
+
+/* レスポンシブ */
+@media (max-width: 680px) {
+  .social-link ul {
+    border: none;
+    justify-content: center;
+    padding: auto;
+  }
+  .social-link a {
+    font-size: 80%;
+  }
+  .social-media {
+    font-size: 0.5em !important;
+  }
+}
+
+/* =================================================================================================================================
+   フッター
+   ================================================================================================================================= */
+
+footer {
+  color: #f7c114;
+  font-size: 13px;
+  padding: 0 3vw 20px;
+}
+
+/* --- リンク ---------------------------------------------------------------------------------------------------------------------- */
+
+/* ロゴ */
+.footer-logo-img {
+  height: 60px; /* ロゴの大きさ調整 */
+  width: auto;
+  margin: 20px 1vw;
+}
+
+.footer-links {
+  font-size: 1.3em;
+  font-family: "メイリオ", Meiryo, sans-serif;
+  padding: 10px 1.5vw;
+  max-width: 50%;
+}
+
+.footer-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 30px;
+  margin-bottom: 5px;
+}
+
+.footer-links a {
+  color: #f7c114;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* リスト項目に相対位置を指定 */
+.footer-links li {
+  position: relative;
+  padding-left: 15px; /* アイコンが入るスペースを確保 */
+}
+
+/* 擬似要素でアイコンを表示 */
+.footer-links li::before {
+  content: "\f0da"; /* Font Awesome の 'caret-right' のコード */
+  font-family: "Font Awesome 6 Free"; /* バージョンに合わせて指定 */
+  font-weight: 900; /* アイコンを正しく表示するために必須 */
+  color: #f7c114;  /* 黄金色にしてアクセントにする */
+  font-size: 10px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%); /* 上下中央揃え */
+}
+
+/* --- 災害情報---------------------------------------------------------------------------------------------------------------------- */
+
+.disaster-info {
+  padding: 10px 1.5vw;
+  margin-bottom: 10px;
+}
+
+.disaster-info a{
+  display: inline-block;
+  font-size: 1em;
+  color: #fff;
+  background-color: #007bbb; /* 警告色の黄色背景 */
+  padding: 10px 20px;
+  border-radius: 24px;
+}
+
+.disaster-info a:hover {
+  text-decoration: underline;
+}
+
+/* --- コピーライト------------------------------------------------------------------------------------------------------------------ */
+
+.footer-bottom {
+  display: block;
+  padding: 10px 1.5vw;
+}
+
+.footer-info p {
+  line-height: 1.8;
+}
+
+.footer-info a {
+  color: #f7c114;
+  text-decoration: underline;
+}
+
+/* --- レスポンシブ------------------------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 680px) {
+  .footer-logo-img {
+    max-width: 140px;
+    height: auto;
+    margin: 20px auto;
+  }
+  .footer-links {
+    font-size: 90%;
+    max-width: 100%;
+  }
+  .disaster-info {
+    text-align: center;
+  }
+  .footer-bottom {
+    text-align: center;
+  }
+}
