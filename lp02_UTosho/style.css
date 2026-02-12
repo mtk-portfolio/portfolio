@@ -89,7 +89,8 @@ body {
   display: flex;
   justify-content: space-between; /* ロゴとナビを左右に振る */
   align-items: center;           /* 上下中央揃え */
-  padding: 20px 5%;
+  padding: 20px 10%;
+  z-index: 1100;
 }
 
 .logo-img {
@@ -183,8 +184,11 @@ body {
 }
 
 @media (max-width: 680px) {
+  .header-main {
+    padding: 15px 10%;
+  }
   .logo-img {
-    max-width: 140px;
+    max-width: 130px;
     height: auto;
   }
   .search-nav {
@@ -193,7 +197,7 @@ body {
   .translation-btn {
     display: inline-block;
     position: absolute;
-    top: 20px;
+    top: 15px;
     right: 20px;
     color: #f7c114;
     text-align: center;
@@ -297,7 +301,7 @@ input[type="radio"] {
   z-index: 2; /* FOCUSが上 */
   height: 50px;
   margin-top: -5px;
-  border-top: 3px solid #ffeb3b; /* フォーカス用のアクセント線 */
+  border-top: 3px solid #fbc02d; /* フォーカス用のアクセント線 */
 }
 
 /* ラジオボタン本体は隠しておく */
@@ -333,16 +337,52 @@ input[name="nav-switch"] {
   display: inline-block;
 }
 
-/* レスポンシブ */
-@media (max-width: 680px) {
-  .menu-switcher {
-    display: none;
-  }
+/* タブレット幅 */
+@media (max-width: 940px) {
+.home-btn,
+.focus-btn {
+  width: 40%;
+}
+/* --- ★スイッチ制御：チェックされた方を手前に持ってくる --- */
+#switch-home:checked ~ .tab-labels .home-btn,
+#switch-focus:checked ~ .tab-labels .focus-btn {
+  width: 70%;
+}
 }
 
 /* --- ラベル --------------------------------------------------- */
 
-/* --- 1. メニュー全体の共通設定 --- */
+/* --- タブ切り替えの制御 --- */
+
+/* 初期状態：両方のナビを隠す */
+.nav-home, .nav-focus {
+  display: none;
+}
+
+/* HOMEがチェックされた時：nav-homeを表示 */
+#switch-home:checked ~ .nav-home {
+  display: block;
+}
+
+/* FOCUSがチェックされた時：nav-focusを表示 & 背景を黄色に */
+#switch-focus:checked ~ .nav-focus {
+  display: block;
+}
+
+#switch-focus:checked ~ .nav-focus li {
+  background-color: #fbc02d; /* FOCUS用の色 */
+  color: #333;               /* 文字を読みやすく黒系に */
+  border-right: 1px solid #c89932; /* 線の色も調整 */
+}
+
+/* タブレット幅 */
+@media (max-width: 940px) {
+  .main-nav li {
+    flex: auto !important;/* ボタンサイズを文字サイズに合わせる */
+  }
+}
+
+/* --- メニュー全体の共通設定 --- */
 .main-nav ul {
   display: flex;        /* 横並びの要 */
   list-style: none;
@@ -366,27 +406,390 @@ input[name="nav-switch"] {
   border-right: none;   /* 最後の縦線を消す */
 }
 
-/* --- 2. 切り替えの制御（ここが重要！） --- */
+.main-nav li:hover {
+  background-color: #001f3f;
+}
 
-/* 初期状態：両方のナビを隠す */
-.nav-home, .nav-focus {
+/* --- サブメニュー -------------- */
+
+.main-nav {
+  position: relative; 
+}
+
+.sub-menu {
+  display: none;/* 初期状態は隠す */
+  position: absolute;
+  top: 100%; /* 親liのすぐ下 */
+  left: 0;
+  width: 100vw; /* 画面いっぱいに広げるメガメニュー形式 */
+  z-index: 1000;
+}
+
+/* ホバー時表示エリア */
+.sub-menu-inner {
+  display: flex;
+  background-color: #001f3f;
+  padding: 25px 10%;
+}
+
+.sub-menu-inner ul {
+  display: block;    /* Flexboxを解除して縦に並べる */
+  flex-direction: column; /* 縦並びにする */
+  border-left: 2px #0f2350 solid;
+  padding: 10px 25px;
+  margin: 0;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.sub-menu-inner ul:last-child {
+  border: none;
+  padding: 0;
+}
+
+/* サブメニュー内のliの設定 */
+.sub-menu-inner li {
+  display: flex;
+  background-color: transparent;
+  border: none;           /* スマホ用の枠線を消す */
+  font-size: 1em;
+  padding: 5px 0 5px 15px;
+}
+
+.sub-menu-inner i {
+  margin-right: 8px;
+}
+
+.sub-menu-inner img {
+  max-width: 250px;
+}
+
+/* 親liにホバーしたら子を表示 */
+@media (min-width: 681px) {
+  .has-sub:hover > .sub-menu {
+    display: block;
+  }
+}
+
+/* --- ハンバーガーメニュー --------------------------------------------------- */
+
+/* チェックボックス自体は隠す */
+.nav-unshown {
   display: none;
 }
 
-/* HOMEがチェックされた時：nav-homeを表示 */
-#switch-home:checked ~ .nav-home {
-  display: block;
+/* ロゴエリアの重なり順を確定させる（これが必要！） */
+.header-main {
+  position: relative;
+  z-index: 1001; /* メニュー(999)より上に設定 */
 }
 
-/* FOCUSがチェックされた時：nav-focusを表示 & 背景を黄色に */
-#switch-focus:checked ~ .nav-focus {
-  display: block;
+/* --- ハンバーガーボタン（三本線）のデザイン --- */
+.hamburger-btn {
+  display: none; /* PCでは隠す */
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  width: 45px;
+  height: 45px;
+  background: transparent;
+  z-index: 1002;
+  cursor: pointer;
 }
 
-#switch-focus:checked ~ .nav-focus li {
-  background-color: #fbc02d; /* FOCUS用の色 */
-  color: #333;               /* 文字を読みやすく黒系に */
-  border-right: 1px solid #c89932; /* 線の色も調整 */
+.hamburger-btn span {
+  position: absolute;
+  left: 10px;
+  width: 25px;
+  height: 2px;
+  background: #fbc02d;
+  transition: 0.3s;
+}
+
+.hamburger-btn span:nth-child(1) { top: 14px; }
+.hamburger-btn span:nth-child(2) { top: 21px; }
+.hamburger-btn span:nth-child(3) { top: 28px; }
+
+/* --- 【重要】チェックが入ったら（ボタンが押されたら）メニューを出す --- */
+@media (max-width: 680px) {
+  .hamburger-btn { display: block; } /* スマホでボタンを表示 */
+
+  /* 最初は右側に隠しておく */
+  .menu-switcher {
+    display: block !important;
+    position: fixed;
+    top: -100%;
+    width: 100%;
+    height: 100vh;
+    background: #001f3f;
+    z-index: 999;
+    transition: 0.4s;
+    padding-top: 60px;
+  }
+
+  /* チェックボックスにチェックが入ったら、メニューを画面内に戻す */
+  #nav-input:checked ~ .menu-switcher {
+    top: 50px;
+  }
+
+  /* 三本線を「×」にする */
+  #nav-input:checked ~ .hamburger-btn span:nth-child(1) { transform: translateY(7px) rotate(-45deg); }
+  #nav-input:checked ~ .hamburger-btn span:nth-child(2) { opacity: 0; }
+  #nav-input:checked ~ .hamburger-btn span:nth-child(3) { transform: translateY(-7px) rotate(45deg); }
+}
+
+/* --- オーバーレイ -------------------------------- */
+
+/* 膜の初期状態（隠す） */
+.nav-overlay {
+  display: none;
+}
+
+/* チェックが入ったら画面全体を覆う */
+#nav-input:checked ~ .nav-overlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 998; /* メニュー(999)のすぐ後ろ */
+}
+
+
+/* --- ハンバーガーメニューの中身 ---------------------------------------------------- */
+
+/* スマホ版検索欄を消す */
+.drawer-search {
+  display: none;
+}
+
+/* スマホ版ドロワーフッター欄を消す */
+.drawer-footer {
+  display: none;
+}
+
+@media (max-width: 680px) {
+
+  /* 中身全体 */
+  .menu-switcher {
+    display: block !important;
+    position: absolute; /* fixedからabsoluteへ（ロゴ下に配置） */
+    top: -100%;        /* 最初は隠す */
+    left: 0;
+    width: 100%;
+    height: auto;      /* 画面いっぱいにせず、中身の量に合わせる */
+    max-height: 0;     /* 初期状態は高さを0にする（アニメーション用） */
+    overflow: hidden;  /* はみ出た中身を隠す */
+    background: #001f3f;
+    z-index: 999;
+    transition: 0.4s ease-in-out;
+    padding: 0;        /* 閉じている時はパディングも0 */
+  }
+
+  /* チェックが入った時の動き */
+  #nav-input:checked ~ .menu-switcher {
+    top: 60px;         /* ロゴエリアの高さに合わせて調整 */
+    max-height: 1000px; /* 閉じている時の0から、十分な高さまで広げる */
+  }
+  
+  /* --- メニュー内のリスト（HOME/FOCUSの中身） ------------------------------ */
+
+  /* 1. PC用のタブ切り替え機能をスマホでは無効にする */
+  .nav-home, 
+  .nav-focus {
+    display: block !important; /* 強制的に両方表示 */
+  }
+
+  /* 2. PC用のタブボタン（HOME/TOSHO FOCUS）を隠す */
+  .tab-labels {
+    display: none;
+  }
+
+  /* 3. スマホ版検索欄を出す */
+  .drawer-search {
+    display: block;
+    background-color: #333;
+  }
+  
+  .drawer-search ul {
+    display: flex;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .drawer-search form {
+    width: 40vw;
+    min-width: 200px;
+    margin-right: 10px;
+  }
+
+  .drawer-search-input {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 0.8em;
+    width: 150px;
+    padding-left: 15px; /* 枠の左側に余白を作る */
+    flex-grow: 1;       /* 入力欄を可能な限り広げる */
+  }
+
+  .drawer-search-btn {
+    border: none;
+    background: #007bbb;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px; /* ★ここの上下パディングで全体の高さを決める */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  /* 教員検索・基金ボタンの装飾 */
+  .drawer-nav-btn a {
+    display: block;
+    font-size: 0.8em;
+    color: #fff;
+    background-color: #007bbb;
+    border: 1px solid #007bbb;
+    border-radius: 24px;
+    padding: 6px 10px;
+  }
+
+  /* 4. HOMEとFOCUSの区切りとして見出しを擬似的に作る */
+  /* nav-homeの前に「HOME」、nav-focusの前に「FOCUS」という文字を出す */
+  .nav-home::before {
+    content: "HOME";
+    display: block;
+    background: #005bac;
+    color: #fff;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: center;
+  }
+  
+  .nav-focus::before {
+    content: "TOSHO FOCUS";
+    display: block;
+    background: #fbc02d;
+    color: #333;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: center;
+  }
+
+  /* リストの親要素をFlexboxにする */
+  .main-nav ul {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap; /* 横幅がいっぱいになったら折り返す */
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #999;
+  }
+
+  /* リンクボタンの共通設定 */
+  .main-nav li {
+    list-style: none;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #444;
+    background-color: #fff;
+    padding: 6px 12px;
+    text-align: left;
+    width: 50%; /* 2列（100% ÷ 2） */
+    box-sizing: border-box; /* パディングを含めて50%にする */
+    border-bottom: 1px solid #999;
+    /* 奇数番目の項目（左側）にだけ右線を入れる */
+    border-right: 1px solid #999;
+  }
+
+  .main-nav li:hover {
+    color: #444;
+    background-color: #fff;
+  }
+
+  .main-nav li::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f0da";
+    font-weight: 900;
+    margin-right: 8px;
+  }
+
+/* 1番目の「大学案内」だけ100%幅にする */
+  .nav-home li:first-child {
+    width: 100% !important;
+  }
+
+  /* 奇数番目（1, 3, 5...）に右線を消す（通常通りの2列ルール） */
+  .nav-home li:nth-child(odd) {
+    border-right: none;
+  }
+
+  /* --- FOCUS側（.nav-focus）はそのまま2列 --- */
+  
+  /* 2番目（偶数番目）の右端の線を消す（1番目が100%なので、2, 4, 6...が左側に来るため） */
+  .nav-focus li:not(:first-child):nth-child(even){
+    border-right: none;
+  }
+  
+  /* FOCUSの1番目は50%に戻す（もし先ほどの設定で100%になっていたら） */
+  .nav-focus li:first-child {
+    width: 50%;
+  }
+
+  /* 4. スマホ版ドロワーフッターを出す */
+  .drawer-footer {
+    display: block;
+    background-color: #fff;
+  }
+
+  .drawer-footer p {
+    display: block;
+    text-align: center;
+    display: block;
+    background: #ccc;
+    color: #333;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 0.8em;
+  }
+
+  .drawer-footer ul {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap; /* 横幅がいっぱいになったら折り返す */
+    padding: 10px;
+    margin: 0;
+    border-top: 1px solid #999;
+  }
+
+  .drawer-footer li {
+    list-style: none;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #444;
+    background-color: #fff;
+    padding: 6px 12px;
+    text-align: left;
+    width: 50%; /* 2列（100% ÷ 2） */
+    box-sizing: border-box; /* パディングを含めて50%にする */
+  }
+
+  /* 「2番目のli以外」の擬似要素を指定 */
+  .drawer-footer li:not(:nth-child(2))::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f0da";
+    font-weight: 900;
+    margin-right: 8px;
+  }
 }
 
 /* =================================================================================================================================
