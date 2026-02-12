@@ -25,7 +25,7 @@
 
     <div class="header-main">
       <h1>
-        <a href="/">
+        <a href="index.html">
           <img src="img/UToshoIogo.png" alt="東照大学 THE UNIVERSITY OF TOSHO" class="logo-img">
         </a>
       </h1>
@@ -47,26 +47,241 @@
       </div>
     </div>
 
+    <!-- ハンバーガーメニュー -->
+    <input type="checkbox" id="nav-input" class="nav-unshown">
+    <label for="nav-input" class="hamburger-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <!-- オーバーレイ -->
+    <label for="nav-input" class="nav-overlay"></label>
+
     <div class="menu-switcher">
       <input type="radio" name="nav-switch" id="switch-home" checked>
       <input type="radio" name="nav-switch" id="switch-focus">
 
+      <!-- メニューバーのタブ -->
       <div class="tab-labels">
         <label for="switch-home" class="home-btn">HOME</label>
         <label for="switch-focus" class="focus-btn">TOSHO FOCUS</label>
       </div>
 
+      <!-- スマホ用ページの検索欄 -->
+      <nav class="drawer-search">
+        <ul>
+          <li class="search-box">
+            <form action="#" method="get">
+              <input type="text" placeholder="キーワードを入力" class="drawer-search-input">
+              <button type="submit" class="drawer-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+          </li>
+          <li class="drawer-nav-btn"><a href="#">教員検索</a></li>
+        </ul>
+      </nav>
+
+      <!-- メニューバー -->
       <nav class="main-nav nav-home">
         <ul>
-          <li>大学案内</li>
-          <li>学部・大学院等</li>
-          <li>入学案内</li>
-          <li>教育・学生生活</li>
-          <li>研究活動</li>
-          <li>社会連携</li>
-          <li>産学連携</li>
-          <li>国際交流</li>
-          <li>卒業生</li>
+          <li class="has-sub">大学案内
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>大学概要</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>キャンパス案内</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>総長室から</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>称号授与</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大学の歴史</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>広報・刊行物</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>情報公開</a></li>
+                </ul>
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>公表事項</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大学の取り組み</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>規則・コンプライアンス</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>点検・評価</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>キャンパス計画</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>調達・契約</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>採用情報</a></li>
+                </ul>
+                <ul>
+                  <li><img src="img/list_img01.png" alt="東照大学_門"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">学部・大学院等
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>学部</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>研究科</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>附置研究所</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>学内共同教育研究施設</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>国際高等研究所</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>学際融合研究施設</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>全国共同利用施設</a></li>
+                </ul>
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>機構等(総長室総括委員会設置)</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>連携研究機構</a></li>
+                </ul>
+                <ul>
+                  <li><img src="img/list_img02.png" alt="東照大学_キャンパス"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">入学案内
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>学部入学</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>大学院入学・社会人入試</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>入学料・授業料</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>海外から東照大への留学</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>留学生支援</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>統計資料</a></li>
+                </ul>
+                <ul class="no-border">
+
+                </ul>
+                <ul>
+                  <li><img src="img/list_img03.png" alt="東照大学_赤門"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">教育・学生生活
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>授業・履修</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>特徴的な教育活動</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>体験型教育プログラム</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>学籍・手続窓口</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>情報サービス・保険</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>授業料・奨学制度・宿舎等</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>課外活動</a></li>
+                </ul>
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>施設利用</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>保健・進路・相談</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>行事・シンボル</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>構内交通・警備・環境</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大から海外への留学</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>参考情報</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>規則等</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>教育統計資料</a></li>
+                </ul>
+                <ul>
+                  <li><img src="img/list_img04.png" alt="東照大学_学食"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">研究活動
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>研究組織・プロジェクト</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>研究力強化</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>制度・統計資料</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>研究倫理・生命倫理</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>安全保障輸出管理</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>研究成果・書籍</a></li>
+                </ul>
+                <ul class="no-border">
+                  
+                </ul>
+                <ul>
+                  <li><img src="img/list_img05.png" alt="東照大学_研究室"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">社会連携
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>社会とともに歩む東照大学</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>研究成果の還元</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>一般見学・公開講座案内</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>社会人向け教育</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>地域等との連携</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>スポーツ連携</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大学への支援</a></li>
+                </ul>
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大学からの支援</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>関連施設</a></li>
+                </ul>
+                <ul>
+                  <li><img src="img/list_img06.png" alt="東照大学_社会連携"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">産学連携
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大学の産学連携</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>産学協創推進本部組織構成</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>関連組織等(外部サイト)</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>制度・様式</a></li>
+                </ul>
+                <ul class="no-border">
+                  
+                </ul>
+                <ul>
+                  <li><img src="img/list_img07.png" alt="東照大学_産学連携"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">国際交流
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>グローバル化に向けた取組み</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>海外大学との交流</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大生の海外留学等</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>留学生・外国人研究者サポート</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>組織</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>海外拠点</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>統計資料</a></li>
+                </ul>
+                <ul class="no-border">
+                  
+                </ul>
+                <ul>
+                  <li><img src="img/list_img08.png" alt="東照大学_国際交流"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="has-sub">卒業生
+            <div class="sub-menu">
+              <div class="sub-menu-inner">
+                <ul>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>大学とつながる</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>集う・繋がる・大学の今を知る</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>東照大学校友会</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>大学・学生を支援・応援する</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>学内施設・制度を利用する</a></li>
+                  <li><a href="#"><i class="fa fa-caret-right"></i>もう一度学ぶ</a></li>
+                </ul>
+                <ul class="no-border">
+                  
+                </ul>
+                <ul>
+                  <li><img src="img/list_img09.png" alt="東照大学_卒業生"></li>
+                </ul>
+              </div>
+            </div>
+          </li>
         </ul>
       </nav>
 
@@ -80,6 +295,18 @@
           <li>Find stories</li>
         </ul>
       </nav>
+
+      <!-- スマホ用ページのハンバーガーメニューのフッター -->
+        <nav class="drawer-footer">
+          <p>SUPPORT</p>
+          <ul>
+            <li><a href="#">アクセス・キャンパスマップ</a></li>
+            <li></li>
+            <li><a href="#">寄付をお考えの方 <i class="fas fa-external-link-alt"></i></a></li>
+            <li><a href="#">お問い合わせ</a></li>
+          </ul>
+        </nav>
+
     </div>
 
   </header>
@@ -173,5 +400,24 @@
   </div>
 </footer>
 
+<script>
+  const navInput = document.getElementById('nav-input');
+
+  // スクロールを禁止する関数
+  function disableScroll(event) {
+    event.preventDefault();
+  }
+
+  navInput.addEventListener('change', () => {
+    if (navInput.checked) {
+      document.body.style.overflow = 'hidden';
+      // 背景（overlay）が触られたときにスクロールを殺す
+      document.querySelector('.nav-overlay').addEventListener('touchmove', disableScroll, { passive: false });
+    } else {
+      document.body.style.overflow = 'auto';
+      document.querySelector('.nav-overlay').removeEventListener('touchmove', disableScroll);
+    }
+  });
+</script>
 </body>
 </html>
