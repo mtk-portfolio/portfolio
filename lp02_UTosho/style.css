@@ -1624,7 +1624,7 @@ input[name="nav-switch"] {
     height: auto;
   }
   .book-area img {
-    padding: 0px 15px 40vw;
+    padding: 10vw 15px;
     height: auto;
   }
   .book-title {
