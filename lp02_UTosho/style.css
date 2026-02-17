@@ -1429,6 +1429,9 @@ input[name="nav-switch"] {
   .highlights img {
     max-height: 160px;
   }
+  .highlights p {
+    padding: 15px 10px;
+  }
 }
 
 /* --- メディア --------------------------------------------------------------------------------------------------------------------- */
@@ -1616,8 +1619,13 @@ input[name="nav-switch"] {
     font-size: 95%;
   }
   .book-wrap {
-    font-size: 85%;
+    font-size: 80%;
     padding: 10px;
+    height: auto;
+  }
+  .book-area img {
+    padding: 0px 15px 40vw;
+    height: auto;
   }
   .book-title {
     font-size: 1.1em;
