@@ -35,9 +35,9 @@ img {
    ================================================================================================================================= */
 body {
   font-family: 'Noto Sans JP', sans-serif;
-  font-weight: 400; /* デフォルトの太さ */
+  font-weight: 400;
   color: #000;
-  background-color: #333; /* 東照ブルー背景 */
+  background-color: #333;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -76,7 +76,7 @@ h2 {
   font-size: 0.75rem;
 }
 
-/* レスポンシブ */
+/* ナビゲーションナビレスポンシブ */
 @media (max-width: 680px) {
   .header-top {
     display: none;
@@ -90,13 +90,13 @@ h2 {
   background-color: #001f3f;
   display: flex;
   justify-content: space-between; /* ロゴとナビを左右に振る */
-  align-items: center;           /* 上下中央揃え */
+  align-items: center;          
   padding: 20px 10%;
   z-index: 1100;
 }
 
 .logo-img {
-  height: 65px; /* ロゴの大きさ調整 */
+  height: 65px;
   width: auto;
 }
 
@@ -110,12 +110,12 @@ h2 {
 /* サイト内検索フォーム */
 .search-box form {
   display: flex;
-  align-items: center; /* 中身を上下中央に */
+  align-items: center;
   border: 1px solid #001f3f;
-  border-radius: 24px; /* ボタンの角丸と合わせる */
+  border-radius: 24px;
   background: #f9f9f9;
-  overflow: hidden;    /* ボタンの角丸が枠からはみ出さないように */
-  padding: 0;          /* ★ここを0にするのがポイント！ */
+  overflow: hidden;
+  padding: 0;
 }
 
 .search-input {
@@ -124,8 +124,8 @@ h2 {
   outline: none;
   font-size: 0.9em;
   width: 150px;
-  padding-left: 15px; /* 枠の左側に余白を作る */
-  flex-grow: 1;       /* 入力欄を可能な限り広げる */
+  padding-left: 15px;
+  flex-grow: 1;
 }
 
 .search-btn {
@@ -133,7 +133,7 @@ h2 {
   background: #007bbb;
   color: #fff;
   cursor: pointer;
-  padding: 15px; /* ★ここの上下パディングで全体の高さを決める */
+  padding: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,9 +173,9 @@ h2 {
 /* レスポンシブ */
 @media (max-width: 940px) {
 .header-main {
-    flex-direction: column; /* 縦並びにする */
-    align-items: center;    /* 中央に寄せる */
-    gap: 20px;              /* ロゴと検索ナビの間の余白 */
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
   /* ロゴの大きさを少し調整（必要であれば） */
@@ -263,7 +263,7 @@ input[type="radio"] {
   justify-content: center;
   cursor: pointer;
   font-size: 0.9em;
-  box-sizing: border-box; /* 基本はこれ */
+  box-sizing: border-box;
   transition: width 0.4s ease, height 0.2s ease, margin-top 0.2s ease;
 }
 
@@ -281,7 +281,7 @@ input[type="radio"] {
 /* --- FOCUSボタン（右側・黄） --- */
 .focus-btn {
   right: 0;
-  background-color: #fbc02d; /* 本家風の黄色 */
+  background-color: #fbc02d;
   color: #333;
   width: 30%;
   /* 左側を斜めに削る：左上(0,0)から右下(100,100)へ向かう斜線 */
@@ -293,9 +293,9 @@ input[type="radio"] {
 #switch-home:checked ~ .tab-labels .home-btn {
   width: 80%;
   z-index: 2000; /* HOMEが上 */
-  height: 50px;           /* 非アクティブ時より5px高く（例） */
+  height: 50px;
   margin-top: -5px;       /* 高くなった分、上に突き出させる */
-  border-top: 3px solid #005bac; /* 本家風の明るい青のアクセント線 */
+  border-top: 3px solid #005bac;
 }
 
 #switch-focus:checked ~ .tab-labels .focus-btn {
@@ -303,7 +303,7 @@ input[type="radio"] {
   z-index: 2000; /* FOCUSが上 */
   height: 50px;
   margin-top: -5px;
-  border-top: 3px solid #fbc02d; /* フォーカス用のアクセント線 */
+  border-top: 3px solid #fbc02d;
 }
 
 /* ラジオボタン本体は隠しておく */
@@ -389,7 +389,7 @@ input[name="nav-switch"] {
 
 /* --- メニュー全体の共通設定 --- */
 .main-nav ul {
-  display: flex;        /* 横並びの要 */
+  display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -399,7 +399,7 @@ input[name="nav-switch"] {
 .main-nav li {
   flex: 1;              /* 幅を均等に分ける */
   text-align: center;
-  background-color: #005bac; /* デフォルトはHOMEの青 */
+  background-color: #005bac;
   color: #fff;
   padding: 15px 0;
   font-size: 0.9em;
@@ -438,7 +438,7 @@ input[name="nav-switch"] {
 }
 
 .sub-menu-inner ul {
-  display: block;    /* Flexboxを解除して縦に並べる */
+  display: block;
   flex-direction: column; /* 縦並びにする */
   border-left: 2px #0f2350 solid;
   padding: 10px 25px;
@@ -604,7 +604,7 @@ input[name="nav-switch"] {
   /* --- メニュー内のリスト（HOME/FOCUSの中身） ------------------------------ */
 
   /* 1. PC用のタブ切り替え機能をスマホでは無効にする */
-  .nav-home, 
+  .nav-home,
   .nav-focus {
     display: block !important; /* 強制的に両方表示 */
   }
@@ -648,7 +648,7 @@ input[name="nav-switch"] {
     background: #007bbb;
     color: #fff;
     cursor: pointer;
-    padding: 10px; /* ★ここの上下パディングで全体の高さを決める */
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -782,7 +782,7 @@ input[name="nav-switch"] {
     font-weight: bold;
     color: #444;
     background-color: #fff;
-    padding: 6px 12px;
+    padding: 6px 6px 6px 0;
     text-align: left;
     width: 50%; /* 2列（100% ÷ 2） */
     box-sizing: border-box; /* パディングを含めて50%にする */
@@ -803,7 +803,7 @@ input[name="nav-switch"] {
   /* --- ヒーロー全体 --------------------------------------------------------------------------------------------------------------- */
 
 .hero-container {
-  position: relative; /* これが重要！ */
+  position: relative;
   width: 100%;
 }
 
@@ -823,8 +823,8 @@ input[name="nav-switch"] {
 }
 
 .slide-link {
-  display: block;   /* flexにしていた場合は block に戻すとズレが直りやすいです */
-  position: relative; /* 子要素の absolute 基準にするため */
+  display: block;
+  position: relative;
   width: 100%;
   height: 100%;
   text-decoration: none;
@@ -885,7 +885,7 @@ input[name="nav-switch"] {
   gap: 20px;
   background: rgba(0, 0, 0, 0.4);
   padding: 10px 0;
-  backdrop-filter: blur(5px); /* 背景を少しぼかすとおしゃれ */
+  backdrop-filter: blur(5px); /* ぼかし */
 }
 
 /* ◯◯◯の位置：.hero の中ではなく .hero-controls の中を指定する */
@@ -926,7 +926,7 @@ input[name="nav-switch"] {
 
 .hero .swiper-pagination-bullet-active {
   opacity: 1;
-  transform: scale(1.2); /* 選択中を少し大きく */
+  transform: scale(1.2);
 }
 
 .play-pause-btn {
@@ -1016,7 +1016,7 @@ input[name="nav-switch"] {
 .notices {
   display: flex;
   position: relative;
-  background-color: #ddd; /* 薄灰背景 */
+  background-color: #ddd;
   padding: 20px 10vw;
   gap: 4vw;
 }
@@ -1159,7 +1159,7 @@ input[name="nav-switch"] {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  object-position: center; /* 中央を中心にトリミング */
+  object-position: center;
   border: 1px #ccc solid;
   background-color: #fff;
 }
@@ -1201,15 +1201,15 @@ input[name="nav-switch"] {
 
 /* タグアイコン */
 .focus-block::after {
-  content: "\f02b"; /* Font Awesome の 'caret-right' のコード */
-  font-family: "Font Awesome 6 Free"; /* バージョンに合わせて指定 */
-  font-weight: 900; /* アイコンを正しく表示するために必須 */
-  color: #f7c114;  /* 黄金色にしてアクセントにする */
+  content: "\f02b";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #f7c114;
   font-size: 0.9em;
   position: absolute;
   left: 26px;
   bottom: 3px;
-  transform: translateY(-50%); /* 上下中央揃え */
+  transform: translateY(-50%);
 }
 
 /* フォーカス最初のブロックの設定 */
@@ -1246,14 +1246,14 @@ input[name="nav-switch"] {
 }
 
 .focus-utosho-link a::before {
-  content: "\f0da"; /* Font Awesome の 'caret-right' のコード */
-  font-family: "Font Awesome 6 Free"; /* バージョンに合わせて指定 */
-  font-weight: 900; /* アイコンを正しく表示するために必須 */
+  content: "\f0da";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
   font-size: 0.9em;
   position: absolute;
   left: 20px;
   top: 50%;
-  transform: translateY(-50%); /* 上下中央揃え */
+  transform: translateY(-50%);
 }
 
 .focus-caution-link a {
@@ -1269,14 +1269,14 @@ input[name="nav-switch"] {
 }
 
 .focus-caution-link a::before {
-  content: "\f0da"; /* Font Awesome の 'caret-right' のコード */
-  font-family: "Font Awesome 6 Free"; /* バージョンに合わせて指定 */
-  font-weight: 900; /* アイコンを正しく表示するために必須 */
+  content: "\f0da";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
   font-size: 0.9em;
   position: absolute;
   left: 20px;
   top: 50%;
-  transform: translateY(-50%); /* 上下中央揃え */
+  transform: translateY(-50%);
 }
 
 /* --- フォーカスレスポンシブ --------------- */
@@ -1355,7 +1355,7 @@ input[name="nav-switch"] {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: stretch;        /* 高さを揃える */
+  align-items: stretch; /* 高さを揃える */
   max-width: 1240px;
   margin: 0 auto 50px;
   gap: 3vw;
@@ -1390,7 +1390,7 @@ input[name="nav-switch"] {
   position: absolute;
   left: 30px;
   top: 50px;
-  transform: translateY(-50%); /* 上下中央揃え */
+  transform: translateY(-50%);
 }
 
 .event-area ul a:hover .event-block::before {
@@ -1438,13 +1438,13 @@ input[name="nav-switch"] {
 }
 
 .event-calendar::before {
-  content: "\f0da"; /* Font Awesome の 'caret-right' のコード */
-  font-family: "Font Awesome 6 Free"; /* バージョンに合わせて指定 */
-  font-weight: 900; /* アイコンを正しく表示するために必須 */
+  content: "\f0da";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
   position: absolute;
   left: 20px;
   top: 50%;
-  transform: translateY(-50%); /* 上下中央揃え */
+  transform: translateY(-50%);
 }
 
 .event-calendar:hover {
@@ -1501,7 +1501,7 @@ input[name="nav-switch"] {
   display: block;
   position: relative;
   padding: 30px 1vw;
-  background-color: #ddd; /* 薄灰背景 */
+  background-color: #ddd;
   gap: 4vw;
 }
 
@@ -1535,7 +1535,7 @@ input[name="nav-switch"] {
   width: 100%;
   max-height: 140px;
   object-fit: cover;
-  object-position: center; /* 中央を中心にトリミング */
+  object-position: center;
   background-color: #000;
 }
 
@@ -1642,7 +1642,7 @@ input[name="nav-switch"] {
 
 .book-area {
   width: 18vw;
-  min-width: 240px; /* 狭くなりすぎないように */
+  min-width: 240px;
   margin-left: 15px;
 }
 
@@ -1656,7 +1656,7 @@ input[name="nav-switch"] {
   width: 100%;
   height: auto;
   object-fit: cover;
-  object-position: center; /* 中央を中心にトリミング */
+  object-position: center;
   background-color: #333;
   border-top: 1px #555 solid;
   margin-top: 25px;
@@ -1717,7 +1717,7 @@ input[name="nav-switch"] {
   height: 14vw;
   min-height: 200px;
   object-fit: cover;
-  object-position: center; /* 中央を中心にトリミング */
+  object-position: center;
   margin-top: 25px;
 }
 
@@ -1824,7 +1824,7 @@ input[name="nav-switch"] {
   display: block;
   position: relative;
   padding: 30px 1vw;
-  background-color: #fff; /* 薄灰背景 */
+  background-color: #fff;
   gap: 4vw;
 }
 
@@ -1884,7 +1884,7 @@ input[name="nav-switch"] {
   width: 84px;
   height:84px;
   object-fit: cover;
-  object-position: center; /* 中央を中心にトリミング */
+  object-position: center;
 }
 
 .initiatives a:hover img {
@@ -1971,7 +1971,7 @@ input[name="nav-switch"] {
   display: block;
   position: relative;
   padding: 30px 10vw;
-  background-color: #ddd; /* 薄灰背景 */
+  background-color: #ddd;
   gap: 4vw;
 }
 
@@ -2058,7 +2058,7 @@ input[name="nav-switch"] {
   display: block;
   position: relative;
   padding: 30px 1vw;
-  background-color: #fff; /* 薄灰背景 */
+  background-color: #fff;
   gap: 4vw;
 }
 
@@ -2086,14 +2086,14 @@ input[name="nav-switch"] {
 }
 
 .other li::before {
-  content: "\f0da"; /* Font Awesome の 'caret-right' のコード */
-  font-family: "Font Awesome 6 Free"; /* バージョンに合わせて指定 */
-  font-weight: 900; /* アイコンを正しく表示するために必須 */
+  content: "\f0da";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
   font-size: 12px;
   position: absolute;
   left: 0;
   top: 50%;
-  transform: translateY(-50%); /* 上下中央揃え */
+  transform: translateY(-50%);
 }
 
 .other a:hover {
@@ -2123,14 +2123,14 @@ input[name="nav-switch"] {
 
 .power-monitor {
   display: flex;
-  align-items: center; /* 縦中央 */
+  align-items: center; 
   justify-content: center;
-  background-color: #9ea892; /* 液晶の緑 */
-  border: 4px solid #555;    /* モニターの外枠 */
-  font-family: 'DotGothic16', sans-serif; /* 基本はドット */
+  background-color: #9ea892;
+  border: 4px solid #555;
+  font-family: 'DotGothic16', sans-serif;
   width: 65%;
   min-width: 220px;
-  height: 80px;             /* 少し高さを出す */
+  height: 80px;
   box-sizing: border-box;
   border-radius: 5px;
   padding: 5px 10px;
@@ -2242,8 +2242,8 @@ input[name="nav-switch"] {
 .social-link a {
   /* inline-block をやめて flex にする */
   display: inline-flex;
-  align-items: center;    /* これで縦方向を強制中央 */
-  justify-content: center; /* 横方向も中央 */
+  align-items: center;
+  justify-content: center;
   
   background-color: #fff;
   font-size: 1.2em;
@@ -2253,7 +2253,7 @@ input[name="nav-switch"] {
   /* 高さを明示的に指定するとズレにくくなります */
   height: 2em;
   width: 2em;
-  line-height: 1; /* 余計な行間を排除 */
+  line-height: 1;
 }
 
 /* SNSアイコン */
@@ -2330,7 +2330,7 @@ footer {
 
 /* ロゴ */
 .footer-logo-img {
-  height: 60px; /* ロゴの大きさ調整 */
+  height: 60px;
   width: auto;
   padding-top: 20px;
   margin: 0 1vw 20px;
@@ -2361,20 +2361,20 @@ footer {
 /* リスト項目に相対位置を指定 */
 .footer-links li {
   position: relative;
-  padding-left: 15px; /* アイコンが入るスペースを確保 */
+  padding-left: 15px;
 }
 
 /* 擬似要素でアイコンを表示 */
 .footer-links li::before {
-  content: "\f0da"; /* Font Awesome の 'caret-right' のコード */
-  font-family: "Font Awesome 6 Free"; /* バージョンに合わせて指定 */
-  font-weight: 900; /* アイコンを正しく表示するために必須 */
-  color: #f7c114;  /* 黄金色にしてアクセントにする */
+  content: "\f0da";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #f7c114;
   font-size: 10px;
   position: absolute;
   left: 0;
   top: 50%;
-  transform: translateY(-50%); /* 上下中央揃え */
+  transform: translateY(-50%);
 }
 
 /* --- 災害情報---------------------------------------------------------------------------------------------------------------------- */
@@ -2388,7 +2388,7 @@ footer {
   display: inline-block;
   font-size: 1em;
   color: #fff;
-  background-color: #007bbb; /* 警告色の黄色背景 */
+  background-color: #007bbb;
   padding: 10px 20px;
   border-radius: 24px;
 }
