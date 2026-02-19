@@ -15,6 +15,7 @@
 
   <header>
 
+    <!-- ナビゲーションメニュー -->
     <div class="header-top">
       <nav class="header-nav">
         <ul>
@@ -25,6 +26,7 @@
       </nav>
     </div>
 
+    <!-- 検索 -->
     <div class="header-main">
       <h1>
         <a href="index.html">
@@ -314,64 +316,93 @@
   </header>
 
   <main>
+    <!-- スライドショー -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
-    <section class="hero">
-      <div class="hero-content">
-        <p class="catchphrase">光、東より出でて、<br>世界を照らす。</p>
+    <div class="hero-container">
+
+      <section class="hero swiper">
+        <a href="#">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" style="background-image: url('img/hero01.png');">
+            <a href="#" class="slide-link">
+              <div class="hero-content">
+                <p class="hero-content-title">総長航海日誌</p>
+                <p class="hero-content-title">UTosho President's Log</p>
+                <p class="hero-desc">総長のアクションログを公開しています</p>
+                <p class="hero-fake-link">詳しくはこちら>></p>
+              </div>
+            </a>
+          </div>
+          <div class="swiper-slide" style="background-image: url('img/hero02.png');">
+            <a href="#" class="slide-link">
+              <div class="hero-content slide-sp-only">
+                <p class="hero-content-title">東照大学の宝物</p>
+                <p class="hero-desc">創立150周年を記念して東照大学の宝物を紹介します。</p>
+                <p class="hero-fake-link">詳しくはこちら>></p>
+              </div>
+            </a>
+          </div>
+          <div class="swiper-slide" style="background-image: url('img/hero03.png');">
+            <a href="#" class="slide-link">
+              <div class="hero-content">
+                <p class="hero-content-title">キャンパスから読み解く</p>
+                <p class="hero-content-title">Deciphering the Campus</p>
+                <p class="hero-desc">災害・防災・復興を多角的に考える</p>
+                <p class="hero-fake-link">詳しくはこちら>></p>
+              </div>
+            </a>
+          </div>
+          <div class="swiper-slide" style="background-image: url('img/hero04.png');">
+            <a href="#" class="slide-link">
+              <div class="hero-content">
+                <p class="hero-content-title">Tosho College of Design</p>
+                <p class="hero-desc">記者発表動画の追加公開</p>
+                <p class="hero-fake-link">詳しくはこちら>></p>
+              </div>
+            </a>
+          </div>
+          <div class="swiper-slide" style="background-image: url('img/hero05.png');">
+            <a href="#" class="slide-link">
+              <div class="hero-content slide-sp-only">
+                <p class="hero-content-title">東照大学150周年記念サイト</p>
+                <p class="hero-desc">東照大学150周年を記念して大学の歴史を特集します</p>
+                <p class="hero-fake-link">詳しくはこちら>></p>
+              </div>
+            </a>
+          </div>
+          <div class="swiper-slide" style="background-image: url('img/hero06.png');">
+            <a href="#" class="slide-link">
+              <div class="hero-content">
+                <p class="hero-content-title">多様性の海へ</p>
+                <p class="hero-content-title">Into the Ocean of Diversity</p>
+                <p class="hero-desc">様々な新しい取り組みを取り込んだUTosho Compass 2.0を公表</p>
+                <p class="hero-fake-link">詳しくはこちら>></p>
+              </div>
+            </a>
+          </div>
+          <div class="swiper-slide" style="background-image: url('img/hero07.png');">
+            <a href="#" class="slide-link">
+              <div class="hero-content">
+                <p class="hero-content-title">グローバル教育センター</p>
+                <p class="hero-content-title">Center for Global Education</p>
+                <p class="hero-desc">東照大学は全額体制でグローバル教育に取り組みます</p>
+                <p class="hero-fake-link">詳しくはこちら>></p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </section>
+      <div class="hero-controls">
+        <div class="swiper-pagination"></div>
+        <button class="play-pause-btn" aria-label="再生・停止"></button>
       </div>
-    </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <section class="notices">
-        <div class="notices-area">
-          <h2>NOTICES</h2>
-          <ul class="notice-list">
-            <li>
-              <a href="javascript:void(0)" class="notices-title">
-                <p class="notices-date">2026年1月20日</p>
-                <p class="notices-content">令和8年度のお知らせ③</p>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)" class="notices-title">
-                <p class="notices-date">2026年1月15日</p>
-                <p class="notices-content">令和8年度のお知らせ②</p>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)" class="notices-title">
-                <p class="notices-date">2026年1月10日</p>
-                <p class="notices-content">令和8年度のお知らせ①</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="admissions-area">
-          <h2>ADMISSIONS</h2>
-          <ul class="admissions-list">
-            <li>
-              <a href="javascript:void(0)" class="notices-title">
-                <p class="notices-date">2026年2月20日</p>
-                <p class="notices-content">令和8年度 一般選抜第1段階選抜　合格者の皆さんへ</p>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)" class="notices-title">
-                <p class="notices-date">2026年2月15日</p>
-                <p class="notices-content">令和8年度 一般選抜第1段階選抜　合格者発表</p>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)" class="notices-title">
-                <p class="notices-date">2026年2月10日</p>
-                <p class="notices-content">試験当日の交通機関の乱れに伴う対応について</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-    </section>
-
+    <!-- フォーカス -->
     <section class="focus">
-
       <div class="focus-area">
         <ul>
           <li>
@@ -486,7 +517,7 @@
                 <div class="event-block">
                   <p class="event-date">2026年2月20日</p>
                   <p class="event-title">公開シンポジウム「AIが解く徳川埋蔵金の埋設理論」</p>
-                  <p><span class="event-tag">日光地区</span><span class="event-tag">公開講座</span></p>
+                  <p><span class="event-tag">日光地区</span><span class="event-tag">公開講座</p>
                 </div>
               </a>
             </li>
@@ -495,7 +526,7 @@
                 <div class="event-block">
                   <p class="event-date">2026年2月24日</p>
                   <p class="event-title">春季特別展：デジタル修復で蘇る「幻の江戸城天守閣」</p>
-                  <p><span class="event-tag">展示会</span></p>
+                  <p><span class="event-tag">展示会</p>
                 </div>
               </a>
             </li>
@@ -504,7 +535,7 @@
                 <div class="event-block">
                   <p class="event-date">2026年3月2日</p>
                   <p class="event-title">飛脚走法ワークショップ：実践・現代トレーニング</p>
-                  <p><span class="event-tag">日光地区</span><span class="event-tag">スポーツ</span></p>
+                  <p><span class="event-tag">日光地区</span><span class="event-tag">スポーツ</p>
                 </div>
               </a>
             </li>
@@ -513,7 +544,7 @@
                 <div class="event-block">
                   <p class="event-date">2026年3月10日</p>
                   <p class="event-title">国際カンファレンス：東アジアの城郭と江戸の防衛</p>
-                  <p><span class="event-tag">学内</span></p>
+                  <p><span class="event-tag">学内</p>
                 </div>
               </a>
             </li>
@@ -522,7 +553,7 @@
                 <div class="event-block">
                   <p class="event-date">2026年3月15日</p>
                   <p class="event-title">ワークショップ「江戸の天文学と和時計の仕組み」</p>
-                  <p><span class="event-tag">本郷地区</span><span class="event-tag">体験イベント</span></p>
+                  <p><span class="event-tag">本郷地区</span><span class="event-tag">体験イベント</p>
                 </div>
               </a>
             </li>
@@ -531,7 +562,7 @@
                 <div class="event-block">
                   <p class="event-date">2026年3月25日</p>
                   <p class="event-title">徳川家康の平和構築論から学ぶ現代地政学</p>
-                  <p><span class="event-tag">学内</span></p>
+                  <p><span class="event-tag">学内</p>
                 </div>
               </a>
             </li>
@@ -541,6 +572,7 @@
       <a href="javascript:void(0)" class="event-calendar">イベントカレンダー</a>
     </section>
 
+    <!-- ハイライト -->
     <section class="highlights">
       <h2>HIGHLIGHTS</h2>
       <div class="highlights-wrapper">
@@ -597,6 +629,7 @@
       </div>
     </section>
 
+    <!-- メディア -->
     <section class="media">
       <h2>UTosho <span class="emphasize">MEDIA</span></h2>
       <div class="media-wrapper">
@@ -644,6 +677,7 @@
       </div>
     </section>
 
+    <!-- インタビュー -->
     <section class="initiatives">
       <h2>UTosho <span class="emphasize">INITIATIVES</span></h2>
       <div class="initiatives-wrapper">
@@ -780,6 +814,7 @@
       </div>
     </section>
 
+    <!-- アップデート -->
     <section class="updates">
       <h2>PAGE <span class="emphasize">UPDATES</span></h2>
       <div class="updates-wrapper">
@@ -806,6 +841,7 @@
       </div>
     </section>
 
+    <!-- その他 -->
     <section class="other">
       <div class="other-wrapper">
         <div class="facility">
@@ -854,6 +890,7 @@
 
   </main>
 
+  <!-- SNSボタン -->
   <section class="social-link">
     <div class="social-link-wrapper">
       <ul>
@@ -867,6 +904,7 @@
     </div>
   </section>
 
+<!-- フッター -->
 <footer>
   <div class="footer-container">
     <div class="footer-logo">
@@ -907,10 +945,62 @@
   </div>
 </footer>
 
+<!-- トップに戻るボタン -->
+ <button id="page-top" class="page-top"><i class="fas fa-angle-up"></i></button>
+
 <script>
+  // --- トップに戻るボタン -----------------------------------------------------------------------
+  const pageTop = document.querySelector('#page-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) { // 300pxスクロールしたら
+      pageTop.classList.add('show');
+    } else {
+      pageTop.classList.remove('show');
+    }
+  });
+
+  // クリックしたらスムーズに上へ
+  pageTop.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  // --- スライドショー ---------------------------------------------------------------------------
+  const swiper = new Swiper('.hero', {
+    loop: true,
+    effect: 'fade',      /* 👈 その場でふわっと切り替える */
+    fadeEffect: {
+      crossFade: true    /* 前後の画像が重なって透けるのを防ぐ */
+    },
+    speed: 2000,         /* フェードにかかる時間 */
+    autoplay: {
+      delay: 5000,       /* 5秒ごとに次へ */
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,   /* 👈 丸をクリック可能にする */
+    },
+  });
+
+  // 停止・再生ボタンの切り替え
+  const btn = document.querySelector('.play-pause-btn');
+  btn.addEventListener('click', () => {
+    if (swiper.autoplay.running) {
+      swiper.autoplay.stop();
+      btn.classList.add('paused');
+    } else {
+      swiper.autoplay.start();
+      btn.classList.remove('paused');
+    }
+  });
+
+  // --- スクロールを禁止する関数 --------------------------------------------------------------
   const navInput = document.getElementById('nav-input');
 
-  // スクロールを禁止する関数
   function disableScroll(event) {
     event.preventDefault();
   }
