@@ -228,7 +228,7 @@ h2 {
 }
 .swiper-slide {
   background-size: cover;
-  border-radius: auto;
+  border-radius: 0;
 }
 .hero-controls {
   height: 50px;
@@ -266,36 +266,40 @@ h2 {
 /* --- スペシャルサイトバナー --------------------- */
 
 .contents-spsite {
-  width: 1000px;
-  height: 240px;
+  width: 90vw;
+  aspect-ratio: 1000 / 240;
+  max-width: 1000px;
   background-image: url('img/Sp_Banner.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 25px;
+  border-radius: 15px;
   margin: 0 auto;
 }
 
 /* --- アプリバナー --------------------- */
 
 .contents-appdl {
-  width: 1000px;
-  height: 240px;
+  width: 90vw;
+  aspect-ratio: 1000 / 240;
+  max-width: 1000px;
   background-image: url('img/App_Banner.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 25px;
+  border-radius: 15px;
   margin: 0 auto;
 }
 
 /* --- 大切なお知らせ --------------------- */
 
 .contents-imp {
-  width: 1000px;
-  height: 240px;
+  width: 90vw;
+  aspect-ratio: 1000 / 240;
+  max-width: 1000px;
+  max-height: 240px;
   border: 1px #333 solid;
-  border-radius: 25px;
+  border-radius: 15px;
   background-color: #fff;
   padding: 25px 0;
   margin: 0 auto;
@@ -379,20 +383,21 @@ h2 {
   }
   .contents-spsite {
     width: 100%;
-    height: 200px;
+    aspect-ratio: 800 / 529;
     background-image: url('img/Sp_BannerSp.png');
     border-radius: 15px;
     margin: 0 auto;
   }
   .contents-appdl {
     width: 100%;
-    height: 200px;
+    aspect-ratio: 800 / 529;
     background-image: url('img/App_BannerSp.png');
     margin: 0 auto;
   }
   .contents-imp {
     width: 100%;
-    height: auto;
+    aspect-ratio: auto;
+    min-height: auto;
     border-radius: 15px;
     padding: 0;
   } 
@@ -416,7 +421,6 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 35px;
     padding: 0 !important;
   }
 }
@@ -612,7 +616,7 @@ overflow: visible; /* これ重要 */
   padding: 0 5px;
 }
 
-/* --- フッターレスポンシブ --------------------- */
+/* --- サービスレスポンシブ --------------------- */
 
 @media (max-width: 768px) {
   .service {
@@ -639,6 +643,211 @@ overflow: visible; /* これ重要 */
     font-size: 0.8em;
   }
 }
+
+/* --- エンジョイ ------------------------------------------------------------------------------------------------------------------------- */
+
+.enjoy-container {
+  background-color: #fff;
+  width: 95vw;
+  max-width: 1240px;
+  padding: 0 3vw;
+  margin: 0 auto 30px;
+}
+
+/* 外側の枠：グラデーションと角丸を担当 */
+.enjoy-border {
+  display: block;
+  background-image: url('img/border-background.png');
+  background-repeat: repeat;
+  background-size: 100% 100%;
+  border-radius: 25px;
+  max-width: 1100px;
+  padding: 8px; /* borderの太さ */
+  margin: 0 auto;
+}
+
+.enjoy-inner {
+  display: block;
+  position: relative;
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 15px;
+  text-align: center;
+}
+
+.enjoy-inner h2 {
+  font-size: 2em;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.enjoy-desc {
+  display: block;
+  font-size: 1.1em;
+  font-weight: 400;
+  margin: 30px auto;
+}
+
+.enjoy-desc-sp {
+  display: none;
+}
+
+.enjoy-inner a {
+  display: inline-block;
+  position: relative;
+  width: 20vw;
+  min-width: 240px;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #6c3524;
+  padding: 15px;
+  border: 1px #6c3524 solid;
+  border-radius: 30px;
+}
+
+.enjoy-inner a:hover {
+  opacity: 0.7;
+}
+
+.enjoy-inner a::after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.1em;
+  font-weight: 900;
+  color: #6c3524;
+  position: absolute;
+  right: 20px;
+  top: 13px;
+}
+
+.enjoy-link-top {
+  margin-bottom: 15px;
+}
+
+.enjoy-link-bottom {
+  margin-bottom: 30px;
+}
+
+/* アニマル画像 */
+.enjoy-animals {
+  width: 18vw;
+  min-width: 240px;
+  aspect-ratio: 500 / 403;
+  background-image: url('img/docdo-animals.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: -5%;
+  top: 40%;
+}
+
+/* ドクター画像 */
+.enjoy-doctor {
+  width: 18vw;
+  min-width: 240px;
+  aspect-ratio: 500 / 622;
+  background-image: url('img/docdo-doctor.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  right: -5%;
+  top: 25%;
+}
+
+/* --- エンジョイレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .enjoy-inner h2 {
+    font-size: 1.6em;
+    margin-bottom: 20px;
+  }
+  .enjoy-desc {
+    display: none;
+  }
+  .enjoy-desc-sp {
+    display: block;
+    font-size: 0.8em;
+    font-weight: 400;
+    text-align: left;
+    padding: 0 10px;
+    margin: 0 auto 180px;
+  }
+  /* アニマル画像 */
+  .enjoy-animals {
+    width: 140px;
+    min-width: auto;
+    left: 5%;
+    top: 37%;
+  }
+  /* ドクター画像 */
+  .enjoy-doctor {
+    width: 110px;
+    min-width: auto;
+    right: 5%;
+    top: 33%;
+  }
+}
+
+/* --- 私たちの取り組み ------------------------------------------------------------------------------------------------------------------- */
+
+#about {
+  background-image: url('img/dcd-background.png');
+  background-repeat: no-repeat;
+  background-position: -10% 16%; 
+  background-size: 350px auto; /* サイズも指定可能 */
+
+  display: none;
+}
+
+.about-container {
+  background-color: #eee8aa;
+  width: 95vw;
+  max-width: 1240px;
+  border-radius: 25px;
+  padding: 30px 5vw;
+  margin: 0 auto 30px;
+}
+
+/* --- おしらせ --------------------------------------------------------------------------------------------------------------------------- */
+
+.notification {
+  background-image: url('img/dcd-background.png');
+  background-repeat: no-repeat;
+  background-position: -10% 16%; 
+  background-size: 350px auto; /* サイズも指定可能 */
+
+  display: none;
+}
+
+.notification-container {
+  background-color: #eee8aa;
+  width: 95vw;
+  max-width: 1240px;
+  border-radius: 25px;
+  padding: 30px 5vw;
+  margin: 0 auto 30px;
+}
+
+/* --- インスタグラム --------------------------------------------------------------------------------------------------------------------- */
+
+.instagram {
+  background-image: url('img/dcd-background.png');
+  background-repeat: no-repeat;
+  background-position: -10% 16%; 
+  background-size: 350px auto; /* サイズも指定可能 */
+
+  display: none;
+}
+
+.instagram-container {
+  background-color: #eee8aa;
+  width: 95vw;
+  max-width: 1240px;
+  border-radius: 25px;
+  padding: 30px 5vw;
+  margin: 0 auto 30px;
+}
+
 
 /* =================================================================================================================================
    フッター
