@@ -63,6 +63,10 @@ h2 {
   margin: 0 auto;
 }
 
+.header-logo-link:hover {
+  opacity: 0.7;
+}
+
 /* --- 1stナビ ------------------------------------------------------------------ */
 
 .nav-1st ul {
@@ -88,6 +92,10 @@ h2 {
   display: block;
 }
 
+.nav-1st a:hover {
+  border-bottom: 1px #000 solid;
+}
+
 /* --- 2ndナビ ------------------------------------------------------------------ */
 
 .nav-2nd {
@@ -106,6 +114,10 @@ h2 {
 .nav-2nd a {
   font-size: 0.8em;
   color: #6c3524;
+}
+
+.nav-2nd a:hover {
+  opacity: 0.7;
 }
 
 /* --- 3rdナビ ------------------------------------------------------------------ */
@@ -127,6 +139,10 @@ h2 {
 .round-icon {
   border-radius: 50%;
   margin-bottom: 3px;
+}
+
+.round-icon:hover {
+  opacity: 0.7;
 }
 
 /* --- ヘッダーナビレスポンシブ ------------------------------------------------------------------ */
@@ -239,7 +255,7 @@ h2 {
 
 .contents {
   width: 100%;
-  background-image: url('img/dcd-background.png');
+  background-image: url('img/dcd-background_c.png');
   background-repeat: no-repeat;
   background-position: 120% 16%; 
   background-size: 400px auto; /* サイズも指定可能 */
@@ -368,8 +384,6 @@ h2 {
 
 @media (max-width: 768px) {
   .contents {
-    background-image: url('img/dcd-background.png');
-    background-repeat: no-repeat;
     background-position: 150% 76%; 
     background-size: 200px auto; /* サイズも指定可能 */
     margin: 0 auto;
@@ -558,7 +572,7 @@ overflow: visible; /* これ重要 */
 /* --- サービス ------------------------------------------------------------------------------------------------------------------- */
 
 .service {
-  background-image: url('img/dcd-background.png');
+  background-image: url('img/dcd-background_y.png');
   background-repeat: no-repeat;
   background-position: -10% 16%; 
   background-size: 350px auto; /* サイズも指定可能 */
@@ -802,7 +816,7 @@ overflow: visible; /* これ重要 */
 /* --- 私たちの取り組み ------------------------------------------------------------------------------------------------------------------- */
 
 #about {
-  background-image: url('img/dcd-background.png');
+  background-image: url('img/dcd-background_b.png');
   background-repeat: no-repeat;
   background-position: 110% 16%; 
   background-size: 350px auto; /* サイズも指定可能 */
@@ -1095,17 +1109,17 @@ overflow: visible; /* これ重要 */
 /* --- インスタグラム --------------------------------------------------------------------------------------------------------------------- */
 
 .instagram {
-  background-image: url('img/dcd-background.png');
+  background-image: url('img/dcd-background_c.png');
   background-repeat: no-repeat;
   background-position: -10% 16%; 
-  background-size: 300px auto; /* サイズも指定可能 */
+  background-size: 250px auto; /* サイズも指定可能 */
 }
 
 .instagram-container {
   width: 95vw;
   max-width: 1240px;
   padding: 0 3vw;
-  margin: 0 auto 30px;
+  margin: 0 auto 60px;
 }
 
 .instagram-border {
@@ -1156,6 +1170,9 @@ overflow: visible; /* これ重要 */
   .instagram {
     background-position: -50% 80%; 
     background-size: 180px auto; /* サイズも指定可能 */
+  }
+  .instagram-container {
+    margin: 0 auto 30px;
   }
   .instagram-inner h2 {
     font-size: 1.4em;
