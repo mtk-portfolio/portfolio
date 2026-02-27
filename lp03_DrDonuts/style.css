@@ -1104,7 +1104,7 @@ overflow: visible; /* これ重要 */
 .instagram-container {
   width: 95vw;
   max-width: 1240px;
-  padding: 30px 5vw;
+  padding: 0 3vw;
   margin: 0 auto 30px;
 }
 
@@ -1150,7 +1150,6 @@ overflow: visible; /* これ重要 */
   opacity: 0.7;
 }
 
-
 /* --- インスタレスポンシブ --------------------- */
 
 @media (max-width: 768px) {
@@ -1169,6 +1168,418 @@ overflow: visible; /* これ重要 */
   .instagram-inner img {
     width: 30vw;
     border-radius: 5px;
+  }
+}
+
+/* --- リンクセクション --------------------------------------------------------------------------------------------------------------- */
+
+.link-section {
+  background-color: #faf0e6;
+}
+
+.link-section-container {
+  width: 95vw;
+  max-width: 1240px;
+  padding: 30px 5vw;
+  margin: 0 auto;
+}
+
+
+/* --- SNSレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .link-section-container {
+    padding: 30px 0;
+  }
+}
+
+/* --- SNSボタン ---------------------------------------------------------------------------------- */
+
+.link-sns-btn {
+  margin: 0 auto 30px;
+}
+
+.link-sns-btn ul {
+  display: flex;
+  justify-content: center;
+  gap: 2vw;
+}
+
+/* --- SNSアイコン ----------------- */
+
+.sns-icon {
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  width: 45px;
+  height: 45px;
+}
+
+.sns-icon:hover {
+  opacity: 0.7;
+}
+
+/* インスタ */
+
+.icon-instagram {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.icon-instagram::before {
+  content: "\f16d";
+  font-family: "Font Awesome 6 Brands";
+  font-size: 2em;
+  font-weight: 400;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 自分の幅と高さの半分を戻す */
+}
+
+/* エックス */
+
+.icon-x {
+  background-color: #000;
+}
+
+.icon-x::before {
+  content: "\e61b";
+  font-family: "Font Awesome 6 Brands";
+  font-size: 1.8em;
+  font-weight: 400;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 自分の幅と高さの半分を戻す */
+}
+
+/* ティックトック */
+
+.icon-tiktok {
+  background-color: #000;
+}
+
+/* メインの白いアイコン */
+.icon-tiktok::before {
+  content: "\e07b";
+  font-family: "Font Awesome 6 Brands";
+  font-size: 1.8em;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+/* ズレた色（赤と青）を擬似要素で作る */
+.icon-tiktok::after {
+  content: "\e07b";
+  font-family: "Font Awesome 6 Brands";
+  font-size: 1.8em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* 影（text-shadow）を使って赤と青を左右に飛ばす */
+  text-shadow: 
+    -1px -1px 0 #25F4EE, /* シアン（青緑）を左上に */
+     1px  1px 0 #FE2C55; /* マゼンタ（赤）を右下に */
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* フェイスブック */
+
+.icon-fb {
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.icon-fb::before {
+  content: "\f09a";
+  font-family: "Font Awesome 6 Brands";
+  font-size: 2.8em;
+  font-weight: 400;
+  color: #0866FF;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 自分の幅と高さの半分を戻す */
+}
+
+/* ライン */
+
+.icon-line {
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.icon-line::before {
+  content: "\f3c0";
+  font-family: "Font Awesome 6 Brands";
+  font-size: 2.8em;
+  font-weight: 400;
+  color: #00C84A;
+  position: absolute;
+  top: 51%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 自分の幅と高さの半分を戻す */
+}
+
+/* ようつべ */
+
+.icon-youtube {
+  background-color: #f00;
+}
+
+.icon-youtube::before {
+  content: "\f167";
+  font-family: "Font Awesome 6 Brands";
+  font-size: 1.8em;
+  font-weight: 400;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 自分の幅と高さの半分を戻す */
+}
+
+/* --- SNSレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .link-sns-btn ul {
+    gap: 15px;
+  }
+  .sns-icon {
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+  }
+  /* インスタ */
+  .icon-instagram::before {
+    font-size: 1.1em;
+  }
+  /* エックス */
+  .icon-x::before {
+    font-size: 1em;
+  }
+  /* ティックトック */
+  .icon-tiktok::before {
+    font-size: 1em;
+  }
+  .icon-tiktok::after {
+    font-size: 1em;
+  }
+  /* フェイスブック */
+  .icon-fb::before {
+    font-size: 1.8em;
+  }
+  /* ライン */
+  .icon-line::before {
+    font-size: 1.8em;
+  }
+  /* ようつべ */
+  .icon-youtube::before {
+    font-size: 1em;
+  }
+}
+
+/* --- バナー ------------------------------------------------------------------------------------- */
+
+.link-banner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  margin: 0 auto 30px;
+}
+
+.break {
+  flex-basis: 100%; /* これで幅100%を占領して改行させる */
+  height: 0;
+}
+
+.link-banner img {
+  width: 15vw;
+  min-width: 230px;
+  aspect-ratio: 400 / 129;
+  margin: 0 auto;
+}
+
+.link-banner p {
+  display: block;
+  font-size: 0.8em;
+  color: #444;
+  text-align: center;
+  padding: 3px;
+}
+
+/* --- バナーレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .link-banner {
+    justify-content: left;
+    width: 93%;
+    gap: 15px;
+  }
+  .break {
+    display: none;
+    flex-basis: 0%; /* これで幅100%を占領して改行させる */
+  }
+  .link-banner img {
+    min-width: 150px;
+  }
+  .link-banner p {
+    font-size: 0.6em;
+  }
+}
+
+/* --- リンクボタン ------------------------------------------------------------------------------- */
+
+.link-btn {
+  margin: 20px auto 30px;
+}
+
+.link-btn ul {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.link-btn a {
+  display: block;
+  position: relative;
+  text-align: center;
+  width: 20vw;
+  min-width: 240px;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #6c3524;
+  border-radius: 28px;
+  background-color: #fff;
+  padding: 15px 20px;
+}
+
+.link-btn a:hover {
+  opacity: 0.7;
+}
+
+.link-btn a::after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1em;
+  font-weight: 900;
+  color: #6c3524;
+  position: absolute;
+  right: 20px;
+  top: 13px;
+}
+
+/* --- リンクボタンレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .link-btn {
+    margin: 20px auto;
+  }
+  .link-btn ul {
+    flex-wrap: wrap;
+    width: 93%;
+    justify-content: left;
+    gap: 15px;
+    padding: 10px 0;
+    margin: 0 auto;
+  }
+  .link-btn a {
+    min-width: 150px;
+    font-size: 0.7em;
+  }
+  .link-btn a::after {
+    font-size: 0.8em;
+    right: 20px;
+    top: 13px;
+  }
+}
+
+/* --- リンクリスト ------------------------------------------------------------------------------- */
+
+.link-list {
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+  margin-bottom: 20px;
+}
+
+.link-list-wrap {
+  width: 25vw;
+}
+
+.link-list-wrap ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.link-list-wrap li {
+  padding: 0 0 10px 10px;
+}
+
+.link-list-wrap h3 {
+  display: block;
+  font-size: 1.1em;
+  letter-spacing: 0.05em;
+  color: #6c3524;
+  border-bottom: 1px #6c3524 solid;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.link-list-wrap a {
+  font-size: 0.8em;
+  color: #6c3524;
+}
+
+.link-list-wrap a:hover {
+  opacity: 0.7;
+}
+
+/* --- リンクリストレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .link-list {
+    display: block;
+    margin-bottom: 20px;
+  }
+  .link-list-wrap {
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+  }
+  .link-list-wrap h3 {
+    font-size: 1.1em;
+    border-bottom: 2px solid #6c3524;
+    padding: 10px 0;
+    margin-bottom: 15px;
+  }
+  .link-list-wrap ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .link-list-wrap li {
+    width: 50%; 
+    padding: 0 0 15px 0; /* 下に余白 */
+    box-sizing: border-box;
+  }
+  .link-list-wrap a {
+    font-size: 0.75em;
+    display: block;
+    text-decoration: none;
   }
 }
 
