@@ -677,7 +677,8 @@ overflow: visible; /* これ重要 */
 
 .enjoy-inner h2 {
   font-size: 2em;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   margin-bottom: 30px;
 }
 
@@ -751,7 +752,7 @@ overflow: visible; /* これ重要 */
   background-size: 100% 100%;
   position: absolute;
   right: -5%;
-  top: 25%;
+  top: 18%;
 }
 
 /* --- エンジョイレスポンシブ --------------------- */
@@ -803,39 +804,292 @@ overflow: visible; /* これ重要 */
 #about {
   background-image: url('img/dcd-background.png');
   background-repeat: no-repeat;
-  background-position: -10% 16%; 
+  background-position: 110% 16%; 
   background-size: 350px auto; /* サイズも指定可能 */
-
-  display: none;
 }
 
 .about-container {
-  background-color: #eee8aa;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  background-color: #ffe4c4;
   width: 95vw;
   max-width: 1240px;
   border-radius: 25px;
-  padding: 30px 5vw;
+  padding: 30px 4vw;
   margin: 0 auto 30px;
 }
 
-/* --- おしらせ --------------------------------------------------------------------------------------------------------------------------- */
+.about-text-wrap {
+  display: block;
+  width: 50%;/* 半分 */
+}
 
-.notification {
-  background-image: url('img/dcd-background.png');
-  background-repeat: no-repeat;
-  background-position: -10% 16%; 
-  background-size: 350px auto; /* サイズも指定可能 */
+.about-text-wrap h2 {
+  font-size: 2em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 30px;
+}
 
+.about-desc {
+  display: block;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.about-desc-sp {
   display: none;
 }
 
-.notification-container {
-  background-color: #eee8aa;
-  width: 95vw;
-  max-width: 1240px;
+.about-text-wrap ul {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;    /* 縦方向の隙間だけ指定 */
+  column-gap: 40px; /* 横方向の隙間だけ指定 */
+  position: relative;
+  margin-top: 30px;
+}
+
+.about-text-wrap li {
+  position: relative;
+  font-size: 1em;
+  font-weight: 600;
+  padding-left: 25px;
+}
+
+.about-text-wrap li::before {
+  content: "\f111";
+  font-family: "Font Awesome 6 Free";
+  font-size: 0.7em;
+  font-weight: 900;
+  color: #f08080;
+  position: absolute;
+  left: 3px;
+  top: 5px;
+}
+
+.about-text-wrap a {
+  display: block;
+  position: relative;
+  text-align: center;
+  width: 260px;
+  font-size: 1em;
+  font-weight: 600;
+  color: #6c3524;
+  border: 1px #6c3524 solid;
+  border-radius: 28px;
+  background-color: #fff;
+  padding: 15px 20px;
+  margin-top: 30px;
+}
+
+.about-text-wrap a:hover {
+  opacity: 0.7;
+}
+
+.about-text-wrap a::after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.1em;
+  font-weight: 900;
+  color: #6c3524;
+  position: absolute;
+  right: 20px;
+  top: 13px;
+}
+
+.about-container img {
+  max-width: 45%;
+  height: auto;
   border-radius: 25px;
-  padding: 30px 5vw;
+  margin: 0 auto 20px;
+}
+
+/* --- 私たちの取り組みレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  #about {
+    background-position: 130% 76%; 
+    background-size: 180px auto; /* サイズも指定可能 */
+  }
+  .about-container {
+    flex-direction: column;
+    padding: 30px 20px 110px;
+  }
+  .about-text-wrap h2 {
+    font-size: 1.4em;
+    margin-bottom: 30px;
+  }
+  .about-desc {
+    display: none;
+  }
+  .about-desc-sp {
+    display: block;
+    font-size: 0.9em;
+    font-weight: 400;
+  }
+  .about-text-wrap ul {
+    row-gap: 10px;    /* 縦方向の隙間だけ指定 */
+    column-gap: 15px; /* 横方向の隙間だけ指定 */
+    margin: 30px 0;
+  }
+  .about-text-wrap li {
+    font-size: 0.8em;
+    width: 135px;
+    padding-left: 15px;
+  }
+  .about-text-wrap li::before {
+    font-size: 8px;
+    left: 3px;
+    top: 5px;
+  }
+  .about-text-wrap {
+    width: 100%;
+  }
+  .about-text-wrap a {
+    font-size: 0.8em;
+    width: 220px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0); /* 自分の幅と高さの半分を戻す */
+    margin: 30px auto;
+  }
+  .about-text-wrap a::after {
+    font-size: 1em;
+    top: 15px;
+  }
+  .about-container img {
+    max-width: 100%;
+    border-radius: 15px;
+    margin: 0 auto;
+  }
+}
+
+/* --- お知らせ --------------------------------------------------------------------------------------------------------------------------- */
+
+.notification {
+  background-color: #fff;
+}
+
+.notification-container {
+  display: block;
+  max-width: 1240px;
+  padding: 30px 5vw 10px;
   margin: 0 auto 30px;
+}
+
+.notification-container h2 {
+  font-size: 2em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 30px;
+}
+
+.notification-container p {
+  display: block;
+  padding: 30px 0;
+  border-bottom: 1px #ccc solid;
+}
+
+/* お知らせ日付 */
+.notification-date {
+  display: inline-block;
+  font-size: 0.9em;
+  min-width: 80px;
+  font-weight: 500;
+}
+
+/* --- お知らせタグ --- */
+
+.notification-tag {
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 5px;
+  padding: 3px 10px;
+  margin: 0 10px;
+}
+
+/* 商品情報タグ */
+.tag-product {
+  background-color: #4169e1;
+}
+
+/* お楽しみタグ */
+.tag-joy {
+  background-color: #ff8c00;
+}
+
+/* お知らせ説明（リンク） */
+.notification-topic {
+  font-size: 1em;
+  font-weight: 400;
+  color: #6c3524;
+}
+
+.notification-topic:hover {
+  opacity: 0.7;
+}
+
+/* お知らせ下部リンク */
+.notification-link {
+  display: block;
+  position: relative;
+  text-align: center;
+  width: 260px;
+  font-size: 1em;
+  font-weight: 600;
+  color: #6c3524;
+  border: 1px #6c3524 solid;
+  border-radius: 28px;
+  background-color: #fff;
+  padding: 15px 20px;
+  margin: 30px auto;
+}
+
+.notification-link:hover {
+  opacity: 0.7;
+}
+
+.notification-link::after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.1em;
+  font-weight: 900;
+  color: #6c3524;
+  position: absolute;
+  right: 20px;
+  top: 13px;
+}
+
+/* --- お知らせレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .notification-container {
+    margin: 0 auto;
+  }
+  .notification-container p {
+    padding: 20px 0;
+  }
+  .notification-container h2 {
+    font-size: 1.4em;
+  }
+  .notification-topic {
+    display: block;
+    margin-top: 20px;
+  }
+  .notification-link {
+    font-size: 0.8em;
+    width: 220px;
+    margin: 30px auto 20px;
+  }
+  .notification-link::after {
+    font-size: 1em;
+    top: 15px;
+  }
 }
 
 /* --- インスタグラム --------------------------------------------------------------------------------------------------------------------- */
@@ -844,20 +1098,79 @@ overflow: visible; /* これ重要 */
   background-image: url('img/dcd-background.png');
   background-repeat: no-repeat;
   background-position: -10% 16%; 
-  background-size: 350px auto; /* サイズも指定可能 */
-
-  display: none;
+  background-size: 300px auto; /* サイズも指定可能 */
 }
 
 .instagram-container {
-  background-color: #eee8aa;
   width: 95vw;
   max-width: 1240px;
-  border-radius: 25px;
   padding: 30px 5vw;
   margin: 0 auto 30px;
 }
 
+.instagram-border {
+  display: block;
+  background-image: url('img/border-instagram.png');
+  background-repeat: repeat;
+  background-size: 100% 100%;
+  border-radius: 25px;
+  max-width: 1100px;
+  padding: 8px; /* borderの太さ */
+  margin: 0 auto;
+}
+
+.instagram-inner {
+  display: block;
+  position: relative;
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 25px;
+  text-align: center;
+}
+
+.instagram-inner h2 {
+  font-size: 2em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 30px;
+}
+
+.instagram-inner ul {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.instagram-inner img {
+  width: 13vw;
+  border-radius: 15px;
+}
+
+.instagram-inner a:hover {
+  opacity: 0.7;
+}
+
+
+/* --- インスタレスポンシブ --------------------- */
+
+@media (max-width: 768px) {
+  .instagram {
+    background-position: -50% 80%; 
+    background-size: 180px auto; /* サイズも指定可能 */
+  }
+  .instagram-inner h2 {
+    font-size: 1.4em;
+  }
+  .instagram-inner ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px
+  }
+  .instagram-inner img {
+    width: 30vw;
+    border-radius: 5px;
+  }
+}
 
 /* =================================================================================================================================
    フッター
