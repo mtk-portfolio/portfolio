@@ -15,35 +15,202 @@
 <body>
 
   <header>
+    <!-- ハンバーガーメニュー -->
+    <div class="hamburger-btn" id="js-hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- ハンバーガーの中身 -->
+  <nav class="sp-nav" id="js-sp-nav">
+    <a href="javascript:void(0)" class="sp-nav-logo-link">
+      <img src="img/Dr_Donuts_Header_Logo.png" alt="ロゴ" class="sp-nav-logo-icon">
+    </a>
+    <div class="sp-nav-link-wrap">
+        <ul>
+          <li>
+            <a href="javascript:void(0)">
+            <img src="img/dcd-app.png" alt="アプリダウンロード" class="sp-nav-link-icon round-icon">
+            <p>公式<br>アプリ</p>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+            <img src="img/dcd-netorder.png" alt="docdoネットオーダー" class="sp-nav-link-icon round-icon">
+            <p>docdo<br>ネットオーダー</p>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+            <img src="img/dcd-delivery.png" alt="デリバリー" class="sp-nav-link-icon round-icon">
+            <p>デリバリー</p>
+            </a>
+          </li>
+        </ul>
+    </div>
+    <div class="sp-list-wrap">
+      <ul class="sp-accordion">
+        <li class="sp-accordion-item">
+          <div class="sp-accordion-title">
+            <a href="index.html">
+              <img src="img/dcd-donuts.png" alt="商品情報">
+              <span>商品情報</span>
+            </a>
+            <span class="icon-arrow js-accordion-trigger"></span>
+          </div>
+          <div class="sp-accordion-content">
+            <ul class="sp-sub-list">
+              <li><a href="javascript:void(0)">おすすめ</a></li>
+              <li><a href="javascript:void(0)">ドーナツ・パイ・マフィン</a></li>
+              <li><a href="javascript:void(0)">ピッツァ</a></li>
+              <li><a href="javascript:void(0)">ドリンク・スープ</a></li>
+              <li><a href="javascript:void(0)">メニュー・セット</a></li>
+              <li><a href="javascript:void(0)">ドクド・デリ</a></li>
+              <li><a href="javascript:void(0)">栄養成分・アレルギー</a></li>
+              <li><a href="javascript:void(0)">グッズ情報</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sp-accordion-item">
+          <div class="sp-accordion-title">
+            <a href="index.html">
+              <img src="img/dcd-donuts-logo.png" alt="エンジョイdocdo">
+              <span>エンジョイdocdo</span>
+            </a>
+            <span class="icon-arrow js-accordion-trigger"></span>
+          </div>
+          <div class="sp-accordion-content">
+            <ul class="sp-sub-list">
+              <li><a href="javascript:void(0)">ドクドのヒミツ</a></li>
+              <li><a href="javascript:void(0)">ドクドファンミーティング</a></li>
+              <li><a href="javascript:void(0)">docdo図鑑</a></li>
+              <li><a href="javascript:void(0)">ドクタードーナツの歴史</a></li>
+              <li><a href="javascript:void(0)">おうちでアレンジドーナツ</a></li>
+              <li><a href="javascript:void(0)">docdoチャンネル</a></li>
+              <li><a href="javascript:void(0)">ドクドトリビア</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sp-accordion-item">
+          <div class="sp-accordion-title">
+            <a href="index.html">
+              <img src="img/dcd-heart.png" alt="私たちの取り組み">
+              <span>私たちの取り組み</span>
+            </a>
+            <span class="icon-arrow js-accordion-trigger"></span>
+          </div>
+          <div class="sp-accordion-content">
+            <ul class="sp-sub-list">
+              <li><a href="javascript:void(0)">ドクタードーナツとSDGs</a></li>
+              <li><a href="javascript:void(0)">ドクドストーリー</a></li>
+              <li><a href="javascript:void(0)">おいしさへのこだわり</a></li>
+            </ul>
+          </div>
+        </li>
+        
+        <li class="sp-accordion-item">
+          <div class="sp-accordion-title sp-accordion-title-link">
+            <a href="javascript:void(0)">
+              <img src="img/dcd-pin.png" alt="ショップを探す">
+              <span>ショップを探す</span>
+            </a>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+    <div class="sp-nav-link-1st">
+      <a href="javascript:void(0)">栄養成分・アレルギー情報</a>
+      <a href="javascript:void(0)">アルバイト情報</a>
+    </div>
+    <div class="sp-nav-link-2nd">
+      <a href="javascript:void(0)">よくある質問</a>
+      <a href="javascript:void(0)">お問い合わせ</a>
+    </div>
+    <div class="sp-nav-sns-btn">
+      <ul>
+        <li><a href="javascript:void(0)" class="sns-icon icon-instagram"></a></li>
+        <li><a href="javascript:void(0)" class="sns-icon icon-x"></a></li>
+        <li><a href="javascript:void(0)" class="sns-icon icon-tiktok"></a></li>
+        <li><a href="javascript:void(0)" class="sns-icon icon-fb"></a></li>
+        <li><a href="javascript:void(0)" class="sns-icon icon-line"></a></li>
+        <li><a href="javascript:void(0)" class="sns-icon icon-youtube"></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="js-overlay"></div>
     <!-- ヘッダーナビ -->
     <div class="header-inner">
-      <a href="javascript:void(0)">
+      <a href="javascript:void(0)" class="header-logo-link">
         <img src="img/Dr_Donuts_Header_Logo.png" alt="ロゴ" class="header-logo">
       </a>
       <nav class="nav-1st">
         <ul>
           <li>
-            <a href="javascript:void(0)">
-            <img src="img/dcd-donuts.png" alt="商品情報" class="nav-link-icon">
-            <p>商品情報</p>
-            </a>
+            <div class="nav-1st-product">
+              <a href="javascript:void(0)">
+              <img src="img/dcd-donuts.png" alt="商品情報" class="nav-link-icon">
+              <p>商品情報</p>
+              </a>
+              <div class="nav-1st-product-sub">
+                <ul>
+                  <li><a href="javascript:void(0)">おすすめ</a></li>
+                  <li><a href="javascript:void(0)">ドーナツ・パイ・マフィン</a></li>
+                  <li><a href="javascript:void(0)">ピッツァ</a></li>
+                  <li><a href="javascript:void(0)">ドリンク・スープ</a></li>
+                  <li><a href="javascript:void(0)">メニュー・セット</a></li>
+                  <li><a href="javascript:void(0)">ドクド・デリ</a></li>
+                  <li><a href="javascript:void(0)">栄養成分・アレルギー</a></li>
+                  <li><a href="javascript:void(0)">グッズ情報</a></li>
+                </ul>
+              </div>
+              <p class="nav-1st-product-border">　　</p>
+            </div>
+          </li>
+          <li>
+            <div class="nav-1st-enjoy">
+              <a href="javascript:void(0)" class="nav-link">
+                <img src="img/dcd-donuts-logo.png" alt="エンジョイdocdo" class="nav-link-icon">
+                <p>エンジョイdocdo</p>
+              </a>
+              <div class="nav-1st-enjoy-sub">
+                <ul>
+                  <li><a href="javascript:void(0)">ドクドのヒミツ</a></li>
+                  <li><a href="javascript:void(0)">ドクドファンミーティング</a></li>
+                  <li><a href="javascript:void(0)">docdo図鑑</a></li>
+                  <li><a href="javascript:void(0)">ドクタードーナツの歴史</a></li>
+                  <li><a href="javascript:void(0)">おうちでアレンジドーナツ</a></li>
+                  <li><a href="javascript:void(0)">docdoチャンネル</a></li>
+                  <li><a href="javascript:void(0)">ドクドトリビア</a></li>
+                </ul>
+              </div>
+              <p class="nav-1st-enjoy-border">　　</p>
+            </div>
+          </li>
+          <li>
+            <div class="nav-1st-about">
+              <a href="javascript:void(0)">
+                <img src="img/dcd-heart.png" alt="私たちの取り組み" class="nav-link-icon">
+                <p>私たちの取り組み</p>
+              </a>
+              <div class="nav-1st-about-sub">
+                <ul>
+                  <li><a href="javascript:void(0)">ドクタードーナツとSDGs</a></li>
+                  <li><a href="javascript:void(0)">ドクドストーリー</a></li>
+                  <li><a href="javascript:void(0)">おいしさへのこだわり</a></li>
+                </ul>
+              </div>
+              <p class="nav-1st-about-border">　　</p>
+            </div>
           </li>
           <li>
             <a href="javascript:void(0)">
-            <img src="img/dcd-donuts-logo.png" alt="エンジョイdocdo" class="nav-link-icon">
-            <p>エンジョイdocdo</p>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-            <img src="img/dcd-heart.png" alt="私たちの取り組み" class="nav-link-icon">
-            <p>私たちの取り組み</p>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-            <img src="img/dcd-pin.png" alt="ショップを探す" class="nav-link-icon">
-            <p>ショップを探す</p>
+              <img src="img/dcd-pin.png" alt="ショップを探す" class="nav-link-icon">
+              <p>ショップを探す</p>
             </a>
           </li>
         </ul>
@@ -66,7 +233,7 @@
           <li>
             <a href="javascript:void(0)">
             <img src="img/dcd-netorder.png" alt="docdoネットオーダー" class="nav-link-icon round-icon">
-            <p>docdo<br>ネットオーダー</p>
+            <p class="long-name">docdo<br>ネットオーダー</p>
             </a>
           </li>
           <li>
@@ -446,36 +613,106 @@
     </div>
   </footer>
 
+  <!-- トップに戻るボタン -->
+   <a href="#" class="back-to-top" id="js-back-to-top">
+    <span class="arrow"></span>
+    <span class="text"><i class="fas fa-angle-up"></i></span>
+  </a>
+
   <script>
-  // プロダクトスライダー
-  const productSwiper = new Swiper('.product-swiper', {
-    wrapperClass: 'product-swiper-wrapper',
-    slideClass: 'product-swiper-slide',
+  // ハンバーガーメニュー
+    const btn = document.getElementById('js-hamburger');
+    const nav = document.getElementById('js-sp-nav');
+    const overlay = document.getElementById('js-overlay');
 
-    spaceBetween: 20,
-    loop: true,
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('is-active');    /* ボタンを「×」に変える用 */
+      nav.classList.toggle('is-active');    /* メニューを出す */
+      overlay.classList.toggle('is-active'); /* 暗幕を出す */
+    });
+    // 暗幕をクリックしても閉じるようにする（親切設計）
+    overlay.addEventListener('click', () => {
+      btn.classList.remove('is-active');
+      nav.classList.remove('is-active');
+      overlay.classList.remove('is-active');
+    });
+  // アコーディオンメニュー
+    const triggers = document.querySelectorAll('.js-accordion-trigger');
 
-    navigation: {
-      nextEl: '.product-swiper-button-next',
-      prevEl: '.product-swiper-button-prev',
-    },
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        // クリックされたタイトルの親要素（li）を取得
+        const parent = trigger.closest('.sp-accordion-item');
+        parent.classList.toggle('is-open');
+      });
+    });
+  // ハンバーガーメニュースクロール
+    const body = document.body;
 
-    pagination: {
-      el: '.product-swiper-pagination',
-      clickable: true,
-    },
+    btn.addEventListener('click', () => {
+      // メニューの開閉クラスをトグル
+      // (nav.classList.toggleなどは実装済みとします)
 
-    breakpoints: {
-      0: {
-        slidesPerView: 'auto',
-        centeredSlides: true,
-      },
-      768: {
-        slidesPerView: 4,
-        centeredSlides: false,
+      if (btn.classList.contains('is-active')) {
+        // メニューが開いた時：後ろを固定
+        body.style.overflow = 'hidden';
+        body.style.height = '100%'; 
+      } else {
+        // メニューを閉じた時：固定を解除
+        body.style.overflow = '';
+        body.style.height = '';
       }
-    }
-  });
+    });
+  // ヘッダ追従
+    window.addEventListener('scroll', function() {
+    const header = document.querySelector('.header-inner'); // 追従させたいメニューのクラス名
+    if (window.scrollY > 300) { // 300px以上スクロールしたら
+        header.classList.add('is-fixed');
+      } else {
+        header.classList.remove('is-fixed');
+      }
+    });
+  // プロダクトスライダー
+    const productSwiper = new Swiper('.product-swiper', {
+      wrapperClass: 'product-swiper-wrapper',
+      slideClass: 'product-swiper-slide',
+
+      spaceBetween: 20,
+      loop: true,
+
+      navigation: {
+        nextEl: '.product-swiper-button-next',
+        prevEl: '.product-swiper-button-prev',
+      },
+
+      pagination: {
+        el: '.product-swiper-pagination',
+        clickable: true,
+      },
+
+      breakpoints: {
+        0: {
+          slidesPerView: 'auto',
+          centeredSlides: true,
+        },
+        768: {
+          slidesPerView: 4,
+          centeredSlides: false,
+        }
+      }
+    });
+  // トップに戻るボタン
+    const topBtn = document.querySelector('.back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        topBtn.style.opacity = '1';
+        topBtn.style.visibility = 'visible';
+      } else {
+        topBtn.style.opacity = '0';
+        topBtn.style.visibility = 'hidden';
+      }
+    });
   </script>
 </body>
 </html>
