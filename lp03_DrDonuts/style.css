@@ -27,20 +27,334 @@ img {
    メイン
    ================================================================================================================================= */
 
+/* はみ出しを「物理的にカット」する */
+html, body {
+  overflow-x: hidden; /* 横方向のはみ出しを無視する */
+  width: 100%;
+  position: relative;
+}
+
+@keyframes fadeInOnly {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* 2. ページ全体（body）に適用 */
 body {
   font-family: 'Noto Sans JP', sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* 1.2秒かけてふわっと */
+  animation: fadeInOnly 0.8s ease-out forwards;
 }
 
 h2 {
   font-weight: normal;
 }
 
+header {
+  position: relative;
+}
+
 /* =================================================================================================================================
    ヘッダ
    ================================================================================================================================= */
+
+/* --- ハンバーガーメニュー ------------------------------------------------------------------------------------------------------ */
+
+/* ボタンそのもの */
+.hamburger-btn {
+  position: absolute; /* 追従させるならfixed */
+  top: 10px;
+  right: 15px;
+  width: 30px;     /* ボタンのクリックエリア */
+  height: 30px;
+  cursor: pointer;
+  z-index: 9999;   /* とにかく一番上に持ってくる */
+  display: block;  /* 念のため */
+}
+
+/* --- 三本線 ------------------------------------------------------ */
+
+/* 三本線そのもの */
+.hamburger-btn span {
+  display: block;
+  position: absolute;
+  left: 5px;
+  width: 22px;     /* 線の長さ */
+  height: 3px;     /* 線の太さ */
+  background-color: #6c3524; /* ドクドの茶色 */
+  border-radius: 2px;
+  transition: all 0.3s; /* 後で×にする時のアニメーション用 */
+}
+
+/* 三本線の間隔 */
+.hamburger-btn span:nth-child(1) { top: 10px; } /* 1本目・2本目・3本目の位置をずらす */
+.hamburger-btn span:nth-child(2) { top: 18px; }
+.hamburger-btn span:nth-child(3) { top: 26px; }
+
+/* --- アクティブ時の✕ --- */
+
+/* 1本目：真ん中に移動させてから45度回転 */
+.hamburger-btn.is-active span:nth-child(1) {
+  top: 50% !important;
+  transform: translateY(-50%) rotate(45deg) !important;
+}
+/* 2本目：透明にして消す */
+.hamburger-btn.is-active span:nth-child(2) {
+  opacity: 0 !important;
+  left: 50% !important; /* 横に飛ばすと消えた感が出る */
+}
+/* 3本目：真ん中に移動させてから逆向きに45度回転 */
+.hamburger-btn.is-active span:nth-child(3) {
+  top: 50% !important;
+  transform: translateY(-50%) rotate(-45deg) !important;
+}
+
+/* --- ハンバーガーメニューの中身 ------------------------------------------------------ */
+
+/* メニュー本体 */
+.sp-nav {
+  position: absolute;
+  top: 0;
+  right: -100%; /* 最初は画面の右外に隠す */
+  width: 98%;    /* 画面の8割くらいを占有 */
+  height: 100vh;
+  background: #fff;
+  border-radius: 20px;
+  transition: all 0.4s ease; /* スルスル動くスピード */
+  padding: 20px 45px 20px 25px;
+  z-index: 1500;
+  overflow-y: auto; /* 中身がはみ出したら自動でスクロールバーを出す */
+  -webkit-overflow-scrolling: touch; /* iPhoneでスルスル動かすため */
+  /* 角丸を固定 */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  overflow: hidden; 
+  mask-image: radial-gradient(white, black); /* Safari等のバグ対策 */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+/* クラス「is-active」がついたら、右端を0にする（＝出てくる） */
+.sp-nav.is-active {
+  right: -20px;
+}
+
+/* オーバーレイ（メニューの背後） */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s;
+  z-index: 1400;
+}
+.nav-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ハンバーガーレスポンシブ */
+@media (min-width: 769px) {
+  .hamburger-btn,
+  .sp-nav,
+  .nav-overlay {
+    display: none !important;
+  }
+}
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+}
+
+/* --- ハンバーガーメニュー内の要素 ------------------------------------------------------ */
+
+/* ロゴ */
+.sp-nav-logo-icon {
+  height: 35px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+/* ---アイコンリンク --- */
+
+.sp-nav-link-wrap {
+  margin-bottom: 30px;
+}
+
+/* アイコン画像 */
+.sp-nav-link-icon {
+  width: 30px;
+  margin: 0 auto;
+}
+
+.sp-nav-link-wrap ul {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.sp-nav-link-wrap li {
+  width: 65px;
+}
+
+.sp-nav-link-wrap p {
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ---リンクリスト --- */
+
+/* リスト */
+.sp-accordion-item {
+  background-color: #eee;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+/* タイトル部分 */
+.sp-accordion-title {
+  padding: 15px;
+  font-size: 0.9em;
+  font-weight: 700;
+  color: #6c3524;
+  position: relative;
+  cursor: pointer;
+}
+
+.sp-accordion-title-link:after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.1em;
+  font-weight: 900;
+  color: #6c3524;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+.sp-accordion-title a {
+  display: flex;
+}
+
+.sp-accordion-title img {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+}
+
+/* 右側の矢印（＋を×にするなど） */
+.icon-arrow {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  transition: transform 0.3s;
+}
+.icon-arrow::before { content: "＋"; }
+
+.sp-accordion-content {
+  display: grid;
+  grid-template-rows: 0fr; /* ここが 0 だと隠れる */
+  transition: grid-template-rows 0.3s ease;
+  overflow: hidden;
+  background-color: #eee; /* 開いた時の背景色を変えると見やすい */
+  border-radius: 15px;
+}
+
+.sp-sub-list {
+  min-height: 0;
+}
+
+/* --- 開いた時（アクティブ時） --- */
+
+.sp-accordion-item.is-open .sp-accordion-content {
+  grid-template-rows: 1fr; /* ここが 1fr になると中身の高さ分だけ広がる */
+}
+
+.sp-accordion-item.is-open .icon-arrow {
+  transform: rotate(45deg); /* ＋を斜めにして×っぽく見せる */
+}
+
+.sp-accordion-item.is-open .sp-sub-list {
+  border-top: 1px #6c3524 solid;
+}
+
+/* --- アコーディオンリスト ------------------------------------------------------------------------------- */
+
+.sp-accordion-content ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 5px 5px;
+}
+.sp-accordion-content li {
+  font-size: 0.7em;
+  font-weight: 500;
+  color: #6c3524;
+  width: 50%; 
+  padding: 10px 8px; /* 下に余白 */
+  box-sizing: border-box;
+}
+
+/* ---リンク ------------------------------------------------------------------------------ */
+
+.sp-nav-link-1st a,
+.sp-nav-link-2nd a {
+  display: block;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: #6c3524;
+  border: 1px #aaa solid;
+  border-radius: 28px;
+  background-color: #fff;
+  box-shadow: 4px 4px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  margin: 0 auto 15px;
+}
+
+.sp-nav-link-1st a:after,
+.sp-nav-link-2nd a:after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.1em;
+  font-weight: 900;
+  color: #6c3524;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+.sp-nav-link-2nd a {
+  width: 50%;
+}
+
+.sp-nav-link-2nd {
+  display: flex;
+  gap: 15px;
+}
+
+/* ---SNSボタン ------------------------------------------------------------------------------ */
+
+.sp-nav-sns-btn {
+  padding: 15px;
+  margin: 0 auto 15px;
+}
+
+.sp-nav-sns-btn ul {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
 
 /* --- ヘッダーナビゲーション ------------------------------------------------------------------------------------------------------ */
 
@@ -92,8 +406,233 @@ h2 {
   display: block;
 }
 
-.nav-1st a:hover {
-  border-bottom: 1px #000 solid;
+/* --- サブボックス ---------------- */
+
+/* 親要素をrelativeに */
+.nav-1st-product,
+.nav-1st-enjoy,
+.nav-1st-about {
+  position: relative;
+}
+
+/* サブボックスを消して位置を固定 */
+.nav-1st-product-sub,
+.nav-1st-enjoy-sub,
+.nav-1st-about-sub {
+  display: none;
+  position: absolute;
+  top:160%;
+  z-index: 2;
+}
+
+/* サブボックス上部の線 */
+.nav-1st-product-border,
+.nav-1st-enjoy-border,
+.nav-1st-about-border  {
+  display: none;
+  position: absolute;
+  top: 140%;
+  left: 50%;
+  width: 20px;
+  transform: translate(-50%, -50%); /* 自分の幅と高さの半分を戻す */
+  text-align: center;
+  border-radius: 3px;
+  z-index: 3;
+}
+
+/* 商品情報のトンガリ */
+.nav-1st-product-border::before,
+.nav-1st-product-border::after {
+  content: "";
+  position: absolute;
+  bottom: 7px;    /* ボックスの上辺に配置 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+}
+.nav-1st-product-border::before {
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 18px solid #6c3524;
+  margin-bottom: 0px; 
+}
+.nav-1st-product-border::after {
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 18px solid #fff;
+  margin-bottom: -2px; 
+}
+
+/* エンジョイのトンガリ */
+.nav-1st-enjoy-border::before,
+.nav-1st-enjoy-border::after {
+  content: "";
+  position: absolute;
+  bottom: 7px;    /* ボックスの上辺に配置 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+}
+.nav-1st-enjoy-border::before {
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 18px solid #6c3524;
+  margin-bottom: 0px; 
+}
+.nav-1st-enjoy-border::after {
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 18px solid #fff;
+  margin-bottom: -2px; 
+}
+
+/* 私たちのトンガリ */
+.nav-1st-about-border::before,
+.nav-1st-about-border::after {
+  content: "";
+  position: absolute;
+  bottom: 7px;    /* ボックスの上辺に配置 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+}
+.nav-1st-about-border::before {
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 18px solid #6c3524;
+  margin-bottom: 0px; 
+}
+.nav-1st-about-border::after {
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 18px solid #fff;
+  margin-bottom: -2px; 
+}
+
+/* --- サブボックス -------- */
+
+.nav-1st-product-sub ul,
+.nav-1st-enjoy-sub ul,
+.nav-1st-about-sub ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+  width: 90vw;     /* 固定pxではなく、画面幅に対する割合にする */
+  max-width: 900px; /* 最大でも900pxまでに制限 */
+  height: 120px;
+  border: 1px #6c3524 solid;
+  border-radius: 10px;
+  background-color: #fff;
+  row-gap: 0;    /* 縦方向の隙間だけ指定 */
+  column-gap: 20px; /* 横方向の隙間だけ指定 */
+  padding: 15px;
+}
+
+.nav-1st-product-sub li,
+.nav-1st-enjoy-sub li,
+.nav-1st-about-sub li {
+  display: inline-block;
+  position: relative;
+  border-right: none;
+  font-size: 1em;
+  color: #6c3524;
+  width: 200px;
+  height: 30px;
+  padding: 3px 5px 10px 20px;
+  text-align: left;
+}
+
+.nav-1st-product-sub li a:hover,
+.nav-1st-enjoy-sub li a:hover,
+.nav-1st-about-sub li a:hover {
+  opacity: 0.7;
+}
+
+.nav-1st-product-sub li a:before,
+.nav-1st-enjoy-sub li a:before,
+.nav-1st-about-sub li a:before {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.1em;
+  font-weight: 900;
+  color: #6c3524;
+  position: absolute;
+  left: 5px;
+  top: 3px;
+}
+
+/* --- アイコンホバー時の挙動 -------- */
+
+/* 商品情報 */
+.nav-1st-product:hover .nav-1st-product-sub {
+  display: block;
+  left: 50%;
+  transform: translateX(-36%);
+}
+.nav-1st-product:hover .nav-1st-product-border {
+  display: block;
+  padding-bottom: 10px;
+  border-top: 5px #6c3524 solid;
+}
+
+/* エンジョイ */
+.nav-1st-enjoy:hover .nav-1st-enjoy-sub {
+  display: block;
+  left: 50%;
+  transform: translateX(-49%);
+}
+.nav-1st-enjoy:hover .nav-1st-enjoy-border {
+  display: block;
+  padding-bottom: 10px;
+  border-top: 5px #6c3524 solid;
+}
+
+/* 私たちの取り組み */
+.nav-1st-about:hover .nav-1st-about-sub {
+  display: block;
+  left: 50%;
+  transform: translateX(-64%);
+}
+.nav-1st-about:hover .nav-1st-about-border {
+  display: block;
+  padding-bottom: 10px;
+  border-top: 5px #ff69b4 solid;
+}
+
+/* --- サブボックスレスポンシブ-------- */
+
+@media (max-width: 1300px) {
+  .nav-1st-product-sub ul,
+  .nav-1st-enjoy-sub ul,
+  .nav-1st-about-sub ul {
+    width: 70vw;     /* 固定pxではなく、画面幅に対する割合にする */
+    max-width: 900px; /* 最大でも900pxまでに制限 */
+    column-gap: 15px; /* 横方向の隙間だけ指定 */
+    padding: 15px;
+  }
+  .nav-1st-product-sub li,
+  .nav-1st-enjoy-sub li,
+  .nav-1st-about-sub li {
+    width: 150px;
+    height: 30px;
+    padding: 3px 5px 10px 20px;
+  }
+  /* 商品情報 */
+  .nav-1st-product:hover .nav-1st-product-sub {
+    transform: translateX(-15%);
+  }
+  /* エンジョイ */
+  .nav-1st-enjoy:hover .nav-1st-enjoy-sub {
+    transform: translateX(-25%);
+  }
+  /* 私たちの取り組み */
+  .nav-1st-about:hover .nav-1st-about-sub {
+    transform: translateX(-35%);
+  }
 }
 
 /* --- 2ndナビ ------------------------------------------------------------------ */
@@ -129,7 +668,7 @@ h2 {
 }
 
 .nav-3rd li {
-  font-size: 0.6em;
+  font-size: 0.7em;
   font-weight: 600;
   line-height: 1;
   text-align: center;
@@ -143,6 +682,41 @@ h2 {
 
 .round-icon:hover {
   opacity: 0.7;
+}
+
+.long-name {
+  font-size: 0.6em;
+}
+
+/* --- ヘッダー追従 ------------------------------------------------------------------ */
+
+.header-inner {
+  width: 100%;
+  transition: all 0.3s ease; /* ふわっと出すためのアニメーション */
+}
+
+.header-inner.is-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 1); /* 少し透かすと今風 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .header-inner.is-fixed {
+    position: static; /* 固定を解除して元の位置に戻す */
+    box-shadow: none;
+  }
+}
+
+/* PC版(769px以上)で、かつ追従中(is-fixed)の時だけ適用 */
+@media (min-width: 769px) {
+  .header-inner.is-fixed {
+    /* ここにPC追従時専用のスタイルを書く */
+    padding: 10px 20px 30px;
+  }
 }
 
 /* --- ヘッダーナビレスポンシブ ------------------------------------------------------------------ */
@@ -169,27 +743,30 @@ h2 {
 }
 
 @media (max-width: 768px) {
+  .header-inner {
+    justify-content: left;
+    padding: 10px 0 10px 15px;
+  }
   .nav-link-icon {
-    width: 20px;
+    width: 22px;
   }
   .header-logo {
     height: 22px;
+    margin-right: 20px;
   }
-  .nav-1st ul {
+  .nav-1st {
     display: none;
   }
-  .nav-1st li {
-    display: auto;
-  }
-  .nav-2nd ul {
+  .nav-2nd {
     display: none;
-  }
-  .nav-2nd li {
-    min-width: auto;
   }
   .nav-3rd li {
+    width: 45px;
     font-size: 7px;
     padding: 0 5px;
+  }
+  .long-name {
+    font-size: 5px;
   }
 }
 
@@ -1650,5 +2227,62 @@ footer a:hover {
     margin-top: 30px;
     flex-direction: column;
     text-align: center;
+  }
+}
+
+/* =================================================================================================================================
+   トップに戻るボタン
+   ================================================================================================================================= */
+
+.back-to-top {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  font-size: 1.2em;
+  font-weight: 900;
+  color: #6c3524;
+  z-index: 9999;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 周辺 */
+  border-radius: 50%;
+  box-shadow: 
+    15px 0 0 -5px #6c3524,   /* 右の粒 */
+    -15px 0 0 -5px #6c3524,  /* 左の粒 */
+    0 15px 0 -5px #6c3524,   /* 下の粒 */
+    0 -15px 0 -5px #6c3524,  /* 上の粒 */
+    11px 11px 0 -5px #6c3524,  /* 右下の粒 */
+    -11px -11px 0 -5px #6c3524, /* 左上の粒 */
+    11px -11px 0 -5px #6c3524,  /* 右上の粒 */
+    -11px 11px 0 -5px #6c3524,  /* 左下の粒 */
+    4px 4px 15px rgba(0,0,0,0.2); /* 最後に全体のうっすら影 */
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+
+/* スムーズスクロール */
+html {
+  scroll-behavior: smooth;
+}
+
+.back-to-top:hover {
+  transform: scale(1.2); /* ホバーで少し回転して弾む感じ */
+  transition: all 0.3s; /* 後で×にする時のアニメーション用 */
+}
+
+/* トップに戻るボタンレスポンシブ */
+
+@media (max-width: 768px) {
+  .back-to-top {
+    width: 30px;
+    height: 30px;
   }
 }
