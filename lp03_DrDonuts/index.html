@@ -10,9 +10,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=M+PLUS+Rounded+1c&family=Tsukimi+Rounded&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
+  <!-- アプリバナー -->
+  <div id="js-app-banner" class="app-banner">
+    <div class="app-banner-inner">
+      <button id="js-close-banner" class="app-banner-close">×</button>
+      <div class="app-banner-icon">
+        <img src="img/dcd-app.png" alt="ドクドアプリ">
+      </div>
+      <div class="app-banner-text">
+        <p class="app-banner-title">ドクタードーナツ公式アプリ</p>
+        <p class="app-banner-desc">割引クーポン配布中！ダウンロードはこちら</p>
+      </div>
+      <a href="#" class="app-banner-btn">入手</a>
+    </div>
+  </div>
 
   <header>
     <!-- ハンバーガーメニュー -->
@@ -259,17 +276,71 @@
     <div class="hero-container">
       <section id="hero" class="swiper">
         <div class="swiper-wrapper">
-          <a href="#" class="swiper-link">
-            <div class="swiper-slide"></div>
-          </a>
+          <!-- ネットオーダー -->
+          <div class="swiper-slide">
+            <a href="javascript:void(0)" class="swiper-link">
+              <img src="img/hero01.png" alt="Slide 1">
+              <div class="swiper-desc-wrap swiper-net-order">
+                <h2>ネットオーダー限定ドーナツ</h2>
+                <p class="swiper-desc">掲載情報の予約可能日時はショップに寄って異なります</p>
+                <p class="swiper-caution">※写真・イラストは架空のイメージです。</p>
+              </div>
+            </a>
+          </div>
+          <!-- アルバイト情報 -->
+          <div class="swiper-slide">
+            <a href="javascript:void(0)" class="swiper-link">
+              <img src="img/hero02.png" alt="Slide 2">
+              <div class="swiper-desc-wrap swiper-part-time">
+                <h2>アルバイト募集中</h2>
+                <p class="swiper-desc">ドクドで一緒にドーナツ作りませんか？</p>
+                <p class="swiper-caution">※写真・イラストは架空のイメージです。</p>
+              </div>
+            </a>
+          </div>
+          <!-- スムージー -->
+          <div class="swiper-slide">
+            <a href="javascript:void(0)" class="swiper-link">
+              <img src="img/hero03.png" alt="Slide 3">
+              <div class="swiper-desc-wrap swiper-smoothie">
+                <h2>３種のスムージー新発売！</h2>
+                <p class="swiper-desc">選べる、3つのうるおい。新スムージー、はじまる。</p>
+                <p class="swiper-caution">※写真・イラストは架空のイメージです。</p>
+              </div>
+            </a>
+          </div>
+          <!-- カーススフレ -->
+          <div class="swiper-slide">
+            <a href="javascript:void(0)" class="swiper-link">
+              <img src="img/hero04.png" alt="Slide 4">
+              <div class="swiper-desc-wrap swiper-calf-souffle">
+                <h2>ドクドのカーススフレ</h2>
+                <p class="swiper-desc">とろける、温まる。私へのご褒美スフレ。</p>
+                <p class="swiper-caution">※写真・イラストは架空のイメージです。</p>
+              </div>
+            </a>
+          </div>
+          <!-- カプサロン -->
+          <div class="swiper-slide">
+            <a href="javascript:void(0)" class="swiper-link">
+              <img src="img/hero05.png" alt="Slide 5">
+              <div class="swiper-desc-wrap swiper-kapsalon">
+                <h2>こだわりのカプサロン</h2>
+                <p class="swiper-desc">一皿に、すべての欲張り。今夜はカプサロン。</p>
+                <p class="swiper-caution">※写真・イラストは架空のイメージです。</p>
+              </div>
+            </a>
+          </div>
         </div>
       </section>
       
       <div class="hero-controls">
         <div class="swiper-pagination"></div>
-        <button class="play-pause-btn" aria-label="再生・停止"></button>
       </div>
     </div>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <!-- コンテンツ -->
     <section class="contents">
@@ -620,6 +691,97 @@
   </a>
 
   <script>
+  // アプリバナー
+// アプリバナーの制御
+document.addEventListener('DOMContentLoaded', () => {
+  const banner = document.getElementById('js-app-banner');
+  const closeBtn = document.getElementById('js-close-banner');
+  const STORAGE_KEY = 'dokudo_banner_closed';
+
+  function checkBanner() {
+    const isClosed = localStorage.getItem(STORAGE_KEY);
+    // スマホ幅（767px以下）かつ、まだ閉じていない場合に表示
+    if (!isClosed && window.innerWidth <= 767) {
+      banner.classList.add('is-visible');
+    } else {
+      banner.classList.remove('is-visible');
+    }
+  }
+
+  if (banner && closeBtn) {
+    // 初回チェック
+    checkBanner();
+
+    // 画面サイズを変えた時もチェック（PCで検証しやすくするため）
+    window.addEventListener('resize', checkBanner);
+
+    // 閉じるボタン
+    closeBtn.addEventListener('click', () => {
+      banner.classList.remove('is-visible');
+      localStorage.setItem(STORAGE_KEY, 'true'); // 閉じた記録を保存
+    });
+  }
+});
+  // スライドショー
+    document.addEventListener('DOMContentLoaded', () => {
+      const DELAY = 5000;
+      const OFFSET_VAL = 301.6;
+
+      const swiper = new Swiper('#hero', {
+        // --- スライドショー本体の設定 -------------------------------------------
+        loop: true,
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true
+        },
+        speed: 1200,
+        autoplay: {
+          delay: DELAY,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true, // 【追加】マウスホバー時に自動送りをストップ
+        },
+
+        // --- コントローラー（サムネイル）の生成 -----------------------------------
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          renderBullet: function (index, className) {
+            const imgNum = (index + 1).toString().padStart(2, '0');
+            const imgPath = `img/hero${imgNum}.png`;
+            
+            return `
+              <div class="${className}">
+                <img src="${imgPath}" class="bullet-img">
+                <svg class="progress-svg" viewBox="0 0 100 100">
+                  <circle class="progress-circle-bg" cx="50" cy="50" r="48"></circle>
+                  <circle class="progress-circle-main" cx="50" cy="50" r="48"></circle>
+                </svg>
+              </div>`;
+          },
+        },
+
+        // --- コントローラーの周期の可視化（プログレスバー同期） -----------------------
+        on: {
+          // スライドが切り替わり始めたら全ゲージをリセット
+          slideChangeTransitionStart: function() {
+            const allCircles = document.querySelectorAll('.progress-circle-main');
+            allCircles.forEach(circle => {
+              circle.style.transition = 'none';
+              circle.style.strokeDashoffset = OFFSET_VAL;
+            });
+          },
+          // 切り替わり完了後、今のアクティブなゲージだけを動かす
+          slideChangeTransitionEnd: function() {
+            const activeBullet = document.querySelector('.swiper-pagination-bullet-active .progress-circle-main');
+            if (activeBullet) {
+              activeBullet.getBoundingClientRect(); // 強制再描画
+              activeBullet.style.transition = `stroke-dashoffset ${DELAY}ms linear`;
+              activeBullet.style.strokeDashoffset = '0';
+            }
+          }
+        }
+      });
+    });
   // ハンバーガーメニュー
     const btn = document.getElementById('js-hamburger');
     const nav = document.getElementById('js-sp-nav');
