@@ -58,6 +58,75 @@ header {
 }
 
 /* =================================================================================================================================
+   アプリバナー
+   ================================================================================================================================= */
+
+/* --- アプリバナー ----------------------------------- */
+.app-banner {
+  display: none; /* デフォルトは非表示（JSで制御） */
+  background: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 2000;
+}
+
+/* スマホの時だけ表示の候補に入れる */
+@media (max-width: 767px) {
+  .app-banner.is-visible {
+    display: block;
+  }
+}
+
+.app-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-banner-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.app-banner-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-banner-text {
+  flex: 1;
+}
+
+.app-banner-title {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.app-banner-desc {
+  font-size: 10px;
+  color: #666;
+  margin: 2px 0 0;
+}
+
+.app-banner-btn {
+  background: #007aff; /* iOS風の青 */
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* =================================================================================================================================
    ヘッダ
    ================================================================================================================================= */
 
@@ -776,56 +845,211 @@ header {
 
 /* --- ヒーロー全体 --------------------------------------------------------------------------------------------------------------- */
 
-#hero.swiper {
+/* --- スライドショー --------------------------------------------------------- */
+
+/* スワイパーからコントローラーまで */
+.hero-container {
   width: 100%;
-  height: 50vw; 
   margin: 0 auto;
-  padding: 20px 3vw;
+  position: relative;
+  padding: 20px 2vw;
+  margin-bottom: 10px;
 }
 
-.swiper-wrapper {
-  height: 100%;
+/* スワイパー全体 */
+.swiper {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 30px;
+  overflow: hidden;
 }
 
-.swiper-link {
+.swiper-slide {
+  position: relative;
+}
+
+/* スライド画像 */
+.swiper-slide img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 55vw;
+  aspect-ratio: 1000 / 666;
+  background-size: 100% auto;
+  object-fit: cover; /* 比率を維持したまま、指定サイズに「切り抜き」 */
+  object-position: 50% 60%; /* どこを中心に残すか（デフォルトは中央） */
+  margin: 0 auto;
 }
 
-.swiper-slide {
+/* --- 説明部分 ----------------------------------------------- */
+
+.swiper-desc-wrap {
+  position: absolute;
+  bottom: 0;
+  display: block;
   width: 100%;
-  height: 100%;
-  background-image: url('img/hero01.png');
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 25px;
+  height: 200px;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 900;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  padding: 10px 0;
 }
 
-/* スライドショーコントローラー */
-.hero-controls {
-  display: flex;
-  width: 100%;
-  height: 100px;
-  background-color: #fafafa;
-  border-top: 1px #999 dotted;
-  border-bottom: 1px #999 dotted;
+.swiper-desc-wrap h2 {
+  font-size: 3em;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
+.swiper-desc {
+  font-size: 1.5em;
+}
+
+.swiper-caution {
+  font-size: 1em;
+  margin-top: 15px;
+  text-decoration: underline;
+}
+
+/* スワイパー別テーマカラー */
+.swiper-net-order {
+  color: #000;
+  background-color: rgba(252, 228, 13, 0.8);
+}
+.swiper-part-time {
+  color: #fff;
+  background-color: rgba(255, 94, 242, 0.8);
+}
+.swiper-smoothie {
+  color: #fff;
+  background-color: rgba(57, 230, 18, 0.8);
+}
+.swiper-calf-souffle {
+  color: #fff;
+  background-color: rgba(245, 132, 20, 0.8);
+}
+.swiper-kapsalon {
+  color: #fff;
+  background-color: rgba(252, 54, 28, 0.8);
+}
+
+/* --- スライドショーレスポンシブ --- */
 
 @media (max-width: 768px) {
-#hero.swiper {
-  height: 60vh;
-  padding: 0;
+  .hero-container {
+    padding: 0 0 20px;
+    margin-bottom: 10px;
+  }
+  .swiper {
+    border-radius: 0;
+  }
+  .swiper-slide img {
+    height: 100vw;
+    object-position: 50% 60%; /* どこを中心に残すか（デフォルトは中央） */
+  }
+  .swiper-desc-wrap {
+    position: static;
+    height: 120px;
+  }
+  .swiper-desc-wrap h2 {
+    font-size: 1.4em;
+  }
+  .swiper-desc {
+    font-size: 0.8em;
+  }
+  .swiper-caution {
+    font-size: 0.6em;
+    margin-top: 10px;
+  }
 }
-.swiper-slide {
-  background-size: cover;
-  border-radius: 0;
-}
+
+
+/* --- スライドコントローラー -------------------------------------------------- */
+
 .hero-controls {
-  height: 50px;
+  display: flex;
+  margin-top: 30px;
 }
+
+.swiper-pagination {
+  position: static !important;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* 親バレット：100pxの正方形。ここを基準(absolute)にする */
+.swiper-pagination-bullet {
+  width: 6vw !important;
+  height: 6vw !important;
+  background: none !important;
+  opacity: 1 !important;
+  position: relative; /* 基準点 */
+  cursor: pointer;
+  margin: 0 !important;
+  border: none !important;
+}
+
+/* サムネイル画像：絶対配置で中央へ */
+.bullet-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 中央寄せ */
+  width: 5vw;
+  height: 5vw;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* ゲージSVG：絶対配置で全面を覆う */
+.progress-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* 12時から開始 */
+  z-index: 2;
+  pointer-events: none;
+}
+
+.progress-circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 4;
+}
+
+.progress-circle-main {
+  fill: none;
+  stroke: #ff4500;
+  stroke-width: 4;
+  stroke-dasharray: 301.6; /* 2 * π * 48 */
+  stroke-dashoffset: 301.6;
+  transition: none;
+}
+
+/* 各サムネイルへの画像割り当て（念のためCSSでも指定可能にする構造） */
+.swiper-pagination-bullet:nth-child(1) { --bg: url('img/hero01.png'); }
+.swiper-pagination-bullet:nth-child(2) { --bg: url('img/hero02.png'); }
+.swiper-pagination-bullet:nth-child(3) { --bg: url('img/hero03.png'); }
+.swiper-pagination-bullet:nth-child(4) { --bg: url('img/hero04.png'); }
+.swiper-pagination-bullet:nth-child(5) { --bg: url('img/hero05.png'); }
+
+/* --- スライドコントローラーレスポンシブ -------------------------- */
+
+@media (max-width: 768px) {
+  /* 親バレット：100pxの正方形。ここを基準(absolute)にする */
+  .swiper-pagination-bullet {
+    width: 45px !important;
+    height:45px !important;
+  }
+  /* サムネイル画像：絶対配置で中央へ */
+  .bullet-img {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 /* --- コンテンツ ------------------------------------------------------------------------------------------------------------------- */
@@ -1095,7 +1319,7 @@ overflow: visible; /* これ重要 */
 
 /* コントロールバーの枠 */
 .product-swiper-pagination {
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   width: 100px;
@@ -1104,19 +1328,24 @@ overflow: visible; /* これ重要 */
   border-radius: 15px;
   margin: 15px 20px 0;
   overflow: hidden;
+  position: static !important; /* 絶対配置を解除 */
 }
 
+/* メイン側の background: none !important に勝つために、!important で色を付け直す */
 .product-swiper-pagination .swiper-pagination-bullet {
-  flex: none;            /* ← これが重要（flexで潰れるのを防ぐ） */
-  width: 20%;
-  height: 100%;
+  flex: none;
+  width: 20% !important; /* 横長のバーの幅を維持 */
+  height: 100% !important;
   margin: 0 !important;
-  background: #eee;
-  border-radius: 0;
+  background: #eee !important; /* メイン側の透明化をこれで上書き！ */
+  border-radius: 0 !important;
+  opacity: 1 !important;
+  cursor: pointer;
 }
 
+/* アクティブ時の色（茶色） */
 .product-swiper-pagination .swiper-pagination-bullet-active {
-  background: #6c3524;
+  background: #6c3524 !important; /* アクティブなバーの色を強制 */
 }
 
 /* --- プロダクトレスポンシブ --------------------- */
