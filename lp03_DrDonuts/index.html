@@ -692,36 +692,35 @@
 
   <script>
   // アプリバナー
-// アプリバナーの制御
-document.addEventListener('DOMContentLoaded', () => {
-  const banner = document.getElementById('js-app-banner');
-  const closeBtn = document.getElementById('js-close-banner');
-  const STORAGE_KEY = 'dokudo_banner_closed';
+    document.addEventListener('DOMContentLoaded', () => {
+      const banner = document.getElementById('js-app-banner');
+      const closeBtn = document.getElementById('js-close-banner');
+      const STORAGE_KEY = 'dokudo_banner_closed';
 
-  function checkBanner() {
-    const isClosed = localStorage.getItem(STORAGE_KEY);
-    // スマホ幅（767px以下）かつ、まだ閉じていない場合に表示
-    if (!isClosed && window.innerWidth <= 767) {
-      banner.classList.add('is-visible');
-    } else {
-      banner.classList.remove('is-visible');
-    }
-  }
+      function checkBanner() {
+        const isClosed = localStorage.getItem(STORAGE_KEY);
+        // スマホ幅（767px以下）かつ、まだ閉じていない場合に表示
+        if (!isClosed && window.innerWidth <= 767) {
+          banner.classList.add('is-visible');
+        } else {
+          banner.classList.remove('is-visible');
+        }
+      }
 
-  if (banner && closeBtn) {
-    // 初回チェック
-    checkBanner();
+      if (banner && closeBtn) {
+        // 初回チェック
+        checkBanner();
 
-    // 画面サイズを変えた時もチェック（PCで検証しやすくするため）
-    window.addEventListener('resize', checkBanner);
+        // 画面サイズを変えた時もチェック（PCで検証しやすくするため）
+        window.addEventListener('resize', checkBanner);
 
-    // 閉じるボタン
-    closeBtn.addEventListener('click', () => {
-      banner.classList.remove('is-visible');
-      localStorage.setItem(STORAGE_KEY, 'true'); // 閉じた記録を保存
+        // 閉じるボタン
+        closeBtn.addEventListener('click', () => {
+          banner.classList.remove('is-visible');
+          localStorage.setItem(STORAGE_KEY, 'true'); // 閉じた記録を保存
+        });
+      }
     });
-  }
-});
   // スライドショー
     document.addEventListener('DOMContentLoaded', () => {
       const DELAY = 5000;
