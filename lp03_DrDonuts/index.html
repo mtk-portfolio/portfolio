@@ -34,16 +34,18 @@
   <header>
     <!-- ハンバーガーメニュー -->
     <div class="hamburger-btn" id="js-hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
   <!-- ハンバーガーの中身 -->
   <nav class="sp-nav" id="js-sp-nav">
+    <!-- ナビ内ロゴ -->
     <a href="javascript:void(0)" class="sp-nav-logo-link">
       <img src="img/Dr_Donuts_Header_Logo.png" alt="ロゴ" class="sp-nav-logo-icon">
     </a>
+    <!-- アイコン -->
     <div class="sp-nav-link-wrap">
         <ul>
           <li>
@@ -66,6 +68,7 @@
           </li>
         </ul>
     </div>
+    <!-- アコーディオンメニュー -->
     <div class="sp-list-wrap">
       <ul class="sp-accordion">
         <li class="sp-accordion-item">
@@ -139,6 +142,7 @@
         
       </ul>
     </div>
+    <!-- ナビ内リンク -->
     <div class="sp-nav-link-1st">
       <a href="javascript:void(0)">栄養成分・アレルギー情報</a>
       <a href="javascript:void(0)">アルバイト情報</a>
@@ -147,6 +151,7 @@
       <a href="javascript:void(0)">よくある質問</a>
       <a href="javascript:void(0)">お問い合わせ</a>
     </div>
+    <!-- ナビ内SNSボタン -->
     <div class="sp-nav-sns-btn">
       <ul>
         <li><a href="javascript:void(0)" class="sns-icon icon-instagram"></a></li>
@@ -691,7 +696,7 @@
   </a>
 
   <script>
-  // アプリバナー
+  // === アプリバナー ========================================================================================
     document.addEventListener('DOMContentLoaded', () => {
       const banner = document.getElementById('js-app-banner');
       const closeBtn = document.getElementById('js-close-banner');
@@ -706,7 +711,6 @@
           banner.classList.remove('is-visible');
         }
       }
-
       if (banner && closeBtn) {
         // 初回チェック
         checkBanner();
@@ -721,7 +725,7 @@
         });
       }
     });
-  // スライドショー
+  // === スライドショー ========================================================================================
     document.addEventListener('DOMContentLoaded', () => {
       const DELAY = 5000;
       const OFFSET_VAL = 301.6;
@@ -781,23 +785,40 @@
         }
       });
     });
-  // ハンバーガーメニュー
+  // === ハンバーガーメニュー ========================================================================================
+    // 各要素の取得
     const btn = document.getElementById('js-hamburger');
     const nav = document.getElementById('js-sp-nav');
     const overlay = document.getElementById('js-overlay');
+    const closeBtn = document.getElementById('js-sp-close'); // 【追加】白丸の×ボタン
 
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('is-active');    /* ボタンを「×」に変える用 */
-      nav.classList.toggle('is-active');    /* メニューを出す */
-      overlay.classList.toggle('is-active'); /* 暗幕を出す */
-    });
-    // 暗幕をクリックしても閉じるようにする（親切設計）
-    overlay.addEventListener('click', () => {
-      btn.classList.remove('is-active');
+    // 共通の「閉じる」処理（アニメーション待ちを入れる）
+    const closeMenu = () => {
+      // 1. まずメニューと暗幕を引っ込める（CSSのtransition開始）
       nav.classList.remove('is-active');
       overlay.classList.remove('is-active');
+      // 2. メニューが右へ消えきるのを待ってから、ボタンのfixed状態（is-active）を解除
+      setTimeout(() => {
+        btn.classList.remove('is-active');
+      }, 200); // ディレイの調整
+    };
+    // ハンバーガーボタンの制御（開くときは即時、閉じるときはタイマー）
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('is-active')) {
+        closeMenu(); // すでに開いていたらタイマー付きで閉じる
+      } else {
+        btn.classList.add('is-active');
+        nav.classList.add('is-active');
+        overlay.classList.add('is-active');
+      }
     });
-  // アコーディオンメニュー
+    // 暗幕をクリックしても閉じる
+    overlay.addEventListener('click', closeMenu);
+    // sp-nav内の専用×ボタン（白丸）をクリックしても閉じる
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeMenu);
+    }
+  // === アコーディオンメニュー ========================================================================================
     const triggers = document.querySelectorAll('.js-accordion-trigger');
 
     triggers.forEach(trigger => {
@@ -807,24 +828,7 @@
         parent.classList.toggle('is-open');
       });
     });
-  // ハンバーガーメニュースクロール
-    const body = document.body;
-
-    btn.addEventListener('click', () => {
-      // メニューの開閉クラスをトグル
-      // (nav.classList.toggleなどは実装済みとします)
-
-      if (btn.classList.contains('is-active')) {
-        // メニューが開いた時：後ろを固定
-        body.style.overflow = 'hidden';
-        body.style.height = '100%'; 
-      } else {
-        // メニューを閉じた時：固定を解除
-        body.style.overflow = '';
-        body.style.height = '';
-      }
-    });
-  // ヘッダ追従
+  // === ヘッダ追従
     window.addEventListener('scroll', function() {
     const header = document.querySelector('.header-inner'); // 追従させたいメニューのクラス名
     if (window.scrollY > 300) { // 300px以上スクロールしたら
@@ -833,7 +837,7 @@
         header.classList.remove('is-fixed');
       }
     });
-  // プロダクトスライダー
+  // === プロダクトスライダー ========================================================================================
     const productSwiper = new Swiper('.product-swiper', {
       wrapperClass: 'product-swiper-wrapper',
       slideClass: 'product-swiper-slide',
@@ -862,7 +866,7 @@
         }
       }
     });
-  // トップに戻るボタン
+  // === トップに戻るボタン ========================================================================================
     const topBtn = document.querySelector('.back-to-top');
 
     window.addEventListener('scroll', () => {
