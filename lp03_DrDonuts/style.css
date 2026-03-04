@@ -140,7 +140,7 @@ header {
   width: 30px;     /* ボタンのクリックエリア */
   height: 30px;
   cursor: pointer;
-  z-index: 9999;   /* とにかく一番上に持ってくる */
+  z-index: 10000;   /* とにかく一番上に持ってくる */
   display: block;  /* 念のため */
 }
 
@@ -155,7 +155,6 @@ header {
   height: 3px;     /* 線の太さ */
   background-color: #6c3524; /* ドクドの茶色 */
   border-radius: 2px;
-  transition: all 0.3s; /* 後で×にする時のアニメーション用 */
 }
 
 /* 三本線の間隔 */
@@ -163,8 +162,24 @@ header {
 .hamburger-btn span:nth-child(2) { top: 18px; }
 .hamburger-btn span:nth-child(3) { top: 26px; }
 
-/* --- アクティブ時の✕ --- */
+/* --- アクティブ時の✕ --------------------------------------------- */
 
+/* --- メニューが開いた時 --- */
+.hamburger-btn.is-active {
+  position: fixed;
+  top: 15px;
+  right: 10px;
+  z-index: 99999;
+  cursor: pointer;
+  /* --- 白丸の設定 --- */
+  width: 33px;           /* 線の長さより一回り大きく */
+  height: 33px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;    /* 正円にする */
+  display: flex;         /* 中の線を真ん中に寄せる */
+  justify-content: center;
+  align-items: center;
+}
 /* 1本目：真ん中に移動させてから45度回転 */
 .hamburger-btn.is-active span:nth-child(1) {
   top: 50% !important;
@@ -185,23 +200,21 @@ header {
 
 /* メニュー本体 */
 .sp-nav {
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: -100%; /* 最初は画面の右外に隠す */
-  width: 98%;    /* 画面の8割くらいを占有 */
-  min-height: 100vh;
+  right: -100%; 
+  width: 98%;    
+  height: 98vh; 
   background: #fff;
   border-radius: 20px;
-  transition: all 0.4s ease; /* スルスル動くスピード */
+  transition: all 0.4s ease;
   padding: 20px 45px 20px 25px;
-  z-index: 1500;
-  overflow-y: auto; /* 中身がはみ出したら自動でスクロールバーを出す */
-  -webkit-overflow-scrolling: touch; /* iPhoneでスルスル動かすため */
-  /* 角丸を固定 */
+  z-index: 9999;
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch; 
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  overflow: hidden; 
-  mask-image: radial-gradient(white, black); /* Safari等のバグ対策 */
+  mask-image: radial-gradient(white, black);
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
@@ -210,7 +223,9 @@ header {
   right: -20px;
 }
 
-/* オーバーレイ（メニューの背後） */
+/* --- オーバーレイ（メニューの背後） ------------------------------------ */
+
+/* オーバーレイ（パッシブ） */
 .nav-overlay {
   position: fixed;
   top: 0;
@@ -223,6 +238,7 @@ header {
   transition: all 0.4s;
   z-index: 1400;
 }
+/* オーバーレイ（アクティブ） */
 .nav-overlay.is-active {
   opacity: 1;
   visibility: visible;
@@ -248,13 +264,13 @@ header {
 .sp-nav-logo-icon {
   height: 35px;
   margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 /* ---アイコンリンク --- */
 
 .sp-nav-link-wrap {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 /* アイコン画像 */
@@ -416,7 +432,7 @@ header {
 
 .sp-nav-sns-btn {
   padding: 15px;
-  margin: 0 auto 15px;
+  margin: 0 auto;
 }
 
 .sp-nav-sns-btn ul {
@@ -1751,12 +1767,12 @@ overflow: visible; /* これ重要 */
   }
   .about-text-wrap ul {
     row-gap: 10px;    /* 縦方向の隙間だけ指定 */
-    column-gap: 15px; /* 横方向の隙間だけ指定 */
+    column-gap: 10px; /* 横方向の隙間だけ指定 */
     margin: 30px 0;
   }
   .about-text-wrap li {
     font-size: 0.8em;
-    width: 135px;
+    width: 143px;
     padding-left: 15px;
   }
   .about-text-wrap li::before {
@@ -2473,7 +2489,7 @@ footer a:hover {
   font-size: 1.2em;
   font-weight: 900;
   color: #6c3524;
-  z-index: 9999;
+  z-index: 9000;
   text-decoration: none;
   display: flex;
   align-items: center;
