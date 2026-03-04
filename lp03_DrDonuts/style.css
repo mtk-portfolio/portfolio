@@ -189,7 +189,7 @@ header {
   top: 0;
   right: -100%; /* 最初は画面の右外に隠す */
   width: 98%;    /* 画面の8割くらいを占有 */
-  height: 100vh;
+  min-height: 100vh;
   background: #fff;
   border-radius: 20px;
   transition: all 0.4s ease; /* スルスル動くスピード */
