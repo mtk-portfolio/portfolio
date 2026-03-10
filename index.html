@@ -3,35 +3,169 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background: #fafafa;
-    }
-
-    a {
-      font-size: 18px;
-      text-decoration: none;
-      color: #000;
-      border-bottom: 1px solid #000;
-      padding-bottom: 2px;
-    }
-
-    a:hover {
-      opacity: 0.6;
-    }
-  </style>
+  <title>ポートフォリオ</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- 
+    <link rel="icon" type="image/png" href="img/favicon.png" sizes="180x180">
+    <link rel="apple-touch-icon" href="img/favicon.png">
+   -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <a href="./lp01_wordplay/index.html">Sixtep-style LP</a>
-  <a href="./lp02_UTosho/index.html">UTokyo-style LP</a>
-  <a href="./lp03_DrDonuts/index.html">DrDonuts-style LP</a>
+
+  <header>
+    <div class="header-inner">
+      <h1 class="logo">Web Development Portfolio</h1>
+    </div>
+  </header>
+
+  <main>
+    <section  class="web-design">
+      <h2>Webデザイン一覧</h2>
+      <div class="web-design-container">
+        <ul>
+
+
+          <!-- 01．Wordplay-LP -->
+          <li class="web-design-list">
+            <div class="web-design-img-wrap">
+              <a href="./lp01_wordplay/index.html">
+                <img src="img/Wordplay-LP.png" alt="lp01_wordplay">
+                <div class="web-design-info">
+                  <p>制作期間：約1ヶ月</p>
+                  <p>使用技術: HTML5 / CSS3 / JS / Inkscape / AI ほか</p>
+                  <p>レスポンシブ: PC / タブレット / スマホ</p>
+                </div>
+              </a>
+            </div>
+            <div class="web-design-desc">
+              <a href="./lp01_wordplay/index.html"><h3>Wordplay-LP</h3></a>
+              <p>模写元：<a href="https://sixtep.com/" target="_blank" rel="noopener noreferrer" class="model-site">Sixtep</a></p>
+              <h4><i class="far fa-lightbulb"></i>&nbsp;工夫した点</h4>
+              <ul>
+                <li>動画を「画像スライドショー」へ変更</li>
+                <li>アニメーションはJSを使わず「CSSのみ」で実装</li>
+                <li>Webフォントでの「文字変化アニメーション」を再現</li>
+              </ul>
+              <h4><i class="far fa-edit"></i>&nbsp;学んだこと</h4>
+              <ul>
+                <li>Webフォントの種類と制御</li>
+                <li>z-indexによる重なり順の管理</li>
+                <li>メディアクエリによるレスポンシブ対応</li>
+                <li>キーフレームアニメーションの基礎</li>
+              </ul>
+            </div>
+          </li>
+
+        
+          <!-- 02．UTosho-LP -->
+          <li class="web-design-list">
+            <div class="web-design-img-wrap">
+              <a href="./lp02_UTosho/index.html">
+                <img src="img/UTosho-LP.png" alt="lp02_UTosho">
+                <div class="web-design-info">
+                  <p>制作期間: 約18日間</p>
+                  <p>使用技術: HTML5 / CSS3 / JS / Inkscape / AI ほか</p>
+                  <p>レスポンシブ: PC / タブレット / スマホ</p>
+                </div>
+              </a>
+            </div>
+            <div class="web-design-desc">
+              <a href="./lp02_UTosho/index.html"><h3>UTosho-LP</h3></a>
+              <p>模写元：<a href="https://www.u-tokyo.ac.jp/" target="_blank" rel="noopener noreferrer" class="model-site">東京大学</a></p>
+              <h4><i class="far fa-lightbulb"></i>&nbsp;工夫した点</h4>
+              <ul>
+                <li>AI生成と画像編集ソフトを組み合わせた画像制作</li>
+                <li>模写元のサイト構成を忠実に再現</li>
+                <li>スライドショーと制御ボタンの実装</li>
+                <li>メニューバーのカテゴリ変更をアニメーションの効いたタブで実装</li>
+                <li>「トップへ戻るボタン」の常時表示による利便性向上</li>
+              </ul>
+              <h4><i class="far fa-edit"></i>&nbsp;学んだこと</h4>
+              <ul>
+                <li>コンセプトに合わせた画像選定・作成</li>
+                <li>スライドショーの制御ボタンの実装方法</li>
+                <li>セクションに合わせたメディアクエリの設定手法</li>
+              </ul>
+            </div>
+          </li>
+
+
+          <!-- 03．DrDonuts-LP -->
+          <li class="web-design-list">
+            <div class="web-design-img-wrap">
+              <a href="./lp03_DrDonuts/index.html">
+                <img src="img/DrDonuts-LP.png" alt="lp03_DrDonuts">
+                <div class="web-design-info">
+                  <p>制作期間: 約8日間</p>
+                  <p>使用技術: HTML5 / CSS3 / JS / Inkscape / AI ほか</p>
+                  <p>レスポンシブ: PC / タブレット / スマホ</p>
+                </div>
+              </a>
+            </div>
+            <div class="web-design-desc">
+              <a href="./lp03_DrDonuts/index.html"><h3>DrDonuts-LP</h3></a>
+              <p>模写元：<a href="https://www.misterdonut.jp/" target="_blank" rel="noopener noreferrer" class="model-site">ミスタードーナツ</a></p>
+              <h4><i class="far fa-lightbulb"></i>&nbsp;工夫した点</h4>
+              <ul>
+                <li>AI生成と画像編集ソフトを組み合わせた画像制作</li>
+                <li>模写元のサイト構成を忠実に再現</li>
+                <li>スライドショーとアニメを付加した制御ボタンの実装</li>
+                <li>タブレット用のメディアクエリ設定を追加</li>
+              </ul>
+              <h4><i class="far fa-edit"></i>&nbsp;学んだこと</h4>
+              <ul>
+                <li>フェード効果を活用したUIアニメーションの実装</li>
+                <li>複雑な形のオブジェクトと描き方</li>
+                <li>画像の比率を保ったまま、サイズを可変制御する方法</li>
+                <li>SVGアニメーションによる進捗表示の同期実装</li>
+              </ul>
+            </div>
+          </li>
+
+          
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-msg">Thank you for visiting.</p>
+      <div class="footer-links">
+        <a href="https://github.com/mtk-portfolio" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <p class="copyright">&copy; 2026 mtk-Portfolio</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- トップに戻るボタン -->
+   <div id="page-top" class="page-top">
+    <a href="#"><i class="fa-solid fa-chevron-up"></i></a>
+  </div>
+
+  <script>
+    // トップに戻るボタン
+    const pageTopBtn = document.getElementById('page-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) { // 300pxスクロールしたら表示
+        pageTopBtn.classList.add('is-show');
+      } else {
+        pageTopBtn.classList.remove('is-show');
+      }
+    });
+    // スムーズに上に戻る（今のブラウザならこれだけでOK）
+    pageTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
 </body>
 </html>
