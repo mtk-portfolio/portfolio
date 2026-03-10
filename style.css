@@ -1,0 +1,354 @@
+/* =================================================================================================================================
+   リセットCSS (ブラウザの余計な余白を消す)
+   ================================================================================================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* =================================================================================================================================
+   メイン
+   ================================================================================================================================= */
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =================================================================================================================================
+   ヘッダー
+   ================================================================================================================================= */
+
+.header-inner {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #222;
+  border-bottom: 5px solid #000;
+  margin-bottom: 30px;
+}
+
+.header-inner h1 {
+  font-size: 2.5em;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  padding: 25px 0;
+}
+
+/* タブレットレスポンシブ */
+@media (max-width: 1024px) {
+  .header-inner h1 {font-size: 2em;}
+}
+/* スマホレスポンシブ */
+@media (max-width: 768px) {
+  .header-inner {margin-bottom: 0;}
+  .header-inner h1 {font-size: 1.5em;}
+}
+
+/* =================================================================================================================================
+   Webデザイン一覧
+   ================================================================================================================================= */
+
+/* --- Webデザイン一覧全体 ---------------------------------------------------------------- */
+
+.web-design {
+  max-width: 1240px;
+  padding: 20px 5vw;
+  margin: 0 auto;
+}
+
+.web-design h2 {
+  display: block;
+  font-size: 2em;
+  padding: 10px 0;
+  border-bottom: 5px #333 double;
+  margin-bottom: 20px;
+}
+
+.web-design h3 {
+  display: inline-block;
+  font-size: 1.5em;
+  padding: 0 3px 3px;
+  border-bottom: 1px #333 solid;
+  margin-bottom: 15px;
+}
+
+.web-design-container a:hover h3 {
+  opacity: 0.6;
+}
+
+.web-design h4 {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+/* --- Webデザインのリスト --------------------------------------------------------------- */
+
+.web-design-container {
+  padding: 0;
+}
+
+.web-design-container ul {
+  display: block;
+}
+
+.web-design-list {
+  display: flex;
+  gap: 30px;
+  padding: 20px 0;
+  border-bottom: 1px #333 solid;
+}
+
+.web-design-list:last-child {
+  border-bottom: none;
+}
+
+.web-design-img-wrap {
+  position: relative;
+}
+
+/* 画像内の固定要素 */
+.web-design-info {
+  display: block;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+}
+.web-design-info  p {
+  font-size: 0.9em;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+/* 画像 */
+.web-design-container img {
+  height: 40vw;
+  max-height: 500px;
+  border: 1px #999 solid;
+  margin: 0 auto;
+}
+
+.web-design-container a:hover img {
+  opacity: 0.8;
+}
+
+.web-design-desc p {
+  margin-bottom: 20px;
+}
+
+.model-site {
+  color: blue;
+}
+
+.model-site:hover {
+  text-decoration: underline;
+}
+
+/* --- Webデザインのリスト説明欄 --------------------------------------------------------- */
+
+.web-design-desc {
+  display: block;
+}
+
+.web-design-desc ul {
+  margin-bottom: 30px;
+}
+
+.web-design-desc li {
+  position: relative;
+  font-size: 0.9em;
+  padding: 3px 0 3px 10px;
+}
+
+.web-design-desc li::before {
+  content: "\f111";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 5px;
+  position: absolute;
+  left: 0;
+  top: 13px;
+  transform: translateY(-50%);
+}
+
+/* タブレットレスポンシブ */
+@media (max-width: 1024px) {
+  .web-design {
+    padding: 20px 2vw;
+  }
+  .web-design h2 {font-size: 1.5em;}
+  .web-design h3 {font-size: 1.3em;}
+  .web-design h4 {font-size: 0.9em;}
+  .web-design-desc li {font-size: 0.8em;}
+  .web-design-list {
+    gap: 20px;
+  }
+  .web-design-desc ul {
+    margin-bottom: 15px;
+  }
+  .web-design-container p {
+    margin-bottom: 10px;
+  }
+  .web-design-container img {
+    min-width: 400px;
+    min-height: 400px;
+  }
+}
+/* スマホレスポンシブ */
+@media (max-width: 768px) {
+  .web-design h2 {
+    font-size: 1.4em;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  .web-design h3 {
+    display: block;
+    font-size: 1.2em;
+    text-align: center;
+    border-bottom: none;
+  }
+  .web-design-list {
+    flex-direction: column;
+    padding: 30px 0 0;
+  }
+  .web-design-desc ul {
+    margin-bottom: 25px;
+  }
+  .web-design-container {
+    padding: 0 15px;
+  }
+  .web-design-container p {
+    font-size: 0.8em;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  /* 画像内の固定要素 */
+  .web-design-info {
+    position: static;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+  }
+  .web-design-info  p {
+    font-size: 0.8em;
+    margin-bottom: 0;
+  }
+  .web-design-container img {
+    width: 100%;
+    border-bottom: none;
+    height: auto;
+    min-width: auto;
+    min-height: auto;
+    margin-bottom: 0;
+  }
+  .web-design-desc li {
+    font-size: 0.8em;
+    padding: 3px 0 3px 8px;
+  }
+}
+
+/* =================================================================================================================================
+   フッター
+   ================================================================================================================================= */
+
+.footer-inner {
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  text-align: center;
+  background-color: #222;
+  border-top: 5px solid #000;
+  padding: 20px 0;
+  margin-top: 30px;
+}
+
+.footer-msg {
+  font-size: 1.2em;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  font-size: 1em;
+  font-weight: 300;
+  gap: 10px;
+}
+
+.footer-links a:hover {
+  opacity: 0.7;
+}
+
+/* スマホレスポンシブ */
+@media (max-width: 768px) {
+  .footer-inner {
+    margin-top: 0;
+  }
+  .footer-msg {
+    font-size: 1em;
+  }
+  .footer-links {
+    font-size: 0.8em;
+  }
+}
+
+/* =================================================================================================================================
+   トップに戻るボタン
+   ================================================================================================================================= */
+
+/* --- トップに戻るボタン --- */
+.page-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  /* 最初は隠しておく */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+/* スクロールした時にクラスをつけて表示させる */
+.page-top.is-show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.page-top a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #222;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+  border-radius: 5px; /* 少し角丸にすると「丁寧な手作り感」が出る */
+  border: 1px solid #000;
+}
+
+.page-top a:hover {
+  background: #333;
+  /* ヘッダーのh1とお揃いの白モヤ */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
