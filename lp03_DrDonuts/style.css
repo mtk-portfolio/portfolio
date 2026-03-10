@@ -2216,11 +2216,11 @@ overflow: visible; /* これ重要 */
   }
   /* フェイスブック */
   .icon-fb::before {
-    font-size: 1.8em;
+    font-size: 1.9em;
   }
   /* ライン */
   .icon-line::before {
-    font-size: 1.8em;
+    font-size: 2em;
   }
   /* ようつべ */
   .icon-youtube::before {
