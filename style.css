@@ -86,8 +86,17 @@ body {
   display: inline-block;
   font-size: 1.5em;
   padding: 0 3px 3px;
-  border-bottom: 1px #333 solid;
+  border-bottom: 1px #333 dashed;
   margin-bottom: 15px;
+}
+
+.web-design h3::after {
+  content: "\f0a9";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900; /* これを忘れると表示されません */
+  margin-left: 6px;
+  font-size: 0.8em;
+  color: #007bff; /* 鮮やかすぎないリンクブルー */
 }
 
 .web-design-container a:hover h3 {
@@ -222,17 +231,23 @@ body {
     margin-bottom: 0;
   }
   .web-design h3 {
-    display: block;
+    display: inline-block;
     font-size: 1.2em;
     text-align: center;
-    border-bottom: none;
+  }
+  .web-design h4 {
+    text-align: left;
   }
   .web-design-list {
     flex-direction: column;
     padding: 30px 0 0;
   }
+  .web-design-desc {
+    text-align: center;
+  }
   .web-design-desc ul {
     margin-bottom: 25px;
+    text-align: left;
   }
   .web-design-container {
     padding: 0 15px;
