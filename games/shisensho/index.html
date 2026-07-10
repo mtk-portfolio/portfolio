@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>四川省ゲーム</title>
+    <style>
+        :root {
+            --bg-color: #003300; /* 🇨🇳 深みのある中華風のダークグリーン（深緑） */
+            --tile-height: min(9.5vh, calc((100vw - 110px) / 19 * 1.35));
+            --tile-width: calc(var(--tile-height) / 1.35);
+        }
+        * { box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-color);
+            
+            /* 🇨🇳 緑基調の中華風幾何学格子文様（CSSアート背景） */
+            background-image: 
+                linear-gradient(30deg, #007700 12%, transparent 12.5%, transparent 87%, #007700 87.5%, #007700),
+                linear-gradient(150deg, #007700 12%, transparent 12.5%, transparent 87%, #007700 87.5%, #007700),
+                linear-gradient(30deg, #007700 12%, transparent 12.5%, transparent 87%, #007700 87.5%, #007700),
+                linear-gradient(150deg, #007700 12%, transparent 12.5%, transparent 87%, #007700 87.5%, #007700),
+                linear-gradient(60deg, #005500 25%, transparent 25.5%, transparent 75%, #005500 75.5%, #005500),
+                linear-gradient(60deg, #005500 25%, transparent 25.5%, transparent 75%, #005500 75.5%, #005500);
+            background-size: 40px 70px;
+            background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
+            
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0; padding: 0;
+            overscroll-behavior: none; 
+            height: 100vh; width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            width: 100%; height: 100%;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .sidebar-options {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            /* 🎨 緑基調に合わせた半透明ダークグリーン */
+            background-color: rgba(15, 34, 25, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 6px;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            height: calc((var(--tile-height) * 10) + 17px);
+            justify-content: space-around;
+            border: 1px solid rgba(46, 204, 113, 0.15); /* ほんのり緑の光彩枠 */
+        }
+        
+        .opt-btn {
+            width: min(12vw, 80px);
+            flex: 1;
+            border: none; border-radius: 4px;
+            background-color: #1a3a2a; color: #e0f2e9;
+            font-size: clamp(11px, 1.4vh, 13px); 
+            font-weight: bold;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            gap: 2px; cursor: pointer;
+            line-height: 1.1;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid #0f2219;
+        }
+        .opt-btn span.icon { font-size: clamp(14px, 2.4vh, 18px); }
+        
+        .opt-btn:hover { background-color: #275d43; color: #fff; }
+        .opt-btn:disabled {
+            background-color: #12251c; color: #4d6e5e;
+            cursor: not-allowed; border-bottom-color: transparent;
+        }
+        /* アクティブ時は中華風に映えるゴールド、または鮮やかな緑 */
+        .opt-btn.active { background-color: #fbc531; color: #1e272e; border-bottom: 2px solid #f39c12; }
+        #btn-color-toggle.active { background-color: #2ecc71; color: #fff; border-bottom: 2px solid #27ae60; }
+
+        .board-wrapper {
+            position: relative;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(19, var(--tile-width));
+            grid-template-rows: repeat(10, var(--tile-height));
+            gap: 1px; 
+            /* 🎨 雀卓をイメージした深緑の半透明マット */
+            background-color: rgba(11, 30, 20, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 4px;
+            border-radius: 6px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        #route-svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .tile {
+            background-color: #f5f6fa; border-radius: 2px;
+            border-bottom: min(0.4vh, 3px) solid #dcdde1; border-right: 1px solid #dcdde1;
+            cursor: pointer; user-select: none;
+            background-image: url('tiles.png');
+            background-size: 400% 900%; background-repeat: no-repeat;
+        }
+        
+        .tile.selected {
+            box-shadow: inset 0 0 0 2px #fbc531, 0 0 6px #fbc531;
+            filter: brightness(0.8); transform: scale(0.95);
+        }
+
+        .tile.hint {
+            animation: hint-flash 0.5s infinite alternate;
+            box-shadow: inset 0 0 0 2px #2ecc71, 0 0 10px #2ecc71;
+            z-index: 10;
+        }
+        @keyframes hint-flash {
+            0% { filter: brightness(1.3); }
+            100% { filter: brightness(0.7); }
+        }
+
+        .color-mode .type-manzu { background-color: #ffb3b3; background-blend-mode: multiply; }
+        .color-mode .type-pinzu { background-color: #b3d1ff; background-blend-mode: multiply; }
+        .color-mode .type-souzu { background-color: #b3ffb3; background-blend-mode: multiply; }
+        .color-mode .type-jihai { background-color: #fff; background-blend-mode: multiply; }
+
+        /* 📌 演出・ポップアップ共通レイヤー */
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center; z-index: 100;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .popup-box {
+            width: 100%; padding: 20px 0; text-align: center;
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .overlay.active .popup-box { transform: scale(1); }
+        
+        .popup-title { font-size: max(1.5rem, 5vh); font-weight: 900; letter-spacing: 6px; margin: 0; }
+        .popup-sub { font-size: max(0.9rem, 2vh); margin: 0; letter-spacing: 2px; }
+
+        #start-overlay {
+            background: radial-gradient(circle, rgba(11,34,22,0.96) 0%, rgba(5,15,10,0.99) 100%);
+        }
+        #start-overlay .popup-title {
+            color: #fbc531; text-shadow: 0 4px 15px rgba(251, 197, 49, 0.4);
+            font-size: max(2.2rem, 7vh); letter-spacing: 12px;
+        }
+
+        /* 🟢 タイムバー関連スタイル（盤面内下部に変更） */
+        #timer-container {
+            position: absolute;
+            bottom: 4px; /* 盤面の枠線や内側の余白に合わせる微調整（お好みで変更可） */
+            left: 4px;   /* 盤面の左端に合わせる */
+            width: calc(100% - 8px); /* 盤面の左右の余白（4px×2）を引いた幅 */
+            height: 8px; /* 少しスマートに8pxに変更 */
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 60; /* ルート線(50)より上に表示 */
+            border-radius: 0 0 4px 4px; /* 盤面の下側の角丸に合わせる */
+        }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            transition: width 0.2s linear, background-color 0.3s ease;
+        }
+
+        /* 難易度選択ボタン装飾 */
+        .diff-menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        .btn-diff-select {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.1s, filter 0.2s;
+        }
+        .btn-diff-select:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .btn-diff-select:active { transform: scale(0.98); }
+
+        /* 🔴 自動手詰まりシャッフル */
+        #shuffle-overlay { background-color: rgba(0, 0, 0, 0.75); }
+        #shuffle-overlay .popup-box { background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(36,24,24,0.9) 25%, rgba(36,24,24,0.9) 75%, rgba(0,0,0,0) 100%); }
+        #shuffle-overlay .popup-title { color: #ff4757; text-shadow: 0 0 10px rgba(255, 71, 87, 0.6); }
+        #shuffle-overlay .popup-sub { color: #ee5253; }
+
+        /* 🔵 任意手動シャッフル */
+        #manual-shuffle-overlay { background-color: rgba(0, 0, 0, 0.7); }
+        #manual-shuffle-overlay .popup-box { background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(15,35,25,0.9) 25%, rgba(15,35,25,0.9) 75%, rgba(0,0,0,0) 100%); }
+        #manual-shuffle-overlay .popup-title { color: #00a8ff; text-shadow: 0 0 10px rgba(0, 168, 255, 0.6); }
+        #manual-shuffle-overlay .popup-sub { color: #70a1ff; }
+
+        /* ゲームオーバー・ゲームクリア */
+        #gameover-overlay { background-color: rgba(40, 10, 10, 0.85); }
+        #gameover-overlay .popup-title { color: #ff4757; text-shadow: 0 0 15px rgba(255, 71, 87, 0.6); font-size: max(2.5rem, 8vh); }
+
+        #clear-overlay { background-color: rgba(0, 0, 0, 0.8); }
+        #clear-overlay .popup-box { background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(16,35,22,0.95) 25%, rgba(16,35,22,0.95) 75%, rgba(0,0,0,0) 100%); }
+        #clear-overlay .popup-title { color: #2ed573; text-shadow: 0 0 10px rgba(46, 213, 115, 0.6); }
+        #clear-overlay .popup-sub { color: #7bed9f; }
+        
+        #confirm-overlay { background-color: rgba(0, 0, 0, 0.6); }
+        #confirm-overlay .popup-box {
+            background-color: #1a3a2a; width: 280px; padding: 15px; border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #2ecc71; gap: 15px;
+        }
+        .confirm-buttons { display: flex; gap: 15px; width: 100%; justify-content: center; }
+        
+        .btn-style { padding: 8px 20px; font-size: 14px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        .btn-green { background-color: #2ed573; color: #1e272e; }
+        .btn-red { background-color: #ff4757; color: white; }
+        .btn-gray { background-color: #718093; color: white; }
+
+        /* 📱 スマホ時・縦画面時の設定 */
+        @media (orientation: portrait) {
+            :root {
+                --tile-width: min(4.8vw, 8vh);
+                --tile-height: calc(var(--tile-width) * 1.35); 
+            }
+            .game-container { flex-direction: column-reverse; }
+            .sidebar-options { flex-direction: row; width: 98vw; height: auto; justify-content: center; padding: 4px; }
+            
+            .opt-btn { 
+                width: 58px; 
+                height: 52px; 
+                font-size: 10px; 
+                flex: none; 
+            }
+            .opt-btn span.icon { font-size: 14px; }
+            
+            #game-board { max-width: 98vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="sidebar-options">
+            <button id="btn-bgm" class="opt-btn active"><span class="icon">🎵</span>BGM<br>ON</button>
+            <button id="btn-line" class="opt-btn active"><span class="icon">⚡</span>ルート線<br>ON</button>
+            <button id="btn-manual-shuffle" class="opt-btn"><span class="icon">🔀</span>シャッフル<br>(2)</button>
+            <button id="btn-hint" class="opt-btn"><span class="icon">💡</span>ヒント<br>(2)</button>
+            <button id="btn-color-toggle" class="opt-btn"><span class="icon">🎨</span>色分け<br>OFF</button>
+            <button id="btn-retry" class="opt-btn"><span class="icon">↩️</span>やり直し</button>
+        </div>
+
+        <div class="board-wrapper">
+            <div id="game-board"></div>
+            <svg id="route-svg"></svg>
+            <div id="timer-container">
+              <div id="timer-bar"></div>
+          </div>
+        </div>
+    </div>
+
+    <div id="start-overlay" class="overlay active">
+        <div class="popup-box">
+            <p class="popup-title">四川省</p>
+            <p class="popup-sub" style="color:#a4ccb6; margin-bottom: 10px;">〜 難易度を選択してください 〜</p>
+            <div class="diff-menu-container">
+                <button id="btn-diff-easy" class="btn-diff-select" style="background-color: #2ecc71; color: #fff;" onclick="selectDifficulty('EASY')">EASY (300秒 / 色分けON)</button>
+                <button id="btn-diff-normal" class="btn-diff-select" style="background-color: #f1c40f; color: #1e272e;" onclick="selectDifficulty('NORMAL')">NORMAL (180秒 / 色分けOFF)</button>
+                <button id="btn-diff-hard" class="btn-diff-select" style="background-color: #e74c3c; color: #fff;" onclick="selectDifficulty('HARD')">HARD (120秒 / 色分け固定OFF)</button>
+                <button id="btn-diff-practice" class="btn-diff-select" style="background-color: #ffffff; color: #1e272e;" onclick="selectDifficulty('PRACTICE')">練習モード (無限 / 色分けON)</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameover-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">TIME UP!</p>
+            <p class="popup-sub" style="color: #ff7675;">制限時間を超過しました</p>
+            
+            <button class="btn-style btn-green" style="font-size:15px; padding:10px 25px; margin-top:15px; margin-right: 10px;" onclick="replayGameFromTimeup()">もう一度遊ぶ</button>
+            
+            <button class="btn-style btn-red" style="font-size:15px; padding:10px 25px; margin-top:15px;" onclick="backToMenu()">難易度選択に戻る</button>
+        </div>
+    </div>
+
+    <div id="shuffle-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">NO MORE MOVES</p>
+            <p class="popup-sub">手詰まりのためシャッフルします...</p>
+        </div>
+    </div>
+
+    <div id="manual-shuffle-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">SHUFFLING...</p>
+            <p class="popup-sub">牌をシャッフルしています</p>
+        </div>
+    </div>
+
+    <div id="clear-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">GAME CLEAR!</p>
+            <p class="popup-sub">素晴らしい！すべての牌を消去しました！</p>
+            <p id="clear-time-info" class="popup-sub" style="margin-top: 5px; color: #fff; font-size: max(1rem, 2.2vh); font-weight: bold;"></p>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px; width: 100%; align-items: center;">
+                <button id="btn-replay" class="btn-style btn-green" style="font-size:16px; padding:10px 30px; width: max(200px, 50%);">もう一回遊ぶ</button>
+                <button class="btn-style btn-gray" style="font-size:14px; padding:8px 20px; width: max(200px, 50%);" onclick="backToMenu()">他の難易度を選ぶ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-overlay" class="overlay">
+        <div class="popup-box">
+            <h3 style="margin:0; color:#fbc531; font-size:16px;">確認</h3>
+            <p style="margin:0; font-size:13px; color:#dcdde1;">本当に最初からやり直しますか?</p>
+            <div class="confirm-buttons">
+                <button id="btn-confirm-yes" class="btn-style btn-red">はい</button>
+                <button id="btn-confirm-no" class="btn-style btn-gray">いいえ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const bgm = new Audio('Chinatown.mp3');
+        bgm.loop = true;
+
+        // 🔊 効果音（SE）の定義
+        const se = {
+            start: new Audio('se_start.mp3'),     // スタート時
+            clear: new Audio('se_clear.mp3'),     // クリア時
+            select: new Audio('se_select.mp3'),   // 牌の選択時
+            delete: new Audio('se_delete.mp3'),   // 牌の消去（マッチ）時
+            shuffle: new Audio('se_shuffle.mp3'), // シャッフル時
+            hint: new Audio('se_hint.mp3'),        // ヒント時
+            timeup: new Audio('se_timeup.mp3')    // 👈【追記】タイムアップ時
+        };
+
+        // 🔊 効果音を鳴らす共通関数（連続で鳴っても途切れない制御）
+        function playSE(type) {
+            if (!isBgmOn) return; // 👈 これを入れると、サイドバーで音声をOFFにした時にSEも鳴らなくなります
+            if (!se[type]) return;
+            se[type].pause();          // 一度止める
+            se[type].currentTime = 0;  // 再生位置を最初（0秒）に戻す
+            se[type].play().catch(e => console.log("SE再生待ち:", e));
+        }
+        bgm.loop = true;
+
+        const TILE_TYPES = [
+            { id: 1, x: 0, y: 0, type: 'manzu' }, { id: 10, x: 1, y: 0, type: 'pinzu' }, { id: 19, x: 2, y: 0, type: 'souzu' }, { id: 28, x: 3, y: 0, type: 'jihai' },
+            { id: 2, x: 0, y: 1, type: 'manzu' }, { id: 11, x: 1, y: 1, type: 'pinzu' }, { id: 20, x: 2, y: 1, type: 'souzu' }, { id: 29, x: 3, y: 1, type: 'jihai' },
+            { id: 3, x: 0, y: 2, type: 'manzu' }, { id: 12, x: 1, y: 2, type: 'pinzu' }, { id: 21, x: 2, y: 2, type: 'souzu' }, { id: 30, x: 3, y: 2, type: 'jihai' },
+            { id: 4, x: 0, y: 3, type: 'manzu' }, { id: 13, x: 1, y: 3, type: 'pinzu' }, { id: 22, x: 2, y: 3, type: 'souzu' }, { id: 31, x: 3, y: 3, type: 'jihai' },
+            { id: 5, x: 0, y: 4, type: 'manzu' }, { id: 14, x: 1, y: 4, type: 'pinzu' }, { id: 23, x: 2, y: 4, type: 'souzu' }, { id: 32, x: 3, y: 4, type: 'jihai' },
+            { id: 6, x: 0, y: 5, type: 'manzu' }, { id: 15, x: 1, y: 5, type: 'pinzu' }, { id: 24, x: 2, y: 5, type: 'souzu' }, { id: 33, x: 3, y: 5, type: 'jihai' },
+            { id: 7, x: 0, y: 6, type: 'manzu' }, { id: 16, x: 1, y: 6, type: 'pinzu' }, { id: 25, x: 2, y: 6, type: 'souzu' }, { id: 34, x: 3, y: 6, type: 'jihai' }, // ⭕ yを6に修正
+            { id: 8, x: 0, y: 7, type: 'manzu' }, { id: 17, x: 1, y: 7, type: 'pinzu' }, { id: 26, x: 2, y: 7, type: 'souzu' },
+            { id: 9, x: 0, y: 8, type: 'manzu' }, { id: 18, x: 1, y: 8, type: 'pinzu' }, { id: 27, x: 2, y: 8, type: 'souzu' }
+        ];
+
+        const ROWS = 10;
+        const COLS = 19;
+        let boardData = [];
+        let selectedTile = null;
+        let isShuffling = false;
+        let isBlockInteraction = false;
+
+        let isBgmOn = true;
+        let isLineOn = true;
+        let isColorMode = false;
+        let shuffleCount = 2;
+        let hintCount = 2;
+        let isAudioInitiated = false;
+        let hintTimeoutId = null;
+
+        // 🟢 難易度管理用変数・定義
+        let gameTimer = null;
+        let currentDifficulty = 'NORMAL';
+        let timeLeft = 0;
+        let totalTime = 0;
+        let elapsedTime = 0; // 👈 【追記】ゲーム開始からの経過時間（秒）
+
+        // 🟢 【追記】秒数を「◯分◯秒」の形に変換する関数
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}分${s.toString().padStart(2, '0')}秒`;
+        }
+
+        const DIFF_CONFIG = {
+            'EASY': { time: 300, color: '#2ecc71', colorMode: true, allowToggle: true, shuffle: 5, hint: 5 },
+            'NORMAL': { time: 180, color: '#f1c40f', colorMode: false, allowToggle: true, shuffle: 2, hint: 2 },
+            'HARD': { time: 120, color: '#e74c3c', colorMode: false, allowToggle: false, shuffle: 0, hint: 1 }, // HARDはシャッフル0回、ヒント1回など
+            'PRACTICE': { time: null, color: '#ffffff', colorMode: true, allowToggle: true, shuffle: 99, hint: 99 } // 練習は多めに
+        };
+
+        function tryPlayBgm() {
+            if (isBgmOn && isAudioInitiated) {
+                // ⏱️ 1000ミリ秒（1秒）待ってからBGMを再生する
+                setTimeout(() => {
+                    // 途中でBGMがOFFに切り替えられていないか再度チェックして再生
+                    if (isBgmOn) {
+                        bgm.play().catch(e => console.log("BGM再生待ち:", e));
+                    }
+                }, 1000); // 👈 ここの数字（ミリ秒）で待ち時間を調整できます（1500なら1.5秒）
+            }
+        }
+
+        // 🟢 難易度選択ボタンが押された時の処理
+        function selectDifficulty(diff) {
+            currentDifficulty = diff;
+            isAudioInitiated = true;
+            document.getElementById('start-overlay').classList.remove('active');
+
+            playSE('start'); // 👈 【追記】スタート音を鳴らす
+
+            tryPlayBgm();
+            initGame();
+        }
+
+        // 🟢 タイマー開始
+        function startTimer() {
+            stopTimer();
+            const config = DIFF_CONFIG[currentDifficulty];
+            const bar = document.getElementById('timer-bar');
+            bar.style.backgroundColor = config.color;
+
+            elapsedTime = 0; // 🟢 経過時間をリセット
+
+            if (config.time === null) {
+                // 練習モード（無限）
+                bar.style.width = '100%';
+                // 練習モードでもタイム計測だけは裏で走らせる
+                gameTimer = setInterval(() => {
+                    if (isShuffling || isBlockInteraction) return;
+                    elapsedTime++;
+                }, 1000);
+                return;
+            }
+
+            totalTime = config.time;
+            timeLeft = config.time;
+            bar.style.width = '100%';
+
+            gameTimer = setInterval(() => {
+                if (isShuffling || isBlockInteraction) return; // 演出中などはタイマーカウントを一時保留
+                timeLeft--;
+                elapsedTime++; // 🟢 経過時間をカウントアップ
+                const ratio = Math.max(0, (timeLeft / totalTime) * 100);
+                bar.style.width = ratio + '%';
+
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    stopTimer(); // 🟢 タイマーを確実に停止する
+                    playSE('timeup'); // 👈 【追記】タイムアップSEを鳴らす
+                    document.getElementById('gameover-overlay').classList.add('active');
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+        }
+
+        // 🟢 【追記】各難易度のボタンに自己ベストを表示する関数
+        function updateBestScoresDisplay() {
+            const diffs = ['EASY', 'NORMAL', 'HARD', 'PRACTICE'];
+            const names = {
+                'EASY': 'EASY (300秒 / 色分けON)',
+                'NORMAL': 'NORMAL (180秒 / 色分けOFF)',
+                'HARD': 'HARD (120秒 / 色分け固定OFF)',
+                'PRACTICE': '練習モード (無限 / 色分けON)'
+            };
+            diffs.forEach(diff => {
+                const btn = document.getElementById(`btn-diff-${diff.toLowerCase()}`);
+                if (btn) {
+                    const best = localStorage.getItem('shisensho_best_' + diff);
+                    if (best) {
+                        btn.innerHTML = `${names[diff]} <br><span style="font-size:12px; color:#fbc531; font-weight:bold;">🏆 自己ベスト: ${formatTime(parseInt(best))}</span>`;
+                    } else {
+                        btn.innerHTML = `${names[diff]} <br><span style="font-size:12px; opacity:0.6;">🏆 自己ベスト: なし</span>`;
+                    }
+                }
+            });
+        }
+
+        // 🟢 メニューに戻る処理
+        function backToMenu() {
+            stopTimer();
+            updateBestScoresDisplay(); // 🟢 メニューに戻った時にレコード表示を更新
+            document.getElementById('gameover-overlay').classList.remove('active');
+            document.getElementById('clear-overlay').classList.remove('active');
+            document.getElementById('confirm-overlay').classList.remove('active');
+            document.getElementById('start-overlay').classList.add('active');
+        }
+
+        function initGame() {
+            clearHint();
+            clearRouteLine();
+            document.getElementById('clear-overlay').classList.remove('active');
+            document.getElementById('confirm-overlay').classList.remove('active');
+            
+            // 🟢 [変更] 難易度ごとの設定（DIFF_CONFIG）から回数を取得して適用します
+            const config = DIFF_CONFIG[currentDifficulty];
+            shuffleCount = config.shuffle !== undefined ? config.shuffle : 2;
+            hintCount = config.hint !== undefined ? config.hint : 2;
+            
+            isBlockInteraction = false;
+
+            // 🟢 難易度ごとの色分け初期設定の適用
+            isColorMode = config.colorMode;
+            
+            const colorBtn = document.getElementById('btn-color-toggle');
+            if (config.allowToggle) {
+                colorBtn.disabled = false;
+                if (isColorMode) {
+                    colorBtn.classList.add('active');
+                    colorBtn.innerHTML = `<span class="icon">🎨</span>色分け<br>ON`;
+                } else {
+                    colorBtn.classList.remove('active');
+                    colorBtn.innerHTML = `<span class="icon">🎨</span>色分け<br>OFF`;
+                }
+            } else {
+                // HARD用：ボタン自体を無効化しOFF固定
+                colorBtn.disabled = true;
+                colorBtn.classList.remove('active');
+                colorBtn.innerHTML = `<span class="icon">🎨</span>色分け<br>固定`;
+            }
+
+            updateOptionButtons();
+
+            boardData = [];
+            for (let r = 0; r < ROWS; r++) {
+                boardData[r] = [];
+                for (let c = 0; c < COLS; c++) {
+                    boardData[r][c] = null;
+                }
+            }
+
+            let pool = [];
+            for (let i = 0; i < TILE_TYPES.length; i++) {
+                for (let j = 0; j < 4; j++) pool.push({ ...TILE_TYPES[i] });
+            }
+
+            for (let i = pool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [pool[i], pool[j]] = [pool[j], pool[i]];
+            }
+
+            let poolIndex = 0;
+            for (let r = 1; r < ROWS - 1; r++) {
+                for (let c = 1; c < COLS - 1; c++) {
+                    if (poolIndex < pool.length) {
+                        boardData[r][c] = pool[poolIndex++];
+                    }
+                }
+            }
+
+            renderBoard();
+            // 🟢 ゲームが完全に配置されたらタイマースタート
+            startTimer();
+            setTimeout(checkMovablePairs, 500);
+        }
+
+        function updateOptionButtons() {
+            const sBtn = document.getElementById('btn-manual-shuffle');
+            sBtn.innerHTML = `<span class="icon">🔀</span>シャッフル<br>(${shuffleCount})`;
+            sBtn.disabled = shuffleCount <= 0;
+
+            const hBtn = document.getElementById('btn-hint');
+            hBtn.innerHTML = `<span class="icon">💡</span>ヒント<br>(${hintCount})`;
+            hBtn.disabled = hintCount <= 0;
+        }
+
+        function renderBoard() {
+            const boardElement = document.getElementById('game-board');
+            boardElement.innerHTML = '';
+            if (isColorMode) boardElement.classList.add('color-mode');
+            else boardElement.classList.remove('color-mode');
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const tileData = boardData[r][c];
+                    const tileElement = document.createElement('div');
+                    if (tileData) {
+                        tileElement.classList.add('tile', `type-${tileData.type}`);
+                        tileElement.style.backgroundPosition = `${(tileData.x / 3) * 100}% ${(tileData.y / 8) * 100}%`;
+                        tileElement.id = `tile-${r}-${c}`;
+                        tileElement.dataset.row = r;
+                        tileElement.dataset.col = c;
+                        tileElement.addEventListener('click', () => handleTileClick(r, c, tileElement));
+                    } else {
+                        tileElement.style.visibility = 'hidden';
+                    }
+                    boardElement.appendChild(tileElement);
+                }
+            }
+        }
+
+        // 🔄 直線上に障害物がないかチェックする関数
+        function checkStraight(r1, c1, r2, c2) {
+            if (r1 !== r2 && c1 !== c2) return false;
+            
+            // 💡 上下左右で完全に隣り合っている（距離が1）なら無条件で開通
+            if (Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1) return true;
+            
+            if (r1 === r2) { // 横方向のチェック
+                const minC = Math.min(c1, c2);
+                const maxC = Math.max(c1, c2);
+                for (let c = minC + 1; c < maxC; c++) {
+                    if (boardData[r1] && boardData[r1][c] !== null) return false;
+                }
+            } else { // 縦方向のチェック
+                const minR = Math.min(r1, r2);
+                const maxR = Math.max(r1, r2);
+                for (let r = minR + 1; r < maxR; r++) {
+                    if (boardData[r] && boardData[r][c1] !== null) return false;
+                }
+            }
+            return true;
+        }
+
+        // 🔄 2つの牌を結ぶ有効なルート（直線、1回折れ、2回折れ）を探索する関数
+        function getConnectRoute(r1, c1, r2, c2) {
+            if (r1 === r2 && c1 === c2) return null;
+
+            // 💡 隣り合っている場合は即座にルートを返す
+            if (Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1) {
+                return [{r: r1, c: c1}, {r: r2, c: c2}];
+            }
+
+            // 1. 直線（折れ曲がり0回）
+            if (checkStraight(r1, c1, r2, c2)) {
+                return [{r: r1, c: c1}, {r: r2, c: c2}];
+            }
+
+            // 2. 1回折れ曲がり（L字）
+            // 角①: (r1, c2)
+            if (boardData[r1] && boardData[r1][c2] === null) {
+                if (checkStraight(r1, c1, r1, c2) && checkStraight(r1, c2, r2, c2)) {
+                    return [{r: r1, c: c1}, {r: r1, c: c2}, {r: r2, c: c2}];
+                }
+            }
+            // 角②: (r2, c1)
+            if (boardData[r2] && boardData[r2][c1] === null) {
+                if (checkStraight(r1, c1, r2, c1) && checkStraight(r2, c1, r2, c2)) {
+                    return [{r: r1, c: c1}, {r: r2, c: c1}, {r: r2, c: c2}];
+                }
+            }
+
+            // 3. 2回折れ曲がり（Z字・U字）
+            // 垂直方向にスキャン（横に伸ばして縦に折れる）
+            for (let c = 0; c < COLS; c++) {
+                if (c === c1) continue;
+                // 移動途中の障害物チェック（ターゲットの列 c2 は通過して良いので除外する）
+                if (c !== c2 && boardData[r1] && boardData[r1][c] !== null) {
+                    if (c < c1) continue; else break;
+                }
+                
+                // 2つの折れ曲がり点が空いている、または目的地であること
+                const p1Empty = (boardData[r1] && boardData[r1][c] === null);
+                const p2Empty = (boardData[r2] && boardData[r2][c] === null) || (r2 === r2 && c === c2);
+
+                if (p1Empty && p2Empty) {
+                    if (checkStraight(r1, c1, r1, c) && checkStraight(r1, c, r2, c) && checkStraight(r2, c, r2, c2)) {
+                        return [{r: r1, c: c1}, {r: r1, c: c}, {r: r2, c: c}, {r: r2, c: c2}];
+                    }
+                }
+            }
+
+            // 水平方向にスキャン（縦に伸ばして横に折れる）
+            for (let r = 0; r < ROWS; r++) {
+                if (r === r1) continue;
+                // 移動途中の障害物チェック（ターゲットの行 r2 は通過して良いので除外する）
+                if (r !== r2 && boardData[r] && boardData[r][c1] !== null) {
+                    if (r < r1) continue; else break;
+                }
+
+                // 2つの折れ曲がり点が空いている、または目的地であること
+                const p1Empty = (boardData[r] && boardData[r][c1] === null);
+                const p2Empty = (boardData[r] && boardData[r][c2] === null) || (r === r2 && c2 === c2);
+
+                if (p1Empty && p2Empty) {
+                    if (checkStraight(r1, c1, r, c1) && checkStraight(r, c1, r, c2) && checkStraight(r, c2, r2, c2)) {
+                        return [{r: r1, c: c1}, {r: r, c: c1}, {r: r, c: c2}, {r: r2, c: c2}];
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        function findMovablePair() {
+            let tiles = [];
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (boardData[r][c] !== null) tiles.push({ r, c, id: boardData[r][c].id });
+                }
+            }
+            if (tiles.length === 0) return { status: 'clear' };
+            for (let i = 0; i < tiles.length; i++) {
+                for (let j = i + 1; j < tiles.length; j++) {
+                    if (tiles[i].id === tiles[j].id && getConnectRoute(tiles[i].r, tiles[i].c, tiles[j].r, tiles[j].c) !== null) {
+                        return { status: 'movable', t1: tiles[i], t2: tiles[j] }; 
+                    }
+                }
+            }
+            return { status: 'deadlock' };
+        }
+
+        function checkMovablePairs() {
+            const result = findMovablePair();
+            if (result.status === 'clear') {
+                stopTimer(); // 🟢 クリアしたらタイマー停止
+                
+                playSE('clear'); // 👈 【追記】クリア音を鳴らす
+
+                // 🏆 【追記】ここから自己ベストの記録・判定処理
+                const bestKey = 'shisensho_best_' + currentDifficulty;
+                const previousBest = localStorage.getItem(bestKey);
+                let isNewRecord = false;
+
+                // 過去の記録がない、または今回のタイムが過去の記録より早い場合
+                if (!previousBest || elapsedTime < parseInt(previousBest)) {
+                    localStorage.setItem(bestKey, elapsedTime);
+                    isNewRecord = true;
+                }
+
+                // クリア画面のテキストを書き換え
+                const clearTimeInfo = document.getElementById('clear-time-info');
+                if (isNewRecord) {
+                    clearTimeInfo.innerHTML = `タイム: <span style="color:#fbc531;">${formatTime(elapsedTime)}</span> 🎉 新記録達成！`;
+                } else {
+                    clearTimeInfo.innerHTML = `タイム: ${formatTime(elapsedTime)} <br><span style="font-size:14px; opacity:0.7;">(自己ベスト: ${formatTime(parseInt(previousBest))})</span>`;
+                }
+
+                document.getElementById('clear-overlay').classList.add('active');
+            } else if (result.status === 'deadlock') {
+                triggerShuffleRoutine(true);
+            }
+        }
+
+        function triggerShuffleRoutine(isAuto = false) {
+            if (isShuffling) return;
+            isShuffling = true;
+            selectedTile = null;
+            clearHint();
+            clearRouteLine();
+
+            playSE('shuffle'); // 👈 【追記】シャッフルの演出開始と同時に鳴らす
+
+            const overlayId = isAuto ? 'shuffle-overlay' : 'manual-shuffle-overlay';
+            const overlay = document.getElementById(overlayId);
+            overlay.classList.add('active');
+
+            setTimeout(() => {
+                let remainingTiles = [];
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (boardData[r][c] !== null) remainingTiles.push(boardData[r][c]);
+                    }
+                }
+                for (let i = remainingTiles.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [remainingTiles[i], remainingTiles[j]] = [remainingTiles[j], remainingTiles[i]];
+                }
+                let index = 0;
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (boardData[r][c] !== null) boardData[r][c] = remainingTiles[index++];
+                    }
+                }
+                renderBoard();
+                overlay.classList.remove('active');
+                isShuffling = false;
+                setTimeout(checkMovablePairs, 500);
+            }, 1500); 
+        }
+
+        function clearHint() {
+            if (hintTimeoutId) { clearTimeout(hintTimeoutId); hintTimeoutId = null; }
+            document.querySelectorAll('.tile.hint').forEach(el => el.classList.remove('hint'));
+        }
+
+        function drawRouteLine(route) {
+            const svg = document.getElementById('route-svg');
+            svg.innerHTML = '';
+            if (!route || route.length < 2) return;
+
+            const board = document.getElementById('game-board');
+            const boardRect = board.getBoundingClientRect();
+            let points = [];
+
+            route.forEach(pos => {
+                const tileEl = document.getElementById(`tile-${pos.r}-${pos.c}`);
+                let x, y;
+                if (tileEl) {
+                    const rect = tileEl.getBoundingClientRect();
+                    x = rect.left - boardRect.left + (rect.width / 2);
+                    y = rect.top - boardRect.top + (rect.height / 2);
+                } else {
+                    const tileW = boardRect.width / COLS;
+                    const tileH = boardRect.height / ROWS;
+                    x = (pos.c * tileW) + (tileW / 2);
+                    y = (pos.r * tileH) + (tileH / 2);
+                }
+                points.push(`${x},${y}`);
+            });
+
+            const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+            polyline.setAttribute('points', points.join(' '));
+            polyline.setAttribute('stroke', '#2ecc71'); /* ラインも翡翠グリーンに変更 */
+            polyline.setAttribute('stroke-width', '4');
+            polyline.setAttribute('fill', 'none');
+            polyline.setAttribute('stroke-linecap', 'round');
+            polyline.setAttribute('stroke-linejoin', 'round');
+            polyline.style.filter = 'drop-shadow(0px 0px 4px #2ecc71)'; 
+            svg.appendChild(polyline);
+        }
+
+        function clearRouteLine() { document.getElementById('route-svg').innerHTML = ''; }
+
+        function handleTileClick(r, c, element) {
+            if (isShuffling || isBlockInteraction) return;
+            clearHint();
+
+            if (selectedTile && selectedTile.r === r && selectedTile.c === c) {
+                element.classList.remove('selected');
+                selectedTile = null;
+                return;
+            }
+
+            if (!selectedTile) {
+                selectedTile = { r, c, element };
+                element.classList.add('selected');
+                
+                playSE('select'); // 👈 【追記】1枚目の牌を選択したとき
+
+            } else {
+                const firstTileData = boardData[selectedTile.r][selectedTile.c];
+                const secondTileData = boardData[r][c];
+                const route = getConnectRoute(selectedTile.r, selectedTile.c, r, c);
+
+                if (firstTileData.id === secondTileData.id && route !== null) {
+                    isBlockInteraction = true;
+                    if (isLineOn) drawRouteLine(route);
+                
+                    // 👈 【追記】2枚目がマッチして消去が確定した瞬間
+                    playSE('delete');
+
+                    const prevSelected = selectedTile;
+                    selectedTile = null;
+
+                    setTimeout(() => {
+                        boardData[prevSelected.r][prevSelected.c] = null;
+                        boardData[r][c] = null;
+                        clearRouteLine();
+                        renderBoard();
+                        isBlockInteraction = false;
+                        setTimeout(checkMovablePairs, 200);
+                    }, isLineOn ? 200 : 0);
+                } else {
+                    selectedTile.element.classList.remove('selected');
+                    selectedTile = { r, c, element };
+                    element.classList.add('selected');
+                }
+            }
+        }
+
+        document.getElementById('btn-bgm').addEventListener('click', (e) => {
+            isBgmOn = !isBgmOn;
+            let target = e.currentTarget;
+            if (isBgmOn) {
+                target.classList.add('active');
+                target.innerHTML = `<span class="icon">🎵</span>BGM<br>ON`;
+                if (isAudioInitiated) bgm.play();
+            } else {
+                target.classList.remove('active');
+                target.innerHTML = `<span class="icon">🔇</span>BGM<br>OFF`;
+                bgm.pause();
+            }
+        });
+
+        document.getElementById('btn-line').addEventListener('click', (e) => {
+            isLineOn = !isLineOn;
+            let target = e.currentTarget;
+            if (isLineOn) {
+                target.classList.add('active');
+                target.innerHTML = `<span class="icon">⚡</span>ルート線<br>ON`;
+            } else {
+                target.classList.remove('active');
+                target.innerHTML = `<span class="icon">❌</span>ルート線<br>OFF`;
+                clearRouteLine();
+            }
+        });
+
+        document.getElementById('btn-manual-shuffle').addEventListener('click', () => {
+            if (shuffleCount > 0 && !isShuffling && !isBlockInteraction) {
+                shuffleCount--;
+                updateOptionButtons();
+                triggerShuffleRoutine(false); 
+            }
+        });
+
+        document.getElementById('btn-hint').addEventListener('click', () => {
+            if (hintCount > 0 && !isShuffling && !isBlockInteraction) {
+                clearHint();
+                let tiles = [];
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (boardData[r][c] !== null) tiles.push({ r, c, id: boardData[r][c].id });
+                    }
+                }
+                let found = null;
+                for (let i = 0; i < tiles.length; i++) {
+                    for (let j = i + 1; j < tiles.length; j++) {
+                        if (tiles[i].id === tiles[j].id && getConnectRoute(tiles[i].r, tiles[i].c, tiles[j].r, tiles[j].c) !== null) {
+                            found = { t1: tiles[i], t2: tiles[j] }; break;
+                        }
+                    }
+                    if (found) break;
+                }
+                if (found) {
+                    hintCount--; updateOptionButtons();
+
+                    playSE('hint'); // 👈 【追記】ヒントのペアが見つかり、光らせる瞬間に鳴らす
+
+                  
+                    const el1 = document.getElementById(`tile-${found.t1.r}-${found.t1.c}`);
+                    const el2 = document.getElementById(`tile-${found.t2.r}-${found.t2.c}`);
+                    if (el1) el1.classList.add('hint');
+                    if (el2) el2.classList.add('hint');
+                    hintTimeoutId = setTimeout(clearHint, 3000);
+                }
+            }
+        });
+
+        document.getElementById('btn-color-toggle').addEventListener('click', (e) => {
+            if (isShuffling || isBlockInteraction) return;
+            
+            // 🟢 難易度HARDの場合は変更不可にする安全ガード
+            if (!DIFF_CONFIG[currentDifficulty].allowToggle) return;
+
+            isColorMode = !isColorMode;
+            let target = e.currentTarget;
+            if (isColorMode) {
+                target.classList.add('active');
+                target.innerHTML = `<span class="icon">🎨</span>色分け<br>ON`;
+            } else {
+                target.classList.remove('active');
+                target.innerHTML = `<span class="icon">🎨</span>色分け<br>OFF`;
+            }
+            renderBoard();
+        });
+
+        document.getElementById('btn-retry').addEventListener('click', () => {
+            if (!isBlockInteraction) document.getElementById('confirm-overlay').classList.add('active');
+        });
+        document.getElementById('btn-confirm-no').addEventListener('click', () => {
+            document.getElementById('confirm-overlay').classList.remove('active');
+        });
+        document.getElementById('btn-confirm-yes').addEventListener('click', initGame);
+        document.getElementById('btn-replay').addEventListener('click', initGame);
+        
+        // 🟢 タイムアップ画面から、同じ難易度でもう一度遊ぶ関数
+        function replayGameFromTimeup() {
+            document.getElementById('gameover-overlay').classList.remove('active');
+            initGame();
+        }
+        // 🟢 起動時に自己ベストを表示
+        updateBestScoresDisplay();
+    </script>
+</body>
+</html>
