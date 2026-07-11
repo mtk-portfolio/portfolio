@@ -489,7 +489,7 @@
             }
         }
 
-        // 🟢 【追記】各難易度のボタンに自己ベストを表示する関数
+        // 🟢 各難易度のボタンに自己ベストを表示する関数（透明度バグ修正版）
         function updateBestScoresDisplay() {
             const diffs = ['EASY', 'NORMAL', 'HARD', 'PRACTICE'];
             const names = {
@@ -498,14 +498,28 @@
                 'HARD': 'HARD (120秒 / 色分け固定OFF)',
                 'PRACTICE': '練習モード (無限 / 色分けON)'
             };
+            
+            // 背景に負けない、絶対に透けないハッキリした色を指定
+            const textColors = {
+                'EASY': '#ffffff',      // 緑ボタンには「純白」
+                'NORMAL': '#000000',    // 黄ボタンには「漆黒」（透かしなし）
+                'HARD': '#ffffff',      // 赤ボタンには「純白」
+                'PRACTICE': '#000000'   // 白ボタンには「漆黒」
+            };
+
             diffs.forEach(diff => {
                 const btn = document.getElementById(`btn-diff-${diff.toLowerCase()}`);
                 if (btn) {
                     const best = localStorage.getItem('shisensho_best_' + diff);
+                    const color = textColors[diff];
+                    
+                    // 💡 opacity（透明度）を完全に撤廃し、文字サイズも少し大きくしました
+                    const textStyle = `font-size:14px; font-weight:bold; color:${color}; display:inline-block; margin-top:5px;`;
+                    
                     if (best) {
-                        btn.innerHTML = `${names[diff]} <br><span style="font-size:12px; color:#fbc531; font-weight:bold;">🏆 自己ベスト: ${formatTime(parseInt(best))}</span>`;
+                        btn.innerHTML = `${names[diff]} <br><span style="${textStyle}">🏆 自己ベスト: ${formatTime(parseInt(best))}</span>`;
                     } else {
-                        btn.innerHTML = `${names[diff]} <br><span style="font-size:12px; opacity:0.6;">🏆 自己ベスト: なし</span>`;
+                        btn.innerHTML = `${names[diff]} <br><span style="${textStyle}">🏆 自己ベスト: なし</span>`;
                     }
                 }
             });
