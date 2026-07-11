@@ -271,7 +271,31 @@
                 --tile-width: calc(var(--tile-height) / 1.35);
             }
             
-            /* タイトル画面（スタート画面）の調整 */
+            /* 【指示通り】上下の隙間・パディングを極限まで無くす */
+            .game-container {
+                padding: 2px 5px !important;
+                gap: 6px !important;
+            }
+
+            /* 🀄【追加】左側メニュー（やり直しボタン等のバー）のはみ出しバグを修正 */
+            .sidebar-options {
+                /* 盤面の10行分の高さにぴったり連動させて、下側へのはみ出しを強制阻止 */
+                height: calc((var(--tile-height) * 10) + 14px) !important;
+                padding: 3px !important;
+                gap: 2px !important;
+            }
+            /* バーの中の各ボタンも、縦に6個綺麗に収まる高さに自動縮小 */
+            .opt-btn {
+                width: min(10vw, 75px) !important;
+                padding: 2px 0 !important;
+                font-size: min(10px, 2.2vh) !important;
+            }
+            .opt-btn span.icon {
+                font-size: min(12px, 2.6vh) !important;
+                margin-bottom: 0px !important;
+            }
+
+            /* 📊 タイトル画面（スタート画面）の調整 */
             #start-overlay .popup-box {
                 gap: 4px; /* 要素同士の隙間を狭くする */
                 padding: 5px 0;
@@ -285,11 +309,11 @@
                 margin-bottom: 2px !important;
             }
             
-            /* 難易度ボタンのコンテナを横並び、または2列にしてコンパクトにする */
+            /* ⚠️【修正】元々の縦並び(1列)のデザイン・サイズを完全に維持 */
             .diff-menu-container {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr); /* 2列に並べる */
-                gap: 8px;
+                display: flex !important;
+                flex-direction: column !important; /* 縦並び(1列)に戻す */
+                gap: 5px !important; /* 元の程よい隙間をキープ */
                 margin-top: 5px;
                 width: 90%;
                 max-width: 600px;
@@ -298,6 +322,13 @@
                 padding: 6px 12px;
                 font-size: clamp(11px, 4vh, 14px); /* ボタン内の文字も縮小 */
                 border-radius: 6px;
+            }
+
+            /* 🟢 やり直し確認ポップアップの高さ調整（ボタン追加用） */
+            #confirm-overlay .popup-box {
+                width: 260px !important;
+                padding: 10px !important;
+                gap: 8px !important;
             }
         }
     </style>
