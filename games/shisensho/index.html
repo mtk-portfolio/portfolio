@@ -262,6 +262,44 @@
             
             #game-board { max-width: 98vw; }
         }
+
+        /* 📱 スマホの横向き（画面の高さが低いとき） */
+        @media (max-height: 450px) and (orientation: landscape) {
+            :root {
+                /* 横向き時は牌をさらに少しスマートにして縦に収める */
+                --tile-height: min(7.5vh, calc((100vw - 110px) / 19 * 1.35));
+                --tile-width: calc(var(--tile-height) / 1.35);
+            }
+            
+            /* タイトル画面（スタート画面）の調整 */
+            #start-overlay .popup-box {
+                gap: 4px; /* 要素同士の隙間を狭くする */
+                padding: 5px 0;
+            }
+            #start-overlay .popup-title {
+                font-size: min(1.8rem, 8vh) !important; /* 文字を画面の高さに合わせて小さく縮小 */
+                letter-spacing: 6px;
+            }
+            #start-overlay .popup-sub {
+                font-size: min(0.8rem, 4vh) !important;
+                margin-bottom: 2px !important;
+            }
+            
+            /* 難易度ボタンのコンテナを横並び、または2列にしてコンパクトにする */
+            .diff-menu-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* 2列に並べる */
+                gap: 8px;
+                margin-top: 5px;
+                width: 90%;
+                max-width: 600px;
+            }
+            .btn-diff-select {
+                padding: 6px 12px;
+                font-size: clamp(11px, 4vh, 14px); /* ボタン内の文字も縮小 */
+                border-radius: 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -350,6 +388,7 @@
                 <button id="btn-confirm-yes" class="btn-style btn-red">はい</button>
                 <button id="btn-confirm-no" class="btn-style btn-gray">いいえ</button>
             </div>
+            <button id="btn-confirm-menu" class="btn-style btn-green" style="width: 100%; margin-top: 5px;">難易度選択に戻る</button>
         </div>
     </div>
 
@@ -1029,6 +1068,10 @@
         });
         // ⭕ 確認画面で「はい」がクリックされたとき、ゲームを最初から作り直す（リスタート）
         document.getElementById('btn-confirm-yes').addEventListener('click', initGame);
+        
+        // 🔽 【新しく追加】確認画面から直接メニューに戻る処理 🔽
+        document.getElementById('btn-confirm-menu').addEventListener('click', backToMenu);
+
         // 🎮 クリア画面などの「もう一度遊ぶ」ボタンがクリックされたとき、確認なしでゲームを新しく始める
         document.getElementById('btn-replay').addEventListener('click', initGame);
         
