@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>四川省ゲーム</title>
+    <title>シンプル四川省</title>
     <style>
+        /* 🛠️ ゲーム全体で使い回す共通の変数（デザイン設定）を定義 */
         :root {
             --bg-color: #003300; /* 🇨🇳 深みのある中華風のダークグリーン（深緑） */
             --tile-height: min(9.5vh, calc((100vw - 110px) / 19 * 1.35));
@@ -264,12 +265,13 @@
 </head>
 <body>
 
+    <!-- 📦 ゲーム画面全体を包む外枠（コンテナ） -->
     <div class="game-container">
         <div class="sidebar-options">
             <button id="btn-bgm" class="opt-btn active"><span class="icon">🎵</span>BGM<br>ON</button>
             <button id="btn-line" class="opt-btn active"><span class="icon">⚡</span>ルート線<br>ON</button>
-            <button id="btn-manual-shuffle" class="opt-btn"><span class="icon">🔀</span>シャッフル<br>(2)</button>
-            <button id="btn-hint" class="opt-btn"><span class="icon">💡</span>ヒント<br>(2)</button>
+            <button id="btn-manual-shuffle" class="opt-btn"><span class="icon">🔀</span>シャッフル<br>(2)</button><!-- デフォ2回 -->
+            <button id="btn-hint" class="opt-btn"><span class="icon">💡</span>ヒント<br>(2)</button><!-- デフォ2回 -->
             <button id="btn-color-toggle" class="opt-btn"><span class="icon">🎨</span>色分け<br>OFF</button>
             <button id="btn-retry" class="opt-btn"><span class="icon">↩️</span>やり直し</button>
         </div>
@@ -283,6 +285,7 @@
         </div>
     </div>
 
+    <!-- ゲーム難易度 -->
     <div id="start-overlay" class="overlay active">
         <div class="popup-box">
             <p class="popup-title">四川省</p>
@@ -296,6 +299,7 @@
         </div>
     </div>
 
+    <!-- ゲームオーバー画面 -->
     <div id="gameover-overlay" class="overlay">
         <div class="popup-box">
             <p class="popup-title">TIME UP!</p>
@@ -307,6 +311,7 @@
         </div>
     </div>
 
+    <!-- 手詰まり時の表示 -->
     <div id="shuffle-overlay" class="overlay">
         <div class="popup-box">
             <p class="popup-title">NO MORE MOVES</p>
@@ -321,6 +326,7 @@
         </div>
     </div>
 
+    <!-- ゲームクリア時の画面 -->
     <div id="clear-overlay" class="overlay">
         <div class="popup-box">
             <p class="popup-title">GAME CLEAR!</p>
@@ -334,6 +340,7 @@
         </div>
     </div>
 
+    <!-- やり直し画面 -->
     <div id="confirm-overlay" class="overlay">
         <div class="popup-box">
             <h3 style="margin:0; color:#fbc531; font-size:16px;">確認</h3>
@@ -346,6 +353,7 @@
     </div>
 
     <script>
+        // BGM
         const bgm = new Audio('Chinatown.mp3');
         bgm.loop = true;
 
@@ -370,6 +378,7 @@
         }
         bgm.loop = true;
 
+        // ゲームで使用する麻雀牌の種類（画像データ）の定義
         const TILE_TYPES = [
             { id: 1, x: 0, y: 0, type: 'manzu' }, { id: 10, x: 1, y: 0, type: 'pinzu' }, { id: 19, x: 2, y: 0, type: 'souzu' }, { id: 28, x: 3, y: 0, type: 'jihai' },
             { id: 2, x: 0, y: 1, type: 'manzu' }, { id: 11, x: 1, y: 1, type: 'pinzu' }, { id: 20, x: 2, y: 1, type: 'souzu' }, { id: 29, x: 3, y: 1, type: 'jihai' },
@@ -411,6 +420,7 @@
             return `${m}分${s.toString().padStart(2, '0')}秒`;
         }
 
+        // 難易度と設定
         const DIFF_CONFIG = {
             'EASY': { time: 300, color: '#2ecc71', colorMode: true, allowToggle: true, shuffle: 5, hint: 5 },
             'NORMAL': { time: 180, color: '#f1c40f', colorMode: false, allowToggle: true, shuffle: 2, hint: 2 },
@@ -418,6 +428,7 @@
             'PRACTICE': { time: null, color: '#ffffff', colorMode: true, allowToggle: true, shuffle: 99, hint: 99 } // 練習は多めに
         };
 
+        // BGMを鳴らす
         function tryPlayBgm() {
             if (isBgmOn && isAudioInitiated) {
                 // ⏱️ 1000ミリ秒（1秒）待ってからBGMを再生する
@@ -499,7 +510,7 @@
                 'PRACTICE': '練習モード (無限 / 色分けON)'
             };
             
-            // 背景に負けない、絶対に透けないハッキリした色を指定
+            // タイム表示の色
             const textColors = {
                 'EASY': '#ffffff',      // 緑ボタンには「純白」
                 'NORMAL': '#000000',    // 黄ボタンには「漆黒」（透かしなし）
@@ -513,7 +524,6 @@
                     const best = localStorage.getItem('shisensho_best_' + diff);
                     const color = textColors[diff];
                     
-                    // 💡 opacity（透明度）を完全に撤廃し、文字サイズも少し大きくしました
                     const textStyle = `font-size:14px; font-weight:bold; color:${color}; display:inline-block; margin-top:5px;`;
                     
                     if (best) {
@@ -541,7 +551,7 @@
             document.getElementById('clear-overlay').classList.remove('active');
             document.getElementById('confirm-overlay').classList.remove('active');
             
-            // 🟢 [変更] 難易度ごとの設定（DIFF_CONFIG）から回数を取得して適用します
+            // 🟢 [変更] 難易度ごとの設定（DIFF_CONFIG）から回数を取得
             const config = DIFF_CONFIG[currentDifficulty];
             shuffleCount = config.shuffle !== undefined ? config.shuffle : 2;
             hintCount = config.hint !== undefined ? config.hint : 2;
@@ -603,6 +613,7 @@
             setTimeout(checkMovablePairs, 500);
         }
 
+        // 🔘 オプションボタン（色分けやヒント等）の表示状態を最新に更新する関数
         function updateOptionButtons() {
             const sBtn = document.getElementById('btn-manual-shuffle');
             sBtn.innerHTML = `<span class="icon">🔀</span>シャッフル<br>(${shuffleCount})`;
@@ -613,6 +624,7 @@
             hBtn.disabled = hintCount <= 0;
         }
 
+        // 🀄 現在の牌のデータを元に、実際のゲーム盤面を画面に描き出す関数
         function renderBoard() {
             const boardElement = document.getElementById('game-board');
             boardElement.innerHTML = '';
@@ -731,6 +743,7 @@
             return null;
         }
 
+        // 🔍 現在の盤面から、消すことができる牌のペアを1組だけ探す関数（ヒント・手詰まり判定用）
         function findMovablePair() {
             let tiles = [];
             for (let r = 0; r < ROWS; r++) {
@@ -749,6 +762,7 @@
             return { status: 'deadlock' };
         }
 
+        // 📊 盤面に消せるペアが残っているか確認し、手詰まりやクリアの判定を行う関数
         function checkMovablePairs() {
             const result = findMovablePair();
             if (result.status === 'clear') {
@@ -781,6 +795,7 @@
             }
         }
 
+        // 🔀 牌をシャッフルする一連の処理（手詰まり時の自動シャッフルにも対応）を実行する関数
         function triggerShuffleRoutine(isAuto = false) {
             if (isShuffling) return;
             isShuffling = true;
@@ -818,11 +833,13 @@
             }, 1500); 
         }
 
+        // 🧹 画面に表示されているヒント（消せる牌のハイライト）を消去して元に戻す関数
         function clearHint() {
             if (hintTimeoutId) { clearTimeout(hintTimeoutId); hintTimeoutId = null; }
             document.querySelectorAll('.tile.hint').forEach(el => el.classList.remove('hint'));
         }
 
+        // ⚡ 2つの牌が消えるときに、その間を繋ぐ移動ルートの線を描画する関数
         function drawRouteLine(route) {
             const svg = document.getElementById('route-svg');
             svg.innerHTML = '';
@@ -859,8 +876,10 @@
             svg.appendChild(polyline);
         }
 
+        // 🧹 牌が消えたときに表示されたルートの線を画面から消去する関数
         function clearRouteLine() { document.getElementById('route-svg').innerHTML = ''; }
 
+        // 🀄 プレイヤーが盤面の牌をクリックしたときの選択・消去処理を行う関数
         function handleTileClick(r, c, element) {
             if (isShuffling || isBlockInteraction) return;
             clearHint();
@@ -908,6 +927,7 @@
             }
         }
 
+        // 🔊 BGMボタンがクリックされたとき、音楽の再生／一時停止を切り替える
         document.getElementById('btn-bgm').addEventListener('click', (e) => {
             isBgmOn = !isBgmOn;
             let target = e.currentTarget;
@@ -922,6 +942,7 @@
             }
         });
 
+        // ⚙️ 確認線ボタンがクリックされたとき、牌が消えるときの線のON/OFFを切り替える
         document.getElementById('btn-line').addEventListener('click', (e) => {
             isLineOn = !isLineOn;
             let target = e.currentTarget;
@@ -935,6 +956,7 @@
             }
         });
 
+        // 🔄 手動シャッフルボタンがクリックされたとき、プレイヤーの意思で牌を混ぜ直す
         document.getElementById('btn-manual-shuffle').addEventListener('click', () => {
             if (shuffleCount > 0 && !isShuffling && !isBlockInteraction) {
                 shuffleCount--;
@@ -943,6 +965,7 @@
             }
         });
 
+        // 💡 ヒントボタンがクリックされたとき、いま消せる牌を1組探して光らせる
         document.getElementById('btn-hint').addEventListener('click', () => {
             if (hintCount > 0 && !isShuffling && !isBlockInteraction) {
                 clearHint();
@@ -976,6 +999,7 @@
             }
         });
 
+        // 🌈 色分けボタンがクリックされたとき、同じ種類の牌（萬子・筒子など）ごとに背景色を変える機能をON
         document.getElementById('btn-color-toggle').addEventListener('click', (e) => {
             if (isShuffling || isBlockInteraction) return;
             
@@ -994,13 +1018,17 @@
             renderBoard();
         });
 
+        // 🔄 リトライボタンがクリックされたとき、「本当にやり直しますか？」の確認画面を表示する
         document.getElementById('btn-retry').addEventListener('click', () => {
             if (!isBlockInteraction) document.getElementById('confirm-overlay').classList.add('active');
         });
+        // ❌ 確認画面で「いいえ」がクリックされたとき、確認画面を閉じてゲームに戻る
         document.getElementById('btn-confirm-no').addEventListener('click', () => {
             document.getElementById('confirm-overlay').classList.remove('active');
         });
+        // ⭕ 確認画面で「はい」がクリックされたとき、ゲームを最初から作り直す（リスタート）
         document.getElementById('btn-confirm-yes').addEventListener('click', initGame);
+        // 🎮 クリア画面などの「もう一度遊ぶ」ボタンがクリックされたとき、確認なしでゲームを新しく始める
         document.getElementById('btn-replay').addEventListener('click', initGame);
         
         // 🟢 タイムアップ画面から、同じ難易度でもう一度遊ぶ関数
