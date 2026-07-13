@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🀄</text></svg>">
+    <title>重力四川省</title>
+    <style>
+        /* 🛠️ ゲーム全体で使い回す共通の変数（デザイン設定）を定義 */
+        :root {
+            --bg-color: #330000; /* 🇨🇳 深みのある中華風のダークグリーン（深緑） */
+            --tile-height: min(9.5vh, calc((100vw - 110px) / 19 * 1.35));
+            --tile-width: calc(var(--tile-height) / 1.35);
+        }
+        * { box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-color);
+            
+            /* 🇨🇳 緑基調の中華風幾何学格子文様（CSSアート背景） */
+            background-image: 
+                linear-gradient(30deg, #990000 12%, transparent 12.5%, transparent 87%, #990000 87.5%, #990000),
+                linear-gradient(150deg, #990000 12%, transparent 12.5%, transparent 87%, #990000 87.5%, #990000),
+                linear-gradient(30deg, #990000 12%, transparent 12.5%, transparent 87%, #990000 87.5%, #990000),
+                linear-gradient(150deg, #990000 12%, transparent 12.5%, transparent 87%, #990000 87.5%, #990000),
+                linear-gradient(60deg, #550000 25%, transparent 25.5%, transparent 75%, #550000 75.5%, #550000),
+                linear-gradient(60deg, #550000 25%, transparent 25.5%, transparent 75%, #550000 75.5%, #550000);
+            background-size: 40px 70px;
+            background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
+            
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0; padding: 0;
+            overscroll-behavior: none; 
+            height: 100vh; width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            width: 100%; height: 100%;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .sidebar-options {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            /* 🎨 赤基調（漆赤・ダークレッド）に合わせた半透明カラー */
+            background-color: rgba(35, 12, 12, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 6px;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            height: calc((var(--tile-height) * 10) + 17px);
+            justify-content: space-around;
+            /* ほんのり赤（朱色系）の光彩枠に変更 */
+            border: 1px solid rgba(231, 76, 60, 0.2); 
+        }
+        
+        .opt-btn {
+            width: min(12vw, 80px);
+            flex: 1;
+            border: none; border-radius: 4px;
+            background-color: #3a1a1a; color: #e0f2e9;
+            font-size: clamp(11px, 1.4vh, 13px); 
+            font-weight: bold;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            gap: 2px; cursor: pointer;
+            line-height: 1.1;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid #0f2219;
+        }
+        .opt-btn span.icon { font-size: clamp(14px, 2.4vh, 18px); }
+        
+        .opt-btn:hover { background-color: #7f2d2d; color: #fff; } /* 🍷 明るめのワインレッドに変更 */
+        .opt-btn:disabled {
+            background-color: #230c0c; color: #5a3d3d; /* 🧱 暗い黒赤と、くすんだ赤茶の文字に変更 */
+            cursor: not-allowed; border-bottom-color: transparent;
+        }
+        /* アクティブ時は中華風に映えるゴールド（赤背景に最高に映えるので維持） */
+        .opt-btn.active { background-color: #fbc531; color: #1e272e; border-bottom: 2px solid #f39c12; }
+        /* 🎨 色分けONの時は、鮮やかな緑から「鮮やかな赤」へ変更 */
+        #btn-color-toggle.active { background-color: #e74c3c; color: #fff; border-bottom: 2px solid #c0392b; }
+        .board-wrapper {
+            position: relative;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(19, var(--tile-width));
+            grid-template-rows: repeat(10, var(--tile-height));
+            gap: 1px; 
+            /* 🎨 雀卓をイメージした深緑の半透明マット */
+            background-color: rgba(35, 12, 12, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 4px;
+            border-radius: 6px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        #route-svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .tile {
+            background-color: #f5f6fa; border-radius: 2px;
+            border-bottom: min(0.4vh, 3px) solid #dcdde1; border-right: 1px solid #dcdde1;
+            cursor: pointer; user-select: none;
+            background-image: url('tiles.png');
+            background-size: 400% 900%; background-repeat: no-repeat;
+            transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 落ちるスムーズなアニメーション */
+        }
+        
+        .tile.selected {
+            box-shadow: inset 0 0 0 2px #fbc531, 0 0 6px #fbc531;
+            filter: brightness(0.8); transform: scale(0.95);
+        }
+
+        .tile.hint {
+            animation: hint-flash 0.5s infinite alternate;
+            box-shadow: inset 0 0 0 2px #2ecc71, 0 0 10px #2ecc71;
+            z-index: 10;
+        }
+        @keyframes hint-flash {
+            0% { filter: brightness(1.3); }
+            100% { filter: brightness(0.7); }
+        }
+
+        .color-mode .type-manzu { background-color: #ffb3b3; background-blend-mode: multiply; }
+        .color-mode .type-pinzu { background-color: #b3d1ff; background-blend-mode: multiply; }
+        .color-mode .type-souzu { background-color: #b3ffb3; background-blend-mode: multiply; }
+        .color-mode .type-jihai { background-color: #fff; background-blend-mode: multiply; }
+
+        /* 📌 演出・ポップアップ共通レイヤー */
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center; z-index: 100;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .popup-box {
+            width: 100%; padding: 20px 0; text-align: center;
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .overlay.active .popup-box { transform: scale(1); }
+        
+        .popup-title { font-size: max(1.5rem, 5vh); font-weight: 900; letter-spacing: 6px; margin: 0; }
+        .popup-sub { font-size: max(0.9rem, 2vh); margin: 0; letter-spacing: 2px; }
+
+        #start-overlay {
+            background: radial-gradient(circle, rgba(35,12,12,0.96) 0%, rgba(15,5,5,0.99) 100%);
+        }
+        #start-overlay .popup-title {
+            color: #fbc531; text-shadow: 0 4px 15px rgba(251, 197, 49, 0.4);
+            font-size: max(2.2rem, 7vh); letter-spacing: 12px;
+        }
+
+        /* 🟢 タイムバー関連スタイル（盤面内下部に変更） */
+        #timer-container {
+            position: absolute;
+            bottom: 4px; 
+            left: 4px;   
+            width: calc(100% - 8px); 
+            height: 8px; 
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 60; 
+            border-radius: 0 0 4px 4px; 
+        }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            transition: width 0.2s linear, background-color 0.3s ease;
+        }
+
+        /* 難易度選択ボタン装飾 */
+        .diff-menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        .btn-diff-select {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.1s, filter 0.2s;
+        }
+        .btn-diff-select:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .btn-diff-select:active { transform: scale(0.98); }
+
+        /* 🔴 自動手詰まりシャッフル */
+        #shuffle-overlay { background-color: rgba(0, 0, 0, 0.75); }
+        #shuffle-overlay .popup-box { background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(36,24,24,0.9) 25%, rgba(36,24,24,0.9) 75%, rgba(0,0,0,0) 100%); }
+        #shuffle-overlay .popup-title { color: #ff4757; text-shadow: 0 0 10px rgba(255, 71, 87, 0.6); }
+        #shuffle-overlay .popup-sub { color: #ee5253; }
+
+        /* 🔵 任意手動シャッフル */
+        #manual-shuffle-overlay { background-color: rgba(0, 0, 0, 0.7); }
+        #manual-shuffle-overlay .popup-box { background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(15,35,25,0.9) 25%, rgba(15,35,25,0.9) 75%, rgba(0,0,0,0) 100%); }
+        #manual-shuffle-overlay .popup-title { color: #00a8ff; text-shadow: 0 0 10px rgba(0, 168, 255, 0.6); }
+        #manual-shuffle-overlay .popup-sub { color: #70a1ff; }
+
+        /* ゲームオーバー・ゲームクリア */
+        #gameover-overlay { background-color: rgba(40, 10, 10, 0.85); }
+        #gameover-overlay .popup-title { color: #ff4757; text-shadow: 0 0 15px rgba(255, 71, 87, 0.6); font-size: max(2.5rem, 8vh); }
+
+        #clear-overlay { background-color: rgba(0, 0, 0, 0.8); }
+        #clear-overlay .popup-box { background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(16,35,22,0.95) 25%, rgba(16,35,22,0.95) 75%, rgba(0,0,0,0) 100%); }
+        #clear-overlay .popup-title { color: #2ed573; text-shadow: 0 0 10px rgba(46, 213, 115, 0.6); }
+        #clear-overlay .popup-sub { color: #7bed9f; }
+        
+        #confirm-overlay { background-color: rgba(0, 0, 0, 0.6); }
+        #confirm-overlay .popup-box {
+            background-color: #1a3a2a; width: 280px; padding: 15px; border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #2ecc71; gap: 15px;
+        }
+        .confirm-buttons { display: flex; gap: 15px; width: 100%; justify-content: center; }
+        
+        .btn-style { padding: 8px 20px; font-size: 14px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        .btn-green { background-color: #2ed573; color: #1e272e; }
+        .btn-red { background-color: #ff4757; color: white; }
+        .btn-gray { background-color: #718093; color: white; }
+
+        /* 📱 スマホ時・縦画面時の設定 */
+        @media (orientation: portrait) {
+            :root {
+                --tile-width: min(4.8vw, 8vh);
+                --tile-height: calc(var(--tile-width) * 1.35); 
+            }
+            .game-container { flex-direction: column-reverse; }
+            .sidebar-options { flex-direction: row; width: 98vw; height: auto; justify-content: center; padding: 4px; }
+            
+            .opt-btn { 
+                width: 58px; 
+                height: 52px; 
+                font-size: 10px; 
+                flex: none; 
+            }
+            .opt-btn span.icon { font-size: 14px; }
+            
+            #game-board { max-width: 98vw; }
+        }
+
+        /* 📱 スマホの横向き（画面の高さが低いとき） */
+        @media (max-height: 450px) and (orientation: landscape) {
+            :root {
+                /* 横向き時は牌をさらに少しスマートにして縦に収める */
+                --tile-height: min(7.5vh, calc((100vw - 110px) / 19 * 1.35));
+                --tile-width: calc(var(--tile-height) / 1.35);
+            }
+            
+            /* 【指示通り】上下の隙間・パディングを極限まで無くす */
+            .game-container {
+                padding: 2px 5px !important;
+                gap: 6px !important;
+            }
+
+            /* 🀄【追加】左側メニュー（やり直しボタン等のバー）のはみ出しバグを修正 */
+            .sidebar-options {
+                /* 盤面の10行分の高さにぴったり連動させて、下側へのはみ出しを強制阻止 */
+                height: calc((var(--tile-height) * 10) + 14px) !important;
+                padding: 3px !important;
+                gap: 2px !important;
+            }
+            /* バーの中の各ボタンも、縦に6個綺麗に収まる高さに自動縮小 */
+            .opt-btn {
+                width: min(10vw, 75px) !important;
+                padding: 2px 0 !important;
+                font-size: min(10px, 2.2vh) !important;
+            }
+            .opt-btn span.icon {
+                font-size: min(12px, 2.6vh) !important;
+                margin-bottom: 0px !important;
+            }
+
+            /* 📊 タイトル画面（スタート画面）の調整 */
+            #start-overlay .popup-box {
+                gap: 4px; /* 要素同士の隙間を狭くする */
+                padding: 5px 0;
+            }
+            #start-overlay .popup-title {
+                font-size: min(1.8rem, 8vh) !important; /* 文字を画面の高さに合わせて小さく縮小 */
+                letter-spacing: 6px;
+            }
+            #start-overlay .popup-sub {
+                font-size: min(0.8rem, 4vh) !important;
+                margin-bottom: 2px !important;
+            }
+            
+            /* ⚠️【修正】元々の縦並び(1列)のデザイン・サイズを完全に維持 */
+            .diff-menu-container {
+                display: flex !important;
+                flex-direction: column !important; /* 縦並び(1列)に戻す */
+                gap: 5px !important; /* 元の程よい隙間をキープ */
+                margin-top: 5px;
+                width: 90%;
+                max-width: 600px;
+            }
+            .btn-diff-select {
+                padding: 6px 12px;
+                font-size: clamp(11px, 4vh, 14px); /* ボタン内の文字も縮小 */
+                border-radius: 6px;
+            }
+
+            /* 🟢 やり直し確認ポップアップの高さ調整（ボタン追加用） */
+            #confirm-overlay .popup-box {
+                width: 260px !important;
+                padding: 10px !important;
+                gap: 8px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="sidebar-options">
+            <button id="btn-bgm" class="opt-btn active"><span class="icon">🎵</span>BGM<br>ON</button>
+            <button id="btn-line" class="opt-btn active"><span class="icon">⚡</span>ルート線<br>ON</button>
+            <button id="btn-manual-shuffle" class="opt-btn"><span class="icon">🔀</span>シャッフル<br>(2)</button>
+            <button id="btn-hint" class="opt-btn"><span class="icon">💡</span>ヒント<br>(2)</button>
+            <button id="btn-color-toggle" class="opt-btn"><span class="icon">🎨</span>色分け<br>OFF</button>
+            <button id="btn-retry" class="opt-btn"><span class="icon">↩️</span>やり直し</button>
+        </div>
+
+        <div class="board-wrapper">
+            <div id="game-board"></div>
+            <svg id="route-svg"></svg>
+            <div id="timer-container">
+              <div id="timer-bar"></div>
+          </div>
+        </div>
+    </div>
+
+    <div id="start-overlay" class="overlay active">
+        <div class="popup-box">
+            <p class="popup-title">重力四川省</p>
+            <p class="popup-sub" style="color:#a4ccb6; margin-bottom: 10px;">〜 難易度を選択してください 〜</p>
+            <div class="diff-menu-container">
+                <button id="btn-diff-easy" class="btn-diff-select" style="background-color: #2ecc71; color: #fff;" onclick="selectDifficulty('EASY')">EASY (300秒 / 色分けON)</button>
+                <button id="btn-diff-normal" class="btn-diff-select" style="background-color: #f1c40f; color: #1e272e;" onclick="selectDifficulty('NORMAL')">NORMAL (180秒 / 色分けOFF)</button>
+                <button id="btn-diff-hard" class="btn-diff-select" style="background-color: #e74c3c; color: #fff;" onclick="selectDifficulty('HARD')">HARD (120秒 / 色分け固定OFF)</button>
+                <button id="btn-diff-practice" class="btn-diff-select" style="background-color: #ffffff; color: #1e272e;" onclick="selectDifficulty('PRACTICE')">練習モード (無限 / 色分けON)</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameover-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">TIME UP!</p>
+            <p class="popup-sub" style="color: #ff7675;">制限時間を超過しました</p>
+            
+            <button class="btn-style btn-green" style="font-size:15px; padding:10px 25px; margin-top:15px; margin-right: 10px;" onclick="replayGameFromTimeup()">もう一度遊ぶ</button>
+            
+            <button class="btn-style btn-red" style="font-size:15px; padding:10px 25px; margin-top:15px;" onclick="backToMenu()">難易度選択に戻る</button>
+        </div>
+    </div>
+
+    <div id="shuffle-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">NO MORE MOVES</p>
+            <p class="popup-sub">手詰まりのためシャッフルします...</p>
+        </div>
+    </div>
+
+    <div id="manual-shuffle-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">SHUFFLING...</p>
+            <p class="popup-sub">牌をシャッフルしています</p>
+        </div>
+    </div>
+
+    <div id="clear-overlay" class="overlay">
+        <div class="popup-box">
+            <p class="popup-title">GAME CLEAR!</p>
+            <p class="popup-sub">素晴らしい！すべての牌を消去しました！</p>
+            <p id="clear-time-info" class="popup-sub" style="margin-top: 5px; color: #fff; font-size: max(1rem, 2.2vh); font-weight: bold;"></p>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px; width: 100%; align-items: center;">
+                <button id="btn-replay" class="btn-style btn-green" style="font-size:16px; padding:10px 30px; width: max(200px, 50%);">もう一回遊ぶ</button>
+                <button class="btn-style btn-gray" style="font-size:14px; padding:8px 20px; width: max(200px, 50%);" onclick="backToMenu()">他の難易度を選ぶ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-overlay" class="overlay">
+        <div class="popup-box">
+            <h3 style="margin:0; color:#fbc531; font-size:16px;">確認</h3>
+            <p style="margin:0; font-size:13px; color:#dcdde1;">本当に最初からやり直しますか?</p>
+            <div class="confirm-buttons">
+                <button id="btn-confirm-yes" class="btn-style btn-red">はい</button>
+                <button id="btn-confirm-no" class="btn-style btn-gray">いいえ</button>
+            </div>
+            <button id="btn-confirm-menu" class="btn-style btn-green" style="width: 100%; margin-top: 5px;">難易度選択に戻る</button>
+        </div>
+    </div>
+
+    <script>
+        // BGM
+        const bgm = new Audio('Chinatown.mp3');
+        bgm.loop = true;
+
+        // 🔊 効果音（SE）の定義
+        const se = {
+            start: new Audio('se_start.mp3'),     
+            clear: new Audio('se_clear.mp3'),     
+            select: new Audio('se_select.mp3'),   
+            delete: new Audio('se_delete.mp3'),   
+            shuffle: new Audio('se_shuffle.mp3'), 
+            hint: new Audio('se_hint.mp3'),        
+            timeup: new Audio('se_timeup.mp3'),
+            fall: new Audio('se_fall.mp3')         // 🪂【追加】牌が下に落ちる際の効果音ファイル
+        };
+
+        function playSE(type) {
+            if (!isBgmOn) return; 
+            if (!se[type]) return;
+            se[type].pause();          
+            se[type].currentTime = 0;  
+            se[type].play().catch(e => console.log("SE再生待ち:", e));
+        }
+
+        // ゲームで使用する麻雀牌の種類
+        const TILE_TYPES = [
+            { id: 1, x: 0, y: 0, type: 'manzu' }, { id: 10, x: 1, y: 0, type: 'pinzu' }, { id: 19, x: 2, y: 0, type: 'souzu' }, { id: 28, x: 3, y: 0, type: 'jihai' },
+            { id: 2, x: 0, y: 1, type: 'manzu' }, { id: 11, x: 1, y: 1, type: 'pinzu' }, { id: 20, x: 2, y: 1, type: 'souzu' }, { id: 29, x: 3, y: 1, type: 'jihai' },
+            { id: 3, x: 0, y: 2, type: 'manzu' }, { id: 12, x: 1, y: 2, type: 'pinzu' }, { id: 21, x: 2, y: 2, type: 'souzu' }, { id: 30, x: 3, y: 2, type: 'jihai' },
+            { id: 4, x: 0, y: 3, type: 'manzu' }, { id: 13, x: 1, y: 3, type: 'pinzu' }, { id: 22, x: 2, y: 3, type: 'souzu' }, { id: 31, x: 3, y: 3, type: 'jihai' },
+            { id: 5, x: 0, y: 4, type: 'manzu' }, { id: 14, x: 1, y: 4, type: 'pinzu' }, { id: 23, x: 2, y: 4, type: 'souzu' }, { id: 32, x: 3, y: 4, type: 'jihai' },
+            { id: 6, x: 0, y: 5, type: 'manzu' }, { id: 15, x: 1, y: 5, type: 'pinzu' }, { id: 24, x: 2, y: 5, type: 'souzu' }, { id: 33, x: 3, y: 5, type: 'jihai' },
+            { id: 7, x: 0, y: 6, type: 'manzu' }, { id: 16, x: 1, y: 6, type: 'pinzu' }, { id: 25, x: 2, y: 6, type: 'souzu' }, { id: 34, x: 3, y: 6, type: 'jihai' }, 
+            { id: 8, x: 0, y: 7, type: 'manzu' }, { id: 17, x: 1, y: 7, type: 'pinzu' }, { id: 26, x: 2, y: 7, type: 'souzu' },
+            { id: 9, x: 0, y: 8, type: 'manzu' }, { id: 18, x: 1, y: 8, type: 'pinzu' }, { id: 27, x: 2, y: 8, type: 'souzu' }
+        ];
+
+        const ROWS = 10;
+        const COLS = 19;
+        let boardData = [];
+        let selectedTile = null;
+        let isShuffling = false;
+        let isBlockInteraction = false;
+
+        let isBgmOn = true;
+        let isLineOn = true;
+        let isColorMode = false;
+        let shuffleCount = 2;
+        let hintCount = 2;
+        let isAudioInitiated = false;
+        let hintTimeoutId = null;
+
+        let gameTimer = null;
+        let currentDifficulty = 'NORMAL';
+        let timeLeft = 0;
+        let totalTime = 0;
+        let elapsedTime = 0; 
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}分${s.toString().padStart(2, '0')}秒`;
+        }
+
+        const DIFF_CONFIG = {
+            'EASY': { time: 300, color: '#2ecc71', colorMode: true, allowToggle: true, shuffle: 5, hint: 5 },
+            'NORMAL': { time: 180, color: '#f1c40f', colorMode: false, allowToggle: true, shuffle: 2, hint: 2 },
+            'HARD': { time: 120, color: '#e74c3c', colorMode: false, allowToggle: false, shuffle: 0, hint: 1 }, 
+            'PRACTICE': { time: null, color: '#ffffff', colorMode: true, allowToggle: true, shuffle: 99, hint: 99 } 
+        };
+
+        function tryPlayBgm() {
+            if (isBgmOn && isAudioInitiated) {
+                setTimeout(() => {
+                    if (isBgmOn) {
+                        bgm.play().catch(e => console.log("BGM再生待ち:", e));
+                    }
+                }, 1000); 
+            }
+        }
+
+        function selectDifficulty(diff) {
+            currentDifficulty = diff;
+            isAudioInitiated = true;
+            document.getElementById('start-overlay').classList.remove('active');
+            playSE('start'); 
+            tryPlayBgm();
+            initGame();
+        }
+
+        function startTimer() {
+            stopTimer();
+            const config = DIFF_CONFIG[currentDifficulty];
+            const bar = document.getElementById('timer-bar');
+            bar.style.backgroundColor = config.color;
+
+            elapsedTime = 0; 
+
+            if (config.time === null) {
+                bar.style.width = '100%';
+                gameTimer = setInterval(() => {
+                    if (isShuffling || isBlockInteraction) return;
+                    elapsedTime++;
+                }, 1000);
+                return;
+            }
+
+            totalTime = config.time;
+            timeLeft = config.time;
+            bar.style.width = '100%';
+
+            gameTimer = setInterval(() => {
+                if (isShuffling || isBlockInteraction) return; 
+                timeLeft--;
+                elapsedTime++; 
+                const ratio = Math.max(0, (timeLeft / totalTime) * 100);
+                bar.style.width = ratio + '%';
+
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    stopTimer(); 
+                    playSE('timeup'); 
+                    document.getElementById('gameover-overlay').classList.add('active');
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+        }
+
+        function updateBestScoresDisplay() {
+            const diffs = ['EASY', 'NORMAL', 'HARD', 'PRACTICE'];
+            const names = {
+                'EASY': 'EASY (300秒 / 色分けON)',
+                'NORMAL': 'NORMAL (180秒 / 色分けOFF)',
+                'HARD': 'HARD (120秒 / 色分け固定OFF)',
+                'PRACTICE': '練習モード (無限 / 色分けON)'
+            };
+            
+            const textColors = {
+                'EASY': '#ffffff',      
+                'NORMAL': '#000000',    
+                'HARD': '#ffffff',      
+                'PRACTICE': '#000000'   
+            };
+
+            diffs.forEach(diff => {
+                const btn = document.getElementById(`btn-diff-${diff.toLowerCase()}`);
+                if (btn) {
+                    const best = localStorage.getItem('shisensho_best_' + diff);
+                    const color = textColors[diff];
+                    
+                    const textStyle = `font-size:14px; font-weight:bold; color:${color}; display:inline-block; margin-top:5px;`;
+                    
+                    if (best) {
+                        btn.innerHTML = `${names[diff]} <br><span style="${textStyle}">🏆 自己ベスト: ${formatTime(parseInt(best))}</span>`;
+                    } else {
+                        btn.innerHTML = `${names[diff]} <br><span style="${textStyle}">🏆 自己ベスト: なし</span>`;
+                    }
+                }
+            });
+        }
+
+        function backToMenu() {
+            stopTimer();
+            updateBestScoresDisplay(); 
+            document.getElementById('gameover-overlay').classList.remove('active');
+            document.getElementById('clear-overlay').classList.remove('active');
+            document.getElementById('confirm-overlay').classList.remove('active');
+            document.getElementById('start-overlay').classList.add('active');
+        }
+
+        function initGame() {
+            clearHint();
+            clearRouteLine();
+            document.getElementById('clear-overlay').classList.remove('active');
+            document.getElementById('confirm-overlay').classList.remove('active');
+            
+            const config = DIFF_CONFIG[currentDifficulty];
+            shuffleCount = config.shuffle !== undefined ? config.shuffle : 2;
+            hintCount = config.hint !== undefined ? config.hint : 2;
+            
+            isBlockInteraction = false;
+            isColorMode = config.colorMode;
+            
+            const colorBtn = document.getElementById('btn-color-toggle');
+            if (config.allowToggle) {
+                colorBtn.disabled = false;
+                if (isColorMode) {
+                    colorBtn.classList.add('active');
+                    colorBtn.innerHTML = `<span class="icon">🎨</span>色分け<br>ON`;
+                } else {
+                    colorBtn.classList.remove('active');
+                    colorBtn.innerHTML = `<span class="icon">🎨</span>色分け<br>OFF`;
+                }
+            } else {
+                colorBtn.disabled = true;
+                colorBtn.classList.remove('active');
+                colorBtn.innerHTML = `<span class="icon">🎨</span>色分け<br>固定`;
+            }
+
+            updateOptionButtons();
+
+            boardData = [];
+            for (let r = 0; r < ROWS; r++) {
+                boardData[r] = [];
+                for (let c = 0; c < COLS; c++) {
+                    boardData[r][c] = null;
+                }
+            }
+
+            let pool = [];
+            for (let i = 0; i < TILE_TYPES.length; i++) {
+                for (let j = 0; j < 4; j++) pool.push({ ...TILE_TYPES[i] });
+            }
+
+            for (let i = pool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [pool[i], pool[j]] = [pool[j], pool[i]];
+            }
+
+            let poolIndex = 0;
+            for (let r = 1; r < ROWS - 1; r++) {
+                for (let c = 1; c < COLS - 1; c++) {
+                    if (poolIndex < pool.length) {
+                        boardData[r][c] = pool[poolIndex++];
+                    }
+                }
+            }
+
+            renderBoard();
+            startTimer();
+            setTimeout(checkMovablePairs, 500);
+        }
+
+        function updateOptionButtons() {
+            const sBtn = document.getElementById('btn-manual-shuffle');
+            sBtn.innerHTML = `<span class="icon">🔀</span>シャッフル<br>(${shuffleCount})`;
+            sBtn.disabled = shuffleCount <= 0;
+
+            const hBtn = document.getElementById('btn-hint');
+            hBtn.innerHTML = `<span class="icon">💡</span>ヒント<br>(${hintCount})`;
+            hBtn.disabled = hintCount <= 0;
+        }
+
+        function renderBoard() {
+            const boardElement = document.getElementById('game-board');
+            boardElement.innerHTML = '';
+            if (isColorMode) boardElement.classList.add('color-mode');
+            else boardElement.classList.remove('color-mode');
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const tileData = boardData[r][c];
+                    const tileElement = document.createElement('div');
+                    if (tileData) {
+                        tileElement.classList.add('tile', `type-${tileData.type}`);
+                        tileElement.style.backgroundPosition = `${(tileData.x / 3) * 100}% ${(tileData.y / 8) * 100}%`;
+                        tileElement.id = `tile-${r}-${c}`;
+                        tileElement.dataset.row = r;
+                        tileElement.dataset.col = c;
+                        tileElement.addEventListener('click', () => handleTileClick(r, c, tileElement));
+                    } else {
+                        tileElement.style.visibility = 'hidden';
+                    }
+                    boardElement.appendChild(tileElement);
+                }
+            }
+        }
+
+        function checkStraight(r1, c1, r2, c2) {
+            if (r1 !== r2 && c1 !== c2) return false;
+            if (Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1) return true;
+            
+            if (r1 === r2) { 
+                const minC = Math.min(c1, c2);
+                const maxC = Math.max(c1, c2);
+                for (let c = minC + 1; c < maxC; c++) {
+                    if (boardData[r1] && boardData[r1][c] !== null) return false;
+                }
+            } else { 
+                const minR = Math.min(r1, r2);
+                const maxR = Math.max(r1, r2);
+                for (let r = minR + 1; r < maxR; r++) {
+                    if (boardData[r] && boardData[r][c1] !== null) return false;
+                }
+            }
+            return true;
+        }
+
+        function getConnectRoute(r1, c1, r2, c2) {
+            if (r1 === r2 && c1 === c2) return null;
+
+            if (Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1) {
+                return [{r: r1, c: c1}, {r: r2, c: c2}];
+            }
+
+            if (checkStraight(r1, c1, r2, c2)) {
+                return [{r: r1, c: c1}, {r: r2, c: c2}];
+            }
+
+            if (boardData[r1] && boardData[r1][c2] === null) {
+                if (checkStraight(r1, c1, r1, c2) && checkStraight(r1, c2, r2, c2)) {
+                    return [{r: r1, c: c1}, {r: r1, c: c2}, {r: r2, c: c2}];
+                }
+            }
+            if (boardData[r2] && boardData[r2][c1] === null) {
+                if (checkStraight(r1, c1, r2, c1) && checkStraight(r2, c1, r2, c2)) {
+                    return [{r: r1, c: c1}, {r: r2, c: c1}, {r: r2, c: c2}];
+                }
+            }
+
+            for (let c = 0; c < COLS; c++) {
+                if (c === c1) continue;
+                if (c !== c2 && boardData[r1] && boardData[r1][c] !== null) {
+                    if (c < c1) continue; else break;
+                }
+                const p1Empty = (boardData[r1] && boardData[r1][c] === null);
+                const p2Empty = (boardData[r2] && boardData[r2][c] === null) || (r2 === r2 && c === c2);
+
+                if (p1Empty && p2Empty) {
+                    if (checkStraight(r1, c1, r1, c) && checkStraight(r1, c, r2, c) && checkStraight(r2, c, r2, c2)) {
+                        return [{r: r1, c: c1}, {r: r1, c: c}, {r: r2, c: c}, {r: r2, c: c2}];
+                    }
+                }
+            }
+
+            for (let r = 0; r < ROWS; r++) {
+                if (r === r1) continue;
+                if (r !== r2 && boardData[r] && boardData[r][c1] !== null) {
+                    if (r < r1) continue; else break;
+                }
+                const p1Empty = (boardData[r] && boardData[r][c1] === null);
+                const p2Empty = (boardData[r] && boardData[r][c2] === null) || (r === r2 && c2 === c2);
+
+                if (p1Empty && p2Empty) {
+                    if (checkStraight(r1, c1, r, c1) && checkStraight(r, c1, r, c2) && checkStraight(r, c2, r2, c2)) {
+                        return [{r: r1, c: c1}, {r: r, c: c1}, {r: r, c: c2}, {r: r2, c: c2}];
+                    }
+                }
+            }
+            return null;
+        }
+
+        function findMovablePair() {
+            let tiles = [];
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (boardData[r][c] !== null) tiles.push({ r, c, id: boardData[r][c].id });
+                }
+            }
+            if (tiles.length === 0) return { status: 'clear' };
+            for (let i = 0; i < tiles.length; i++) {
+                for (let j = i + 1; j < tiles.length; j++) {
+                    if (tiles[i].id === tiles[j].id && getConnectRoute(tiles[i].r, tiles[i].c, tiles[j].r, tiles[j].c) !== null) {
+                        return { status: 'movable', t1: tiles[i], t2: tiles[j] }; 
+                    }
+                }
+            }
+            return { status: 'deadlock' };
+        }
+
+        function checkMovablePairs() {
+            const result = findMovablePair();
+            if (result.status === 'clear') {
+                stopTimer(); 
+                playSE('clear'); 
+
+                const bestKey = 'shisensho_best_' + currentDifficulty;
+                const previousBest = localStorage.getItem(bestKey);
+                let isNewRecord = false;
+
+                if (!previousBest || elapsedTime < parseInt(previousBest)) {
+                    localStorage.setItem(bestKey, elapsedTime);
+                    isNewRecord = true;
+                }
+
+                const clearTimeInfo = document.getElementById('clear-time-info');
+                if (isNewRecord) {
+                    clearTimeInfo.innerHTML = `タイム: <span style="color:#fbc531;">${formatTime(elapsedTime)}</span> 🎉 新記録達成！`;
+                } else {
+                    clearTimeInfo.innerHTML = `タイム: ${formatTime(elapsedTime)} <br><span style="font-size:14px; opacity:0.7;">(自己ベスト: ${formatTime(parseInt(previousBest))})</span>`;
+                }
+                document.getElementById('clear-overlay').classList.add('active');
+            } else if (result.status === 'deadlock') {
+                triggerShuffleRoutine(true);
+            }
+        }
+
+        // 🪂【追加】重力処理ファンクション
+        function applyGravity() {
+            let hasFallen = false;
+
+            // 各列(コラム)ごとに下から上に向かってスキャン
+            for (let c = 1; c < COLS - 1; c++) {
+                // 下から2行目（枠線の内側の最下部）から上へと処理
+                for (let r = ROWS - 2; r > 0; r--) {
+                    if (boardData[r][c] !== null) {
+                        let targetRow = r;
+                        
+                        // 下が空いている限り、どこまで落ちるかチェック
+                        while (targetRow + 1 < ROWS - 1 && boardData[targetRow + 1][c] === null) {
+                            targetRow++;
+                        }
+                        
+                        // 落下可能な空間があればデータを移動
+                        if (targetRow !== r) {
+                            boardData[targetRow][c] = boardData[r][c];
+                            boardData[r][c] = null;
+                            hasFallen = true;
+
+                            // アニメーション用にDOM要素を取得し、移動量を計算して割り当てる
+                            const tileEl = document.getElementById(`tile-${r}-${c}`);
+                            if (tileEl) {
+                                const distance = targetRow - r;
+                                tileEl.style.transform = `translateY(calc(var(--tile-height) * ${distance}))`;
+                            }
+                        }
+                    }
+                }
+            }
+            return hasFallen;
+        }
+
+        function triggerShuffleRoutine(isAuto = false) {
+            if (isShuffling) return;
+            isShuffling = true;
+            selectedTile = null;
+            clearHint();
+            clearRouteLine();
+
+            playSE('shuffle'); 
+
+            const overlayId = isAuto ? 'shuffle-overlay' : 'manual-shuffle-overlay';
+            const overlay = document.getElementById(overlayId);
+            overlay.classList.add('active');
+
+            setTimeout(() => {
+                let remainingTiles = [];
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (boardData[r][c] !== null) remainingTiles.push(boardData[r][c]);
+                    }
+                }
+                for (let i = remainingTiles.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [remainingTiles[i], remainingTiles[j]] = [remainingTiles[j], remainingTiles[i]];
+                }
+                let index = 0;
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (boardData[r][c] !== null) boardData[r][c] = remainingTiles[index++];
+                    }
+                }
+                
+                // シャッフル後に即重力を適用して整える
+                applyGravity();
+                renderBoard();
+                
+                overlay.classList.remove('active');
+                isShuffling = false;
+                setTimeout(checkMovablePairs, 500);
+            }, 1500); 
+        }
+
+        function clearHint() {
+            if (hintTimeoutId) { clearTimeout(hintTimeoutId); hintTimeoutId = null; }
+            document.querySelectorAll('.tile.hint').forEach(el => el.classList.remove('hint'));
+        }
+
+        function drawRouteLine(route) {
+            const svg = document.getElementById('route-svg');
+            svg.innerHTML = '';
+            if (!route || route.length < 2) return;
+
+            const board = document.getElementById('game-board');
+            const boardRect = board.getBoundingClientRect();
+            let points = [];
+
+            route.forEach(pos => {
+                const tileEl = document.getElementById(`tile-${pos.r}-${pos.c}`);
+                let x, y;
+                if (tileEl) {
+                    const rect = tileEl.getBoundingClientRect();
+                    x = rect.left - boardRect.left + (rect.width / 2);
+                    y = rect.top - boardRect.top + (rect.height / 2);
+                } else {
+                    const tileW = boardRect.width / COLS;
+                    const tileH = boardRect.height / ROWS;
+                    x = (pos.c * tileW) + (tileW / 2);
+                    y = (pos.r * tileH) + (tileH / 2);
+                }
+                points.push(`${x},${y}`);
+            });
+
+            const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+            polyline.setAttribute('points', points.join(' '));
+            polyline.setAttribute('stroke', '#2ecc71'); 
+            polyline.setAttribute('stroke-width', '4');
+            polyline.setAttribute('fill', 'none');
+            polyline.setAttribute('stroke-linecap', 'round');
+            polyline.setAttribute('stroke-linejoin', 'round');
+            polyline.style.filter = 'drop-shadow(0px 0px 4px #2ecc71)'; 
+            svg.appendChild(polyline);
+        }
+
+        function clearRouteLine() { document.getElementById('route-svg').innerHTML = ''; }
+
+        function handleTileClick(r, c, element) {
+            if (isShuffling || isBlockInteraction) return;
+            clearHint();
+
+            if (selectedTile && selectedTile.r === r && selectedTile.c === c) {
+                element.classList.remove('selected');
+                selectedTile = null;
+                return;
+            }
+
+            if (!selectedTile) {
+                selectedTile = { r, c, element };
+                element.classList.add('selected');
+                playSE('select'); 
+            } else {
+                const firstTileData = boardData[selectedTile.r][selectedTile.c];
+                const secondTileData = boardData[r][c];
+                const route = getConnectRoute(selectedTile.r, selectedTile.c, r, c);
+
+                if (firstTileData.id === secondTileData.id && route !== null) {
+                    isBlockInteraction = true;
+                    if (isLineOn) drawRouteLine(route);
+                
+                    playSE('delete');
+
+                    const prevSelected = selectedTile;
+                    selectedTile = null;
+
+                    // 1. まずルート線や消去の余韻を持たせる（0.2秒待つ）
+                    setTimeout(() => {
+                        // 2. 盤面データから2枚を消去して「即座に再描画」し、画面上から牌を完全に消す
+                        boardData[prevSelected.r][prevSelected.c] = null;
+                        boardData[r][c] = null;
+                        clearRouteLine();
+                        renderBoard(); 
+
+                        // 3. 牌が消えた「あと」に、一瞬の間（0.15秒）を空けてから落下処理を開始する
+                        setTimeout(() => {
+                            const didFall = applyGravity();
+                            
+                            if (didFall) {
+                                // 落ちるアニメーション中に落下音を鳴らす
+                                playSE('fall');
+                                
+                                // 4. 落下アニメーション（CSS transition 0.25秒）が終わるのを待ってから最終状態を確定
+                                setTimeout(() => {
+                                    renderBoard();
+                                    isBlockInteraction = false;
+                                    setTimeout(checkMovablePairs, 100);
+                                }, 250);
+                            } else {
+                                // 落ちる牌がなかった場合はそのままインタラクションを解放
+                                isBlockInteraction = false;
+                                setTimeout(checkMovablePairs, 100);
+                            }
+                        }, 150); // ← 牌が消えてから落下が始まるまでの「タメ」の時間
+
+                    }, isLineOn ? 200 : 0);
+                } else {
+                    selectedTile.element.classList.remove('selected');
+                    selectedTile = { r, c, element };
+                    element.classList.add('selected');
+                }
+            }
+        }
+
+        document.getElementById('btn-bgm').addEventListener('click', (e) => {
+            isBgmOn = !isBgmOn;
+            let target = e.currentTarget;
+            if (isBgmOn) {
+                target.classList.add('active');
+                target.innerHTML = `<span class="icon">🎵</span>BGM<br>ON`;
+                if (isAudioInitiated) bgm.play();
+            } else {
+                target.classList.remove('active');
+                target.innerHTML = `<span class="icon">🔇</span>BGM<br>OFF`;
+                bgm.pause();
+            }
+        });
+
+        document.getElementById('btn-line').addEventListener('click', (e) => {
+            isLineOn = !isLineOn;
+            let target = e.currentTarget;
+            if (isLineOn) {
+                target.classList.add('active');
+                target.innerHTML = `<span class="icon">⚡</span>ルート線<br>ON`;
+            } else {
+                target.classList.remove('active');
+                target.innerHTML = `<span class="icon">❌</span>ルート線<br>OFF`;
+                clearRouteLine();
+            }
+        });
+
+        document.getElementById('btn-manual-shuffle').addEventListener('click', () => {
+            if (shuffleCount > 0 && !isShuffling && !isBlockInteraction) {
+                shuffleCount--;
+                updateOptionButtons();
+                triggerShuffleRoutine(false); 
+            }
+        });
+
+        document.getElementById('btn-hint').addEventListener('click', () => {
+            if (hintCount > 0 && !isShuffling && !isBlockInteraction) {
+                clearHint();
+                let tiles = [];
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (boardData[r][c] !== null) tiles.push({ r, c, id: boardData[r][c].id });
+                    }
+                }
+                let found = null;
+                for (let i = 0; i < tiles.length; i++) {
+                    for (let j = i + 1; j < tiles.length; j++) {
+                        if (tiles[i].id === tiles[j].id && getConnectRoute(tiles[i].r, tiles[i].c, tiles[j].r, tiles[j].c) !== null) {
+                            found = { t1: tiles[i], t2: tiles[j] }; break;
+                        }
+                    }
+                    if (found) break;
+                }
+                if (found) {
+                    hintCount--; updateOptionButtons();
+                    playSE('hint'); 
+                    const el1 = document.getElementById(`tile-${found.t1.r}-${found.t1.c}`);
+                    const el2 = document.getElementById(`tile-${found.t2.r}-${found.t2.c}`);
+                    if (el1) el1.classList.add('hint');
+                    if (el2) el2.classList.add('hint');
+                    hintTimeoutId = setTimeout(clearHint, 3000);
+                }
+            }
+        });
+
+        document.getElementById('btn-color-toggle').addEventListener('click', (e) => {
+            if (isShuffling || isBlockInteraction) return;
+            if (!DIFF_CONFIG[currentDifficulty].allowToggle) return;
+
+            isColorMode = !isColorMode;
+            let target = e.currentTarget;
+            if (isColorMode) {
+                target.classList.add('active');
+                target.innerHTML = `<span class="icon">🎨</span>色分け<br>ON`;
+            } else {
+                target.classList.remove('active');
+                target.innerHTML = `<span class="icon">🎨</span>色分け<br>OFF`;
+            }
+            renderBoard();
+        });
+
+        document.getElementById('btn-retry').addEventListener('click', () => {
+            if (!isBlockInteraction) document.getElementById('confirm-overlay').classList.add('active');
+        });
+        document.getElementById('btn-confirm-no').addEventListener('click', () => {
+            document.getElementById('confirm-overlay').classList.remove('active');
+        });
+        document.getElementById('btn-confirm-yes').addEventListener('click', initGame);
+        document.getElementById('btn-confirm-menu').addEventListener('click', backToMenu);
+        document.getElementById('btn-replay').addEventListener('click', initGame);
+        
+        function replayGameFromTimeup() {
+            document.getElementById('gameover-overlay').classList.remove('active');
+            initGame();
+        }
+        updateBestScoresDisplay();
+    </script>
+</body>
+</html>
