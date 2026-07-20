@@ -251,9 +251,16 @@
                 --tile-width: min(4.8vw, 8vh);
                 --tile-height: calc(var(--tile-width) * 1.35); 
             }
-            .game-container { flex-direction: column-reverse; }
-            .sidebar-options { flex-direction: row; width: 98vw; height: auto; justify-content: center; padding: 4px; }
             
+            .game-container { 
+                flex-direction: column-reverse !important; 
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 10px !important;
+            }
+            
+            /* 元のメニュー設定を完全キープ */
+            .sidebar-options { flex-direction: row; width: 98vw; height: auto; justify-content: center; padding: 4px; }
             .opt-btn { 
                 width: 58px; 
                 height: 52px; 
@@ -263,6 +270,23 @@
             .opt-btn span.icon { font-size: 14px; }
             
             #game-board { max-width: 98vw; }
+
+            /* ⚙️ 右側のインフォメーションメニュー（上側バー）を左詰めにする */
+            .sidebar-info { 
+                flex-direction: row !important; 
+                width: 98vw !important; 
+                height: auto !important; 
+                justify-content: flex-start !important; /* 👈 center から flex-start (左詰め) に変更 */
+                padding: 4px !important; 
+                gap: 4px !important; /* ボタン同士の間隔を少し空ける */
+            }
+            .info-btn { 
+                width: 58px !important; 
+                height: 52px !important; 
+                font-size: 10px !important; 
+                flex: none !important; 
+            }
+            .info-btn span.icon { font-size: 14px !important; }
         }
 
         /* 📱 スマホの横向き（画面の高さが低いとき） */
@@ -333,6 +357,94 @@
                 gap: 8px !important;
             }
         }
+
+        /* ⚙️ 右側インフォメーションパネル */
+        .sidebar-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background-color: rgba(15, 34, 25, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 6px;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            height: calc((var(--tile-height) * 10) + 17px);
+            justify-content: flex-start; /* 上詰めでボタンを配置 */
+            border: 1px solid rgba(46, 204, 113, 0.15);
+        }
+        
+        .info-btn {
+            width: min(12vw, 80px);
+            height: calc(((var(--tile-height) * 10) + 17px) / 6); /* 左のボタンと同じ高さ */
+            border: none; border-radius: 4px;
+            background-color: #1a3a2a; color: #e0f2e9;
+            font-size: clamp(10px, 1.3vh, 12px); 
+            font-weight: bold;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            gap: 2px; cursor: pointer;
+            line-height: 1.1;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid #0f2219;
+        }
+        .info-btn span.icon { font-size: clamp(14px, 2.4vh, 18px); }
+        .info-btn:hover { background-color: #275d43; color: #fff; }
+        
+        /* 📄 インフォ専用ポップアップのスクロール対応と枠調整 */
+        .info-popup-box {
+            background-color: #102216 !important;
+            width: min(90vw, 340px) !important;
+            max-height: 85vh; /* 🚨 画面の高さの85%までに制限 */
+            padding: 16px !important;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            border: 1px solid #2ecc71;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 🚨 はみ出た中身をスクロールさせるための設定 */
+        .info-content-text {
+            font-size: 13px;
+            color: #dcdde1;
+            line-height: 1.5;
+            text-align: center;
+            width: 100%;
+            overflow-y: auto; /* 縦方向にはみ出したらスクロールバーを出す */
+            flex: 1;          /* ポップアップ内で引き伸ばしてスクロール領域を確保 */
+            padding-right: 4px; /* スクロールバー用の微調整 */
+        }
+        
+        /* 🎛️ スクロールバーのデザインも暗い背景に合わせる（任意） */
+        .info-content-text::-webkit-scrollbar {
+            width: 4px;
+        }
+        .info-content-text::-webkit-scrollbar-thumb {
+            background: #2ecc71;
+            border-radius: 2px;
+        }
+
+        /* 📱 スマホ横画面時（高さが低いとき）の超省スペース化 */
+        @media (max-height: 450px) and (orientation: landscape) {
+            .info-popup-box {
+                max-height: 92vh !important; /* 画面いっぱいに広げる */
+                padding: 10px !important;
+                gap: 6px !important;
+            }
+            #info-popup-title {
+                font-size: 14px !important; /* タイトルを小さく */
+            }
+            #info-content-diff {
+                font-size: 10px !important; /* 難易度の文字を小さく */
+                line-height: 1.3 !important;
+            }
+            /* 閉じるボタンも横画面では少し平べったくして押しやすく */
+            .info-popup-box .btn-style {
+                margin-top: 4px !important;
+                padding: 6px 0 !important;
+                font-size: 12px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -354,6 +466,13 @@
             <div id="timer-container">
               <div id="timer-bar"></div>
           </div>
+        </div>
+
+        <!-- ⚙️ 右側：インフォメーション操作パネル -->
+        <div class="sidebar-info">
+            <button class="info-btn" onclick="openInfoPopup('rule')"><span class="icon">📜</span>ルール</button>
+            <button class="info-btn" onclick="openInfoPopup('diff')"><span class="icon">📊</span>難易度</button>
+            <button class="info-btn" onclick="openInfoPopup('credit')"><span class="icon">🤝</span>素材・著作権</button>
         </div>
     </div>
 
@@ -422,6 +541,52 @@
                 <button id="btn-confirm-no" class="btn-style btn-gray">いいえ</button>
             </div>
             <button id="btn-confirm-menu" class="btn-style btn-green" style="width: 100%; margin-top: 5px;">難易度選択に戻る</button>
+        </div>
+    </div>
+
+    <!-- 📄 インフォメーションポップアップ画面 -->
+    <div id="info-overlay" class="overlay">
+        <div class="popup-box info-popup-box">
+            <h3 id="info-popup-title" style="margin:0; color:#fbc531; font-size:18px; letter-spacing: 2px;">タイトル</h3>
+            
+            <!-- ルール用の中身 -->
+            <div id="info-content-rule" class="info-content-text" style="display:none; text-align: left;">
+                同じ絵柄の麻雀牌を2枚選んで消していくパズルゲームです。<br><br>
+                2つの牌を繋ぐ線が「直線」「1回折れ」「2回折れ」のいずれかで、途中に他の牌がないルートであれば消すことができます。<br><br>
+                すべての牌を消し切るとゲームクリアとなります（手詰まり時は残りの牌が自動でシャッフルされます）。
+            </div>
+
+            <!-- ② 難易度用の中身（NEW！） -->
+            <div id="info-content-diff" class="info-content-text" style="display:none; text-align: left; font-size: 12px; line-height: 1.6;">
+                各難易度ごとの詳しいルール設定です。<br><br>
+                🟢 <strong style="color: #2ecc71;">EASY</strong><br>
+                ・制限時間：300秒<br>
+                ・牌の色分け：あり<br>
+                ・お助け機能：シャッフル5回 / ヒント5回[cite: 1]<br><br>
+                🟡 <strong style="color: #f1c40f;">NORMAL</strong><br>
+                ・制限時間：180秒<br>
+                ・牌の色分け：なし（手動でONに切替可）<br>
+                ・お助け機能：シャッフル2回 / ヒント2回[cite: 1]<br><br>
+                🔴 <strong style="color: #e74c3c;">HARD</strong><br>
+                ・制限時間：120秒<br>
+                ・牌の色分け：固定OFF（切替不可）[cite: 1]<br>
+                ・お助け機能：シャッフルなし（0回）/ ヒント1回[cite: 1]<br><br>
+                ⚪ <strong>練習モード</strong><br>
+                ・制限時間：なし（無限）<br>
+                ・牌の色分け：あり<br>
+                ・お助け機能：制限ほぼなし（99回）[cite: 1]
+            </div>
+            
+            <!-- 素材・著作権用の中身 -->
+            <div id="info-content-credit" class="info-content-text" style="display:none;">
+                <p style="margin: 5px 0 12px 0; font-weight: bold; color: #2ecc71;">© 2026 Furuyura Studio<br>All Rights Reserved.</p>
+                <div style="font-size: 11px; text-align: left; opacity: 0.8; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+                    🎵 BGM：PeriTune 様<br>
+                    🔊 効果音：効果音ラボ 様<br>
+                </div>
+            </div>
+
+            <button class="btn-style btn-green" style="width: 100%; margin-top: 10px;" onclick="closeInfoPopup()">閉じる</button>
         </div>
     </div>
 
@@ -1115,6 +1280,44 @@
         }
         // 🟢 起動時に自己ベストを表示
         updateBestScoresDisplay();
+
+        // 📜 インフォメーションポップアップの制御
+        function openInfoPopup(type) {
+            if (isShuffling || isBlockInteraction) return;
+            
+            const overlay = document.getElementById('info-overlay');
+            const titleEl = document.getElementById('info-popup-title');
+            const ruleContent = document.getElementById('info-content-rule');
+            const diffContent = document.getElementById('info-content-diff');
+            const creditContent = document.getElementById('info-content-credit');
+            
+            // すべて非表示にしてリセット
+            ruleContent.style.display = 'none';
+            diffContent.style.display = 'none';
+            creditContent.style.display = 'none';
+            
+            if (type === 'rule') {
+                titleEl.innerText = '📜 ルール説明';
+                ruleContent.style.display = 'block';
+            } else if (type === 'diff') {
+                titleEl.innerText = '📊 難易度ごとの仕様';
+                diffContent.style.display = 'block';
+            } else if (type === 'credit') {
+                titleEl.innerText = '🤝 素材・著作権クレジット';
+                creditContent.style.display = 'block';
+            }
+            
+            overlay.classList.add('active');
+        }
+
+        function closeInfoPopup() {
+            document.getElementById('info-overlay').classList.remove('active');
+        }
+
+        // 🔽 【ここを追加】画面（オーバーレイ全体）のどこをクリックしても閉じるようにする
+        document.getElementById('info-overlay').addEventListener('click', () => {
+            closeInfoPopup();
+        });
     </script>
 </body>
 </html>
